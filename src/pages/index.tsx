@@ -6,7 +6,7 @@ import { TaskInput } from "@/components/TaskInput"
 import { TaskItem } from "@/components/TaskItem"
 import { SettingsPanel } from "@/components/SettingsPanel"
 import { AccountMenu } from "@/components/AccountMenu"
-import { useMobile } from "@/hooks/UseMobile"
+import { useMobile, useDarkMode } from "@/hooks/UseMobile"
 import type { Task } from "@/types"
 
 export default function Component() {
@@ -26,6 +26,7 @@ export default function Component() {
     const [accountMenuOpen, setAccountMenuOpen] = useState<boolean>(false)
 
     const isMobile = useMobile()
+    const { isDarkMode, toggleDarkMode } = useDarkMode()
 
     // On viewport change, adjust sidebar
     useLayoutEffect(() => {
@@ -61,7 +62,7 @@ export default function Component() {
     }
 
     return (
-        <div className="h-screen flex flex-col" style={{ backgroundColor: "#FFFBF7" }}>
+        <div className="h-screen flex flex-col bg-amber-50 dark:bg-gray-800">
             <Header
                 onMenuClick={() => setSidebarOpen(!sidebarOpen)}
                 onSettingsClick={() => setSettingsOpen(true)}
@@ -77,7 +78,7 @@ export default function Component() {
                     isMobile={isMobile}
                 />
 
-                <main className="flex-1 flex flex-col overflow-hidden" style={{ backgroundColor: "#FFFBF7" }}>
+                <main className="flex-1 flex flex-col overflow-hidden bg-amber-50 dark:bg-gray-900">
                     <ContentHeader title={activeView} date="Sunday, June 29" />
 
                     <div className="flex-1 p-3 sm:p-6 overflow-y-auto">
@@ -102,7 +103,12 @@ export default function Component() {
                 </main>
             </div>
 
-            <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
+            <SettingsPanel
+                isOpen={settingsOpen}
+                onClose={() => setSettingsOpen(false)}
+                isDarkMode={isDarkMode}
+                onToggleDarkMode={toggleDarkMode}
+            />
             <AccountMenu isOpen={accountMenuOpen} onClose={() => setAccountMenuOpen(false)} />
         </div>
     )

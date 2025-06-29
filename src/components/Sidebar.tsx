@@ -18,21 +18,19 @@ export const Sidebar: FC<SidebarProps> = ({
         <>
             <aside
                 className={`
-          ${isMobile ? "fixed" : "relative"}
-          inset-y-0 left-0 z-40 w-64 bg-white border-r border-amber-300 flex flex-col
-          transform transition-transform duration-300 ease-in-out
+          ${isMobile ? "fixed" : "relative"} inset-y-0 left-0 z-40 w-64 bg-white dark:bg-gray-800 border-r border-amber-300 dark:border-gray-700 flex flex-col transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : isMobile ? "-translate-x-full" : "translate-x-0"}
         `}
             >
                 {/* Mobile header */}
                 {isMobile && (
-                    <div className="flex items-center justify-between p-4 border-b border-amber-300">
-                        <h2 className="font-semibold text-gray-800">Menu</h2>
+                    <div className="flex items-center justify-between p-4 border-b border-amber-300 dark:border-gray-700">
+                        <h2 className="font-semibold text-gray-800 dark:text-gray-200">Menu</h2>
                         <Button
                             variant="ghost"
                             size="sm"
                             onClick={onClose}
-                            className="text-gray-500 hover:text-gray-800"
+                            className="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
                         >
                             <X className="h-4 w-4" />
                         </Button>
@@ -49,8 +47,8 @@ export const Sidebar: FC<SidebarProps> = ({
                                         if (isMobile) onClose()
                                     }}
                                     className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-sm transition-colors ${activeView === item.label
-                                        ? "bg-amber-300 text-orange-600 font-medium"
-                                        : "text-gray-800 hover:bg-amber-100"
+                                        ? "bg-amber-300 dark:bg-blue-500 text-orange-600 dark:text-white font-medium"
+                                        : "text-gray-800 dark:text-gray-200 hover:bg-amber-100 dark:hover:bg-gray-700"
                                         }`}
                                 >
                                     <div className="flex items-center gap-3">
@@ -58,7 +56,7 @@ export const Sidebar: FC<SidebarProps> = ({
                                         <span>{item.label}</span>
                                     </div>
                                     {item.count > 0 && (
-                                        <span className="text-xs bg-amber-300 text-orange-600 px-2 py-0.5 rounded-full">
+                                        <span className="text-xs bg-amber-300 dark:bg-blue-500 text-orange-600 dark:text-white px-2 py-0.5 rounded-full">
                                             {item.count}
                                         </span>
                                     )}
@@ -68,10 +66,10 @@ export const Sidebar: FC<SidebarProps> = ({
                     </ul>
                 </nav>
 
-                <div className="p-4 border-t border-amber-300">
+                <div className="p-4 border-t border-amber-300 dark:border-gray-700">
                     <Button
                         variant="ghost"
-                        className="w-full justify-start text-orange-500 hover:bg-amber-100"
+                        className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
                     >
                         <Plus className="h-4 w-4 mr-2" />
                         New list

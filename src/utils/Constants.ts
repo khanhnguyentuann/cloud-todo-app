@@ -6,7 +6,7 @@ import {
   Flag,
   CheckSquare,
 } from "lucide-react";
-import type { SidebarItem } from "@/types";
+import type { QuickOption, SidebarItem } from "@/types";
 
 export const sidebarItems: SidebarItem[] = [
   { icon: Sun, label: "My Day", count: 1 },
@@ -15,4 +15,16 @@ export const sidebarItems: SidebarItem[] = [
   { icon: UserCheck, label: "Assigned to me", count: 0 },
   { icon: Flag, label: "Flagged email", count: 0 },
   { icon: CheckSquare, label: "Tasks", count: 1 },
+];
+
+export const dueDateQuickOptions: QuickOption[] = [
+  { label: "Today", value: "today", day: "Sun" },
+  { label: "Tomorrow", value: "tomorrow", day: "Mon" },
+  { label: "Next week", value: "next-week", day: "Mon" },
+];
+
+export const reminderQuickOptions: QuickOption[] = [
+  { label: "Later today", time: "6:00 PM" },
+  { label: "Tomorrow", time: "Mon, 9 AM" },
+  { label: "Next week", time: "Mon, 9 AM" },
 ];

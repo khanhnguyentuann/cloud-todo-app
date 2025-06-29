@@ -12,12 +12,12 @@ export const Header: FC<HeaderProps> = ({
     const [searchExpanded, setSearchExpanded] = useState(false)
 
     return (
-        <header className="bg-orange-500 text-white px-2 sm:px-4 py-3 flex items-center justify-between relative z-50">
+        <header className="border-b border-amber-300 dark:border-gray-600 bg-orange-500 dark:bg-gray-800 text-white px-2 sm:px-4 py-3 flex items-center justify-between relative z-50">
             <div className="flex items-center gap-2 sm:gap-4">
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="text-white hover:bg-orange-600"
+                    className="text-white hover:bg-orange-600 dark:hover:bg-blue-500"
                     onClick={onMenuClick}
                 >
                     <Menu className="h-4 w-4" />
@@ -28,10 +28,10 @@ export const Header: FC<HeaderProps> = ({
             {/* Desktop Search */}
             <div className="hidden sm:flex flex-1 max-w-md mx-8">
                 <div className="relative w-full">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 h-4 w-4" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 h-4 w-4" />
                     <Input
                         placeholder="Search"
-                        className="pl-10 bg-white border-0 text-gray-800 text-sm w-full"
+                        className="pl-10 bg-white dark:bg-gray-800 border-0 text-gray-800 dark:text-gray-200 text-sm w-full"
                     />
                 </div>
             </div>
@@ -39,12 +39,12 @@ export const Header: FC<HeaderProps> = ({
             {/* Mobile Search */}
             <div className="sm:hidden">
                 {searchExpanded ? (
-                    <div className="absolute left-0 right-0 top-0 bg-orange-500 p-3 flex items-center gap-2">
+                    <div className="absolute left-0 right-0 top-0 bg-orange-500 dark:bg-gray-800 p-3 flex items-center gap-2">
                         <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 h-4 w-4" />
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 h-4 w-4" />
                             <Input
                                 placeholder="Search"
-                                className="pl-10 bg-white border-0 text-gray-800 text-sm w-full"
+                                className="pl-10 bg-white dark:bg-gray-800 border-0 text-gray-800 dark:text-gray-200 text-sm w-full"
                                 autoFocus
                                 onBlur={() => setSearchExpanded(false)}
                             />
@@ -52,7 +52,7 @@ export const Header: FC<HeaderProps> = ({
                         <Button
                             variant="ghost"
                             size="sm"
-                            className="text-white hover:bg-orange-600"
+                            className="text-white hover:bg-orange-600 dark:hover:bg-blue-500"
                             onClick={() => setSearchExpanded(false)}
                         >
                             Cancel
@@ -62,7 +62,7 @@ export const Header: FC<HeaderProps> = ({
                     <Button
                         variant="ghost"
                         size="sm"
-                        className="text-white hover:bg-orange-600"
+                        className="text-white hover:bg-orange-600 dark:hover:bg-blue-500"
                         onClick={() => setSearchExpanded(true)}
                     >
                         <Search className="h-4 w-4" />
@@ -75,24 +75,24 @@ export const Header: FC<HeaderProps> = ({
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="text-white hover:bg-orange-600"
+                    className="text-white hover:bg-orange-600 dark:hover:bg-blue-500"
                     onClick={onSettingsClick}
                 >
                     <Settings className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm" className="text-white hover:bg-orange-600">
+                <Button variant="ghost" size="sm" className="text-white hover:bg-orange-600 dark:hover:bg-blue-500">
                     <HelpCircle className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm" className="text-white hover:bg-orange-600 relative">
+                <Button variant="ghost" size="sm" className="text-white hover:bg-orange-600 dark:hover:bg-blue-500 relative">
                     <Bell className="h-4 w-4" />
-                    <span className="absolute -top-1 -right-1 bg-orange-600 text-xs rounded-full h-4 w-4 flex items-center justify-center text-white">
+                    <span className="absolute -top-1 -right-1 bg-orange-600 dark:bg-blue-500 text-xs rounded-full h-4 w-4 flex items-center justify-center text-white">
                         2
                     </span>
                 </Button>
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="text-white hover:bg-orange-600"
+                    className="text-white hover:bg-orange-600 dark:hover:bg-blue-500"
                     onClick={onAccountClick}
                 >
                     <User className="h-4 w-4" />

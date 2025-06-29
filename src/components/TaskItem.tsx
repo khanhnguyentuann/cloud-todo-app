@@ -3,10 +3,12 @@ import { Star, CalendarDays, Clock } from "lucide-react"
 
 export function TaskItem({ task, onToggle, onToggleImportant }: TaskItemProps) {
     return (
-        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-amber-50 transition-colors group bg-white border border-amber-300">
+        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors group bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600">
             <button
                 onClick={(e) => onToggle(task.id, e)}
-                className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${task.completed ? "bg-emerald-500 border-emerald-500" : "border-amber-300 hover:border-orange-500"
+                className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${task.completed
+                    ? "bg-emerald-500 border-emerald-500"
+                    : "border-amber-300 dark:border-gray-600 hover:border-orange-500 dark:hover:border-blue-400"
                     }`}
             >
                 {task.completed && (
@@ -21,11 +23,13 @@ export function TaskItem({ task, onToggle, onToggleImportant }: TaskItemProps) {
             </button>
 
             <div className="flex-1 min-w-0">
-                <div className={`text-sm sm:text-base ${task.completed ? "line-through text-gray-500" : "text-gray-800"}`}>
+                <div
+                    className={`text-sm sm:text-base ${task.completed ? "line-through text-gray-500 dark:text-gray-400" : "text-gray-800 dark:text-gray-200"}`}
+                >
                     {task.text}
                 </div>
                 {task.dueDate && (
-                    <div className="flex items-center gap-2 sm:gap-4 mt-1 text-xs text-gray-500">
+                    <div className="flex items-center gap-2 sm:gap-4 mt-1 text-xs text-gray-500 dark:text-gray-400">
                         <span>Tasks</span>
                         <div className="flex items-center gap-1">
                             <CalendarDays className="h-3 w-3" />
@@ -41,7 +45,9 @@ export function TaskItem({ task, onToggle, onToggleImportant }: TaskItemProps) {
 
             <button
                 onClick={(e) => onToggleImportant(task.id, e)}
-                className={`opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 ${task.isImportant ? "text-orange-600" : "text-gray-500 hover:text-orange-600"
+                className={`opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 ${task.isImportant
+                    ? "text-orange-600 dark:text-blue-400"
+                    : "text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-blue-400"
                     }`}
             >
                 <Star className={`h-4 w-4 ${task.isImportant ? "fill-current" : ""}`} />
