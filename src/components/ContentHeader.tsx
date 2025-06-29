@@ -4,8 +4,9 @@ import { Sun, Grid3X3, List, MoreHorizontal } from "lucide-react"
 import type { FC } from "react"
 import { useState } from "react"
 import { SortMenu } from "@/components/SortMenu"
+import { Tooltip } from "@/components/Tooltip"
 
-export const ContentHeader: FC<ContentHeaderProps> = ({ title, date }) => {
+export const ContentHeader: FC<ContentHeaderProps> = ({ title, date, viewMode, onViewModeChange }) => {
     const [sortMenuOpen, setSortMenuOpen] = useState(false)
 
     return (
@@ -23,26 +24,36 @@ export const ContentHeader: FC<ContentHeaderProps> = ({ title, date }) => {
                     >
                         <MoreHorizontal className="h-4 w-4" />
                     </Button>
+                    <Tooltip content="Grid">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => onViewModeChange("grid")}
+                            className={`text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${viewMode === "grid" ? "bg-amber-100 dark:bg-gray-700" : ""
+                                }`}
+                        >
+                            <Grid3X3 className="h-4 w-4" />
+                            <span className="hidden sm:inline ml-1">Grid</span>
+                        </Button>
+                    </Tooltip>
+
+                    {/* List button */}
+                    <Tooltip content="List">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => onViewModeChange("list")}
+                            className={`text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${viewMode === "list" ? "bg-amber-100 dark:bg-gray-700" : ""
+                                }`}
+                        >
+                            <List className="h-4 w-4" />
+                            <span className="hidden sm:inline ml-1">List</span>
+                        </Button>
+                    </Tooltip>
                 </div>
 
                 {/* Toolbar */}
                 <div className="flex items-center gap-1 sm:gap-2">
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-                    >
-                        <Grid3X3 className="h-4 w-4" />
-                        <span className="hidden sm:inline ml-1">Grid</span>
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 bg-amber-100 dark:bg-gray-700"
-                    >
-                        <List className="h-4 w-4" />
-                        <span className="hidden sm:inline ml-1">List</span>
-                    </Button>
                     <SortMenu
                         isOpen={sortMenuOpen}
                         onOpenChange={setSortMenuOpen}

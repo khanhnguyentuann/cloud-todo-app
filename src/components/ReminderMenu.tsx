@@ -27,7 +27,7 @@ export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect }: Reminde
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
             >
-                <div className="p-4 w-80">
+                <div className="p-1 w-70 flex items-center justify-between flex-col">
                     <Calendar
                         mode="single"
                         selected={selectedDate}

@@ -3,11 +3,11 @@ import { Header } from "@/components/Header"
 import { Sidebar } from "@/components/Sidebar"
 import { ContentHeader } from "@/components/ContentHeader"
 import { TaskInput } from "@/components/TaskInput"
-import { TaskItem } from "@/components/TaskItem"
 import { SettingsPanel } from "@/components/SettingsPanel"
 import { AccountMenu } from "@/components/AccountMenu"
 import { useMobile, useDarkMode } from "@/hooks/UseMobile"
 import type { Task } from "@/types"
+import { TaskList } from "@/components/TaskList"
 
 export default function Component() {
     const [tasks, setTasks] = useState<Task[]>([
@@ -18,13 +18,26 @@ export default function Component() {
             dueDate: "Mon, June 30",
             isImportant: false,
         },
+        {
+            id: 2,
+            text: "Hoàn thành báo cáo",
+            completed: false,
+            dueDate: "Tue, July 1",
+            isImportant: true,
+        },
+        {
+            id: 3,
+            text: "Mua sắm cuối tuần",
+            completed: true,
+            isImportant: false,
+        },
     ])
     const [inputValue, setInputValue] = useState<string>("")
     const [activeView, setActiveView] = useState<string>("My Day")
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true)
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false)
     const [accountMenuOpen, setAccountMenuOpen] = useState<boolean>(false)
-
+    const [viewMode, setViewMode] = useState<"grid" | "list">("list")
     const isMobile = useMobile()
     const { isDarkMode, toggleDarkMode } = useDarkMode()
 
@@ -79,7 +92,7 @@ export default function Component() {
                 />
 
                 <main className="flex-1 flex flex-col overflow-hidden bg-amber-50 dark:bg-gray-900">
-                    <ContentHeader title={activeView} date="Sunday, June 29" />
+                    <ContentHeader title="My Day" date="Sunday, June 29" viewMode={viewMode} onViewModeChange={setViewMode} />
 
                     <div className="flex-1 p-3 sm:p-6 overflow-y-auto">
                         <TaskInput
@@ -89,16 +102,8 @@ export default function Component() {
                             onKeyPress={handleKeyPress}
                         />
 
-                        <div className="space-y-2">
-                            {tasks.map((task) => (
-                                <TaskItem
-                                    key={task.id}
-                                    task={task}
-                                    onToggle={toggleTask}
-                                    onToggleImportant={toggleImportant}
-                                />
-                            ))}
-                        </div>
+                        {/* Tasks List/Grid */}
+                        <TaskList tasks={tasks} viewMode={viewMode} onToggle={toggleTask} onToggleImportant={toggleImportant} />
                     </div>
                 </main>
             </div>

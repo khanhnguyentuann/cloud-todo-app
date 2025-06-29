@@ -3,7 +3,7 @@ import { Star, CalendarDays, Clock } from "lucide-react"
 
 export function TaskItem({ task, onToggle, onToggleImportant }: TaskItemProps) {
     return (
-        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors group bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600">
+        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-600 transition-colors group bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600 hover:border-amber-400 dark:hover:border-gray-500">
             <button
                 onClick={(e) => onToggle(task.id, e)}
                 className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${task.completed
@@ -46,7 +46,7 @@ export function TaskItem({ task, onToggle, onToggleImportant }: TaskItemProps) {
             <button
                 onClick={(e) => onToggleImportant(task.id, e)}
                 className={`opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 ${task.isImportant
-                    ? "text-orange-600 dark:text-blue-400"
+                    ? "text-orange-600 dark:text-blue-400 opacity-100"
                     : "text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-blue-400"
                     }`}
             >

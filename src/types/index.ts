@@ -1,4 +1,4 @@
-import type { KeyboardEvent } from "react";
+import type { FC, KeyboardEvent, ReactNode } from "react";
 import type { MouseEvent } from "react";
 
 export interface AccountMenuProps {
@@ -9,6 +9,8 @@ export interface AccountMenuProps {
 export interface ContentHeaderProps {
   title: string;
   date: string;
+  viewMode: "grid" | "list";
+  onViewModeChange: (mode: "grid" | "list") => void;
 }
 
 export interface HeaderProps {
@@ -91,4 +93,34 @@ export interface QuickOption {
   value?: string;
   day?: string;
   time?: string;
+}
+
+export interface SortMenuProps {
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSortChange: (sort: string) => void;
+}
+
+export interface SortOption {
+  icon: FC<{ className?: string }>;
+  label: string;
+}
+
+export interface TooltipProps {
+  content: string;
+  children: ReactNode;
+  disabled?: boolean;
+}
+
+export interface TaskGridItemProps {
+  task: Task;
+  onToggle: (id: number) => void;
+  onToggleImportant: (id: number) => void;
+}
+
+export interface TaskListProps {
+  tasks: Task[];
+  viewMode: "grid" | "list";
+  onToggle: (id: number) => void;
+  onToggleImportant: (id: number) => void;
 }
