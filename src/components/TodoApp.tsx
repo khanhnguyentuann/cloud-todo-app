@@ -1,5 +1,8 @@
 import { useState } from "react"
 import type { KeyboardEvent } from "react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 
 interface Task {
     id: number
@@ -58,20 +61,16 @@ function TodoApp() {
 
                 {/* Input + Add button */}
                 <div className="flex gap-2 mb-4">
-                    <input
-                        type="text"
+                    <Input
                         placeholder="Enter a new task..."
                         value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
                         onKeyDown={handleKeyPress}
-                        className="flex-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="flex-1"
                     />
-                    <button
-                        onClick={addTask}
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                    >
+                    <Button onClick={addTask}>
                         Add
-                    </button>
+                    </Button>
                 </div>
 
                 {/* Task Counter */}
@@ -93,21 +92,22 @@ function TodoApp() {
                                     }`}
                             >
                                 <label className="flex items-center gap-2 cursor-pointer">
-                                    <input
-                                        type="checkbox"
+                                    <Checkbox
                                         checked={task.completed}
-                                        onChange={() => toggleTask(task.id)}
+                                        onCheckedChange={() => toggleTask(task.id)}
                                     />
                                     <span className={task.completed ? "line-through text-gray-500" : ""}>
                                         {task.text}
                                     </span>
                                 </label>
-                                <button
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
                                     onClick={() => deleteTask(task.id)}
                                     className="text-red-500 hover:text-red-700"
                                 >
                                     🗑️
-                                </button>
+                                </Button>
                             </li>
                         ))
                     )}
@@ -116,12 +116,13 @@ function TodoApp() {
                 {/* Clear Completed */}
                 {completedCount > 0 && (
                     <div className="text-center mt-4">
-                        <button
+                        <Button
+                            variant="link"
+                            className="text-sm text-gray-600 hover:text-gray-800"
                             onClick={() => setTasks(tasks.filter((task) => !task.completed))}
-                            className="text-sm text-gray-600 hover:text-gray-800 underline"
                         >
                             Clear completed tasks ({completedCount})
-                        </button>
+                        </Button>
                     </div>
                 )}
             </div>
