@@ -1,0 +1,51 @@
+import type { TaskItemProps } from "@/types"
+import { Star, CalendarDays, Clock } from "lucide-react"
+
+export function TaskItem({ task, onToggle, onToggleImportant }: TaskItemProps) {
+    return (
+        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-amber-50 transition-colors group bg-white border border-amber-300">
+            <button
+                onClick={(e) => onToggle(task.id, e)}
+                className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${task.completed ? "bg-emerald-500 border-emerald-500" : "border-amber-300 hover:border-orange-500"
+                    }`}
+            >
+                {task.completed && (
+                    <svg className="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                        />
+                    </svg>
+                )}
+            </button>
+
+            <div className="flex-1 min-w-0">
+                <div className={`text-sm sm:text-base ${task.completed ? "line-through text-gray-500" : "text-gray-800"}`}>
+                    {task.text}
+                </div>
+                {task.dueDate && (
+                    <div className="flex items-center gap-2 sm:gap-4 mt-1 text-xs text-gray-500">
+                        <span>Tasks</span>
+                        <div className="flex items-center gap-1">
+                            <CalendarDays className="h-3 w-3" />
+                            <span>Due {task.dueDate}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                            <Clock className="h-3 w-3" />
+                            <span>Tomorrow</span>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            <button
+                onClick={(e) => onToggleImportant(task.id, e)}
+                className={`opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 ${task.isImportant ? "text-orange-600" : "text-gray-500 hover:text-orange-600"
+                    }`}
+            >
+                <Star className={`h-4 w-4 ${task.isImportant ? "fill-current" : ""}`} />
+            </button>
+        </div>
+    )
+}

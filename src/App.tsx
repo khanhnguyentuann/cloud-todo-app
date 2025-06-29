@@ -1,7 +1,7 @@
-import TodoApp from "@/components/TodoApp"
+import Home from "@/pages"
 
 function App() {
-  return <TodoApp />
+  return <Home />
 }
 
 export default App
