@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react"
+import React, { useState, useLayoutEffect, useEffect } from "react"
 import { Header } from "@/components/Header"
 import { Sidebar } from "@/components/Sidebar"
 import { ContentHeader } from "@/components/ContentHeader"
@@ -6,32 +6,11 @@ import { TaskInput } from "@/components/TaskInput"
 import { SettingsPanel } from "@/components/SettingsPanel"
 import { AccountMenu } from "@/components/AccountMenu"
 import { useMobile, useDarkMode } from "@/hooks/UseMobile"
-import type { Task } from "@/types"
+import type { DynamoDBTask, Task } from "@/types"
 import { TaskList } from "@/components/TaskList"
 
 export default function Component() {
-    const [tasks, setTasks] = useState<Task[]>([
-        {
-            id: 1,
-            text: "đi đánh bóng chày",
-            completed: false,
-            dueDate: "Mon, June 30",
-            isImportant: false,
-        },
-        {
-            id: 2,
-            text: "Hoàn thành báo cáo",
-            completed: false,
-            dueDate: "Tue, July 1",
-            isImportant: true,
-        },
-        {
-            id: 3,
-            text: "Mua sắm cuối tuần",
-            completed: true,
-            isImportant: false,
-        },
-    ])
+    const [tasks, setTasks] = useState<Task[]>([])
     const [inputValue, setInputValue] = useState<string>("")
     const [activeView, setActiveView] = useState<string>("My Day")
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true)
@@ -40,6 +19,38 @@ export default function Component() {
     const [viewMode, setViewMode] = useState<"grid" | "list">("list")
     const isMobile = useMobile()
     const { isDarkMode, toggleDarkMode } = useDarkMode()
+
+
+    // Fetch tasks from API Gateway + Lambda + DynamoDB
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks`);
+                if (!res.ok) {
+                    throw new Error("Network response was not ok")
+                }
+                const data: DynamoDBTask[] = await res.json();
+                console.log("Fetched tasks:", data)
+                if (!Array.isArray(data)) {
+                    throw new Error("Invalid data format")
+                }
+
+                const parsed: Task[] = data.map((item) => ({
+                    id: parseInt(item.taskId.S),
+                    text: item.title.S,
+                    completed: item.completed.BOOL,
+                    dueDate: item.dueDate.S,
+                    isImportant: item.isImportant.BOOL,
+                }))
+
+                setTasks(parsed)
+            } catch (err) {
+                console.error("Failed to load tasks:", err)
+            }
+        }
+
+        fetchTasks()
+    }, [])
 
     // On viewport change, adjust sidebar
     useLayoutEffect(() => {

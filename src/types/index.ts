@@ -127,3 +127,11 @@ export interface TaskListProps {
   onToggle: (id: number) => void;
   onToggleImportant: (id: number) => void;
 }
+
+export interface DynamoDBTask {
+  taskId: { S: string };
+  title: { S: string };
+  completed: { BOOL: boolean };
+  dueDate: { S: string };
+  isImportant: { BOOL: boolean };
+}
