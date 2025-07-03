@@ -6,8 +6,9 @@ import { TaskInput } from "@/components/TaskInput"
 import { SettingsPanel } from "@/components/SettingsPanel"
 import { AccountMenu } from "@/components/AccountMenu"
 import { useMobile, useDarkMode } from "@/hooks/UseMobile"
-import type { DynamoDBTask, Task } from "@/types"
+import type { Task } from "@/types"
 import { TaskList } from "@/components/TaskList"
+import { fetchTasks } from "@/lib/api/todo"
 
 export default function Component() {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -23,33 +24,9 @@ export default function Component() {
 
     // Fetch tasks from API Gateway + Lambda + DynamoDB
     useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks`);
-                if (!res.ok) {
-                    throw new Error("Network response was not ok")
-                }
-                const data: DynamoDBTask[] = await res.json();
-                console.log("Fetched tasks:", data)
-                if (!Array.isArray(data)) {
-                    throw new Error("Invalid data format")
-                }
-
-                const parsed: Task[] = data.map((item) => ({
-                    id: parseInt(item.taskId.S),
-                    text: item.title.S,
-                    completed: item.completed.BOOL,
-                    dueDate: item.dueDate.S,
-                    isImportant: item.isImportant.BOOL,
-                }))
-
-                setTasks(parsed)
-            } catch (err) {
-                console.error("Failed to load tasks:", err)
-            }
-        }
-
         fetchTasks()
+            .then(setTasks)
+            .catch((err) => console.error("Failed to load tasks:", err))
     }, [])
 
     // On viewport change, adjust sidebar
