@@ -8,25 +8,23 @@ import type { DueDateMenuProps } from "@/types"
 import { DropdownMenu } from "@/components/DropdownMenuBase"
 import { dueDateQuickOptions } from "@/utils/Constants"
 
-export function DueDateMenu({ isOpen, onOpenChange, onDateSelect }: DueDateMenuProps) {
+export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: DueDateMenuProps) {
     const [showCalendar, setShowCalendar] = useState(false)
     const [selectedDate, setSelectedDate] = useState<Date>()
 
+    const defaultTrigger = (
+        <Button
+            variant="ghost"
+            size="sm"
+            className="text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600"
+        >
+            <CalendarIcon className="h-4 w-4" />
+        </Button>
+    )
+
     if (showCalendar) {
         return (
-            <DropdownMenu
-                trigger={
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600"
-                    >
-                        <CalendarIcon className="h-4 w-4" />
-                    </Button>
-                }
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-            >
+            <DropdownMenu trigger={trigger || defaultTrigger} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <div className="p-1 w-70 flex items-center justify-between flex-col">
                     <Calendar
                         mode="single"
@@ -52,19 +50,7 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect }: DueDateMenuP
     }
 
     return (
-        <DropdownMenu
-            trigger={
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600"
-                >
-                    <CalendarIcon className="h-4 w-4" />
-                </Button>
-            }
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-        >
+        <DropdownMenu trigger={trigger || defaultTrigger} isOpen={isOpen} onOpenChange={onOpenChange}>
             <div className="p-2">
                 <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">Due</div>
                 {dueDateQuickOptions.map((option) => (

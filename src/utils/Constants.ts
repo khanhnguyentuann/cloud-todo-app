@@ -18,9 +18,9 @@ export const sidebarItems: SidebarItem[] = [
 ];
 
 export const dueDateQuickOptions: QuickOption[] = [
-  { label: "Today", value: "today", day: "Sun" },
-  { label: "Tomorrow", value: "tomorrow", day: "Mon" },
-  { label: "Next week", value: "next-week", day: "Mon" },
+  { label: "Today", value: "Today", day: "Sun" },
+  { label: "Tomorrow", value: "Tomorrow", day: "Mon" },
+  { label: "Next week", value: "Next-week", day: "Mon" },
 ];
 
 export const reminderQuickOptions: QuickOption[] = [

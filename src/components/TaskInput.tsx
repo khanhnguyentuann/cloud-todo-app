@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import type { TaskInputProps } from "@/types"
-import { Plus } from "lucide-react"
+import { Bell, CalendarIcon, Plus, RotateCcw } from "lucide-react"
 import { useState } from "react"
 import { DueDateMenu } from "@/components/DueDateMenu"
 import { ReminderMenu } from "@/components/ReminderMenu"
 import { RepeatMenu } from "@/components/RepeatMenu"
+import { Tooltip } from "@/components/Tooltip"
 
 export function TaskInput({ value, onChange, onAdd, onKeyPress }: TaskInputProps) {
     const [dueDateMenuOpen, setDueDateMenuOpen] = useState(false)
@@ -37,36 +38,69 @@ export function TaskInput({ value, onChange, onAdd, onKeyPress }: TaskInputProps
                 </Button>
             </div>
 
-            {/* Task options bar */}
-            {(selectedDueDate || selectedReminder || selectedRepeat) && (
-                <div className="flex items-center gap-2 mt-2 p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    {selectedDueDate && (
-                        <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
-                            {selectedDueDate}
-                        </span>
-                    )}
-                    {selectedReminder && (
-                        <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
-                            {selectedReminder}
-                        </span>
-                    )}
-                    {selectedRepeat && (
-                        <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
-                            {selectedRepeat}
-                        </span>
-                    )}
-                </div>
-            )}
-
-            {/* Dropdown menus */}
+            {/* Action buttons with values */}
             <div className="flex items-center gap-2 mt-2">
-                <DueDateMenu isOpen={dueDateMenuOpen} onOpenChange={setDueDateMenuOpen} onDateSelect={setSelectedDueDate} />
-                <ReminderMenu
-                    isOpen={reminderMenuOpen}
-                    onOpenChange={setReminderMenuOpen}
-                    onReminderSelect={setSelectedReminder}
-                />
-                <RepeatMenu isOpen={repeatMenuOpen} onOpenChange={setRepeatMenuOpen} onRepeatSelect={setSelectedRepeat} />
+                <Tooltip content="Add due date">
+                    <DueDateMenu
+                        isOpen={dueDateMenuOpen}
+                        onOpenChange={setDueDateMenuOpen}
+                        onDateSelect={setSelectedDueDate}
+                        trigger={
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${selectedDueDate
+                                        ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                        : "border border-transparent"
+                                    }`}
+                            >
+                                <CalendarIcon className="h-4 w-4" />
+                                {selectedDueDate && <span className="text-xs font-medium">{selectedDueDate}</span>}
+                            </Button>
+                        }
+                    />
+                </Tooltip>
+                <Tooltip content="Add reminder">
+                    <ReminderMenu
+                        isOpen={reminderMenuOpen}
+                        onOpenChange={setReminderMenuOpen}
+                        onReminderSelect={setSelectedReminder}
+                        trigger={
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${selectedReminder
+                                        ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                        : "border border-transparent"
+                                    }`}
+                            >
+                                <Bell className="h-4 w-4" />
+                                {selectedReminder && <span className="text-xs font-medium">{selectedReminder}</span>}
+                            </Button>
+                        }
+                    />
+                </Tooltip>
+                <Tooltip content="Set repeat options">
+                    <RepeatMenu
+                        isOpen={repeatMenuOpen}
+                        onOpenChange={setRepeatMenuOpen}
+                        onRepeatSelect={setSelectedRepeat}
+                        trigger={
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${selectedRepeat
+                                        ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                        : "border border-transparent"
+                                    }`}
+                            >
+                                <RotateCcw className="h-4 w-4" />
+                                {selectedRepeat && <span className="text-xs font-medium">{selectedRepeat}</span>}
+                            </Button>
+                        }
+                    />
+                </Tooltip>
+
             </div>
         </div>
     )

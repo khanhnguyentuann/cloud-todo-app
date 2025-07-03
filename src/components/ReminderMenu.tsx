@@ -7,26 +7,24 @@ import { DropdownMenu } from "@/components/DropdownMenuBase"
 import type { ReminderMenuProps } from "@/types"
 import { reminderQuickOptions } from "@/utils/Constants"
 
-export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect }: ReminderMenuProps) {
+export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect, trigger }: ReminderMenuProps) {
     const [showCalendar, setShowCalendar] = useState(false)
     const [selectedDate, setSelectedDate] = useState<Date>()
     const [selectedTime, setSelectedTime] = useState<string>("4:00 PM")
 
+    const defaultTrigger = (
+        <Button
+            variant="ghost"
+            size="sm"
+            className="text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600"
+        >
+            <Bell className="h-4 w-4" />
+        </Button>
+    )
+
     if (showCalendar) {
         return (
-            <DropdownMenu
-                trigger={
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600"
-                    >
-                        <Bell className="h-4 w-4" />
-                    </Button>
-                }
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-            >
+            <DropdownMenu trigger={trigger || defaultTrigger} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <div className="p-1 w-70 flex items-center justify-between flex-col">
                     <Calendar
                         mode="single"
@@ -61,20 +59,8 @@ export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect }: Reminde
     }
 
     return (
-        <DropdownMenu
-            trigger={
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600"
-                >
-                    <Bell className="h-4 w-4" />
-                </Button>
-            }
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-        >
-            <div className="p-2">
+        <DropdownMenu trigger={trigger || defaultTrigger} isOpen={isOpen} onOpenChange={onOpenChange}>
+            <div className="p-2 w-60">
                 <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">Reminder</div>
                 {reminderQuickOptions.map((option) => (
                     <button

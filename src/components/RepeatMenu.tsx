@@ -5,7 +5,7 @@ import { useState } from "react"
 import { DropdownMenu } from "@/components/DropdownMenuBase"
 import type { RepeatMenuProps } from "@/types"
 
-export function RepeatMenu({ isOpen, onOpenChange, onRepeatSelect }: RepeatMenuProps) {
+export function RepeatMenu({ isOpen, onOpenChange, onRepeatSelect, trigger }: RepeatMenuProps) {
     const [showCustom, setShowCustom] = useState(false)
     const [customInterval, setCustomInterval] = useState<string>("1")
     const [customUnit, setCustomUnit] = useState<string>("weeks")
@@ -21,21 +21,19 @@ export function RepeatMenu({ isOpen, onOpenChange, onRepeatSelect }: RepeatMenuP
 
     const days: string[] = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
 
+    const defaultTrigger = (
+        <Button
+            variant="ghost"
+            size="sm"
+            className="text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600"
+        >
+            <RotateCcw className="h-4 w-4" />
+        </Button>
+    )
+
     if (showCustom) {
         return (
-            <DropdownMenu
-                trigger={
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600"
-                    >
-                        <RotateCcw className="h-4 w-4" />
-                    </Button>
-                }
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-            >
+            <DropdownMenu trigger={trigger || defaultTrigger} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <div className="p-4 w-80">
                     <div className="flex gap-2 mb-4">
                         <Select value={customInterval} onValueChange={(val: string) => setCustomInterval(val)}>
@@ -94,19 +92,7 @@ export function RepeatMenu({ isOpen, onOpenChange, onRepeatSelect }: RepeatMenuP
     }
 
     return (
-        <DropdownMenu
-            trigger={
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600"
-                >
-                    <RotateCcw className="h-4 w-4" />
-                </Button>
-            }
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-        >
+        <DropdownMenu trigger={trigger || defaultTrigger} isOpen={isOpen} onOpenChange={onOpenChange}>
             <div className="p-2">
                 <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">Repeat</div>
                 {repeatOptions.map((option) => (
