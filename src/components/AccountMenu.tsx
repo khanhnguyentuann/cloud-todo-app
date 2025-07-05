@@ -4,7 +4,7 @@ import { User } from "lucide-react"
 import type { FC } from "react"
 import { useLanguage } from "@/hooks/UseLanguage"
 
-export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose }) => {
+export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose, onViewAccount }) => {
     const { t } = useLanguage()
     if (!isOpen) return null
 
@@ -31,7 +31,10 @@ export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose }) => {
                 </div>
 
                 <div className="space-y-2">
-                    <Button variant="ghost" className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-orange-50 dark:hover:bg-gray-600">
+                    <Button variant="ghost" className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-orange-50 dark:hover:bg-gray-600" onClick={() => {
+                        onViewAccount()
+                        onClose()
+                    }}>
                         {t.viewAccount}
                     </Button>
                 </div>

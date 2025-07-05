@@ -158,6 +158,72 @@ export interface Translations {
     viewAllNotifications: string;
     taskCompleted: string;
     systemUpdate: string;
+
+    // Add to the Translations interface
+    profile: string
+    subscription: string
+    usage: string
+    privacy: string
+    billing: string
+    myAccount: string
+    freeAccount: string
+    changePicture: string
+    personalInformation: string
+    fullName: string
+    phoneNumber: string
+    email: string
+    timezone: string
+    preferences: string
+    emailNotifications: string
+    pushNotifications: string
+    weeklyDigest: string
+    taskReminders: string
+    edit: string
+    saveChanges: string
+    currentPlan: string
+    freeAccountDescription: string
+    upgrade: string
+    planFeatures: string
+    unlimitedTasks: string
+    basicReminders: string
+    webAccess: string
+    basicSupport: string
+    premiumAccount: string
+    allFreeFeatures: string
+    advancedReminders: string
+    fileAttachments: string
+    prioritySupport: string
+    teamCollaboration: string
+    usageStatistics: string
+    totalTasks: string
+    thisMonth: string
+    completedTasks: string
+    completionRate: string
+    activeReminders: string
+    upcoming: string
+    accountActivity: string
+    accountCreated: string
+    lastLogin: string
+    dataUsage: string
+    privacySettings: string
+    dataExport: string
+    dataExportDescription: string
+    exportMyData: string
+    deleteAccount: string
+    deleteAccountDescription: string
+    deleteMyAccount: string
+    privacyControls: string
+    dataCollection: string
+    dataCollectionDescription: string
+    analytics: string
+    analyticsDescription: string
+    marketingEmails: string
+    marketingEmailsDescription: string
+    billingInformation: string
+    noBillingInfo: string
+    upgradeToPremium: string
+    billingHistory: string
+    noBillingHistory: string
 }
 
 export const translations: Record<Language, Translations> = {
@@ -327,6 +393,72 @@ export const translations: Record<Language, Translations> = {
         viewAllNotifications: "View all notifications",
         taskCompleted: "Task Completed",
         systemUpdate: "System Update",
+
+        // English translations
+        profile: "Profile",
+        subscription: "Subscription",
+        usage: "Usage",
+        privacy: "Privacy",
+        billing: "Billing",
+        myAccount: "My Account",
+        freeAccount: "Free Account",
+        changePicture: "Change picture",
+        personalInformation: "Personal Information",
+        fullName: "Full Name",
+        phoneNumber: "Phone Number",
+        email: "Email",
+        timezone: "Timezone",
+        preferences: "Preferences",
+        emailNotifications: "Email Notifications",
+        pushNotifications: "Push Notifications",
+        weeklyDigest: "Weekly Digest",
+        taskReminders: "Task Reminders",
+        edit: "Edit",
+        saveChanges: "Save Changes",
+        currentPlan: "Current Plan",
+        freeAccountDescription: "Basic features for personal use",
+        upgrade: "Upgrade",
+        planFeatures: "Plan Features",
+        unlimitedTasks: "Unlimited tasks",
+        basicReminders: "Basic reminders",
+        webAccess: "Web access",
+        basicSupport: "Basic support",
+        premiumAccount: "Premium Account",
+        allFreeFeatures: "All free features",
+        advancedReminders: "Advanced reminders",
+        fileAttachments: "File attachments",
+        prioritySupport: "Priority support",
+        teamCollaboration: "Team collaboration",
+        usageStatistics: "Usage Statistics",
+        totalTasks: "Total Tasks",
+        thisMonth: "this month",
+        completedTasks: "Completed Tasks",
+        completionRate: "completion rate",
+        activeReminders: "Active Reminders",
+        upcoming: "upcoming",
+        accountActivity: "Account Activity",
+        accountCreated: "Account Created",
+        lastLogin: "Last Login",
+        dataUsage: "Data Usage",
+        privacySettings: "Privacy Settings",
+        dataExport: "Data Export",
+        dataExportDescription: "Download all your data in a portable format",
+        exportMyData: "Export My Data",
+        deleteAccount: "Delete Account",
+        deleteAccountDescription: "Permanently delete your account and all data",
+        deleteMyAccount: "Delete My Account",
+        privacyControls: "Privacy Controls",
+        dataCollection: "Data Collection",
+        dataCollectionDescription: "Allow us to collect usage data to improve the service",
+        analytics: "Analytics",
+        analyticsDescription: "Help us understand how you use the app",
+        marketingEmails: "Marketing Emails",
+        marketingEmailsDescription: "Receive updates about new features and offers",
+        billingInformation: "Billing Information",
+        noBillingInfo: "You're currently on the free plan. Upgrade to access premium features.",
+        upgradeToPremium: "Upgrade to Premium",
+        billingHistory: "Billing History",
+        noBillingHistory: "No billing history available",
     },
     ja: {
         // Header
@@ -494,6 +626,72 @@ export const translations: Record<Language, Translations> = {
         viewAllNotifications: "すべての通知を表示",
         taskCompleted: "タスク完了",
         systemUpdate: "システム更新",
+
+        // English translations
+        profile: "Profile",
+        subscription: "Subscription",
+        usage: "Usage",
+        privacy: "Privacy",
+        billing: "Billing",
+        myAccount: "My Account",
+        freeAccount: "Free Account",
+        changePicture: "Change picture",
+        personalInformation: "Personal Information",
+        fullName: "Full Name",
+        phoneNumber: "Phone Number",
+        email: "Email",
+        timezone: "Timezone",
+        preferences: "Preferences",
+        emailNotifications: "Email Notifications",
+        pushNotifications: "Push Notifications",
+        weeklyDigest: "Weekly Digest",
+        taskReminders: "Task Reminders",
+        edit: "Edit",
+        saveChanges: "Save Changes",
+        currentPlan: "Current Plan",
+        freeAccountDescription: "Basic features for personal use",
+        upgrade: "Upgrade",
+        planFeatures: "Plan Features",
+        unlimitedTasks: "Unlimited tasks",
+        basicReminders: "Basic reminders",
+        webAccess: "Web access",
+        basicSupport: "Basic support",
+        premiumAccount: "Premium Account",
+        allFreeFeatures: "All free features",
+        advancedReminders: "Advanced reminders",
+        fileAttachments: "File attachments",
+        prioritySupport: "Priority support",
+        teamCollaboration: "Team collaboration",
+        usageStatistics: "Usage Statistics",
+        totalTasks: "Total Tasks",
+        thisMonth: "this month",
+        completedTasks: "Completed Tasks",
+        completionRate: "completion rate",
+        activeReminders: "Active Reminders",
+        upcoming: "upcoming",
+        accountActivity: "Account Activity",
+        accountCreated: "Account Created",
+        lastLogin: "Last Login",
+        dataUsage: "Data Usage",
+        privacySettings: "Privacy Settings",
+        dataExport: "Data Export",
+        dataExportDescription: "Download all your data in a portable format",
+        exportMyData: "Export My Data",
+        deleteAccount: "Delete Account",
+        deleteAccountDescription: "Permanently delete your account and all data",
+        deleteMyAccount: "Delete My Account",
+        privacyControls: "Privacy Controls",
+        dataCollection: "Data Collection",
+        dataCollectionDescription: "Allow us to collect usage data to improve the service",
+        analytics: "Analytics",
+        analyticsDescription: "Help us understand how you use the app",
+        marketingEmails: "Marketing Emails",
+        marketingEmailsDescription: "Receive updates about new features and offers",
+        billingInformation: "Billing Information",
+        noBillingInfo: "You're currently on the free plan. Upgrade to access premium features.",
+        upgradeToPremium: "Upgrade to Premium",
+        billingHistory: "Billing History",
+        noBillingHistory: "No billing history available",
     },
     vi: {
         // Header
@@ -661,5 +859,71 @@ export const translations: Record<Language, Translations> = {
         viewAllNotifications: "Xem tất cả thông báo",
         taskCompleted: "Nhiệm vụ Hoàn thành",
         systemUpdate: "Cập nhật Hệ thống",
+
+        // English translations
+        profile: "Profile",
+        subscription: "Subscription",
+        usage: "Usage",
+        privacy: "Privacy",
+        billing: "Billing",
+        myAccount: "My Account",
+        freeAccount: "Free Account",
+        changePicture: "Change picture",
+        personalInformation: "Personal Information",
+        fullName: "Full Name",
+        phoneNumber: "Phone Number",
+        email: "Email",
+        timezone: "Timezone",
+        preferences: "Preferences",
+        emailNotifications: "Email Notifications",
+        pushNotifications: "Push Notifications",
+        weeklyDigest: "Weekly Digest",
+        taskReminders: "Task Reminders",
+        edit: "Edit",
+        saveChanges: "Save Changes",
+        currentPlan: "Current Plan",
+        freeAccountDescription: "Basic features for personal use",
+        upgrade: "Upgrade",
+        planFeatures: "Plan Features",
+        unlimitedTasks: "Unlimited tasks",
+        basicReminders: "Basic reminders",
+        webAccess: "Web access",
+        basicSupport: "Basic support",
+        premiumAccount: "Premium Account",
+        allFreeFeatures: "All free features",
+        advancedReminders: "Advanced reminders",
+        fileAttachments: "File attachments",
+        prioritySupport: "Priority support",
+        teamCollaboration: "Team collaboration",
+        usageStatistics: "Usage Statistics",
+        totalTasks: "Total Tasks",
+        thisMonth: "this month",
+        completedTasks: "Completed Tasks",
+        completionRate: "completion rate",
+        activeReminders: "Active Reminders",
+        upcoming: "upcoming",
+        accountActivity: "Account Activity",
+        accountCreated: "Account Created",
+        lastLogin: "Last Login",
+        dataUsage: "Data Usage",
+        privacySettings: "Privacy Settings",
+        dataExport: "Data Export",
+        dataExportDescription: "Download all your data in a portable format",
+        exportMyData: "Export My Data",
+        deleteAccount: "Delete Account",
+        deleteAccountDescription: "Permanently delete your account and all data",
+        deleteMyAccount: "Delete My Account",
+        privacyControls: "Privacy Controls",
+        dataCollection: "Data Collection",
+        dataCollectionDescription: "Allow us to collect usage data to improve the service",
+        analytics: "Analytics",
+        analyticsDescription: "Help us understand how you use the app",
+        marketingEmails: "Marketing Emails",
+        marketingEmailsDescription: "Receive updates about new features and offers",
+        billingInformation: "Billing Information",
+        noBillingInfo: "You're currently on the free plan. Upgrade to access premium features.",
+        upgradeToPremium: "Upgrade to Premium",
+        billingHistory: "Billing History",
+        noBillingHistory: "No billing history available",
     },
 };

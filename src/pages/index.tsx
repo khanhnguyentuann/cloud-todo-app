@@ -13,6 +13,7 @@ import { TaskDetailSidebar } from "@/components/TaskDetailSideBar"
 import { useLanguage } from "@/hooks/UseLanguage"
 import { HelpPanel } from "@/components/HelpPanel"
 import { NotificationPanel } from "@/components/NotificationPanel"
+import { AccountView } from "@/components/AccountView"
 
 export default function Component() {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -35,6 +36,7 @@ export default function Component() {
     const [notificationOpen, setNotificationOpen] = useState(false)
     // Mock unread notification count
     const [unreadNotificationCount] = useState(2)
+    const [accountViewOpen, setAccountViewOpen] = useState(false)
 
     // Fetch tasks from API Gateway + Lambda + DynamoDB
     useEffect(() => {
@@ -201,7 +203,13 @@ export default function Component() {
             <HelpPanel isOpen={helpOpen} onClose={() => setHelpOpen(false)} />
             {/* Notification Panel */}
             <NotificationPanel isOpen={notificationOpen} onClose={() => setNotificationOpen(false)} />
-            <AccountMenu isOpen={accountMenuOpen} onClose={() => setAccountMenuOpen(false)} />
+            <AccountMenu
+                isOpen={accountMenuOpen}
+                onClose={() => setAccountMenuOpen(false)}
+                onViewAccount={() => setAccountViewOpen(true)}
+            />
+
+            <AccountView isOpen={accountViewOpen} onClose={() => setAccountViewOpen(false)} />
         </div>
     )
 }
