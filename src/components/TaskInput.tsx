@@ -8,13 +8,15 @@ import { ReminderMenu } from "@/components/ReminderMenu"
 import { RepeatMenu } from "@/components/RepeatMenu"
 import { Tooltip } from "@/components/Tooltip"
 
-export function TaskInput({ value, onChange, onAdd, onKeyPress }: TaskInputProps) {
+export function TaskInput({ value, onChange, onAdd, onKeyPress, selectedDueDate,
+    setSelectedDueDate,
+    selectedReminder,
+    setSelectedReminder,
+    selectedRepeat,
+    setSelectedRepeat }: TaskInputProps) {
     const [dueDateMenuOpen, setDueDateMenuOpen] = useState(false)
     const [reminderMenuOpen, setReminderMenuOpen] = useState(false)
     const [repeatMenuOpen, setRepeatMenuOpen] = useState(false)
-    const [selectedDueDate, setSelectedDueDate] = useState("")
-    const [selectedReminder, setSelectedReminder] = useState("")
-    const [selectedRepeat, setSelectedRepeat] = useState("")
 
     return (
         <div className="mb-4 sm:mb-6">
@@ -50,8 +52,8 @@ export function TaskInput({ value, onChange, onAdd, onKeyPress }: TaskInputProps
                                 variant="ghost"
                                 size="sm"
                                 className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${selectedDueDate
-                                        ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                                        : "border border-transparent"
+                                    ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                    : "border border-transparent"
                                     }`}
                             >
                                 <CalendarIcon className="h-4 w-4" />
@@ -70,8 +72,8 @@ export function TaskInput({ value, onChange, onAdd, onKeyPress }: TaskInputProps
                                 variant="ghost"
                                 size="sm"
                                 className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${selectedReminder
-                                        ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                                        : "border border-transparent"
+                                    ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                    : "border border-transparent"
                                     }`}
                             >
                                 <Bell className="h-4 w-4" />
@@ -90,8 +92,8 @@ export function TaskInput({ value, onChange, onAdd, onKeyPress }: TaskInputProps
                                 variant="ghost"
                                 size="sm"
                                 className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${selectedRepeat
-                                        ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                                        : "border border-transparent"
+                                    ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                    : "border border-transparent"
                                     }`}
                             >
                                 <RotateCcw className="h-4 w-4" />

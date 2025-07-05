@@ -8,11 +8,15 @@ import { AccountMenu } from "@/components/AccountMenu"
 import { useMobile, useDarkMode } from "@/hooks/UseMobile"
 import type { Task } from "@/types"
 import { TaskList } from "@/components/TaskList"
-import { fetchTasks } from "@/lib/api/todo"
+import { createTask, fetchTasks } from "@/lib/api/Todo"
 
 export default function Component() {
     const [tasks, setTasks] = useState<Task[]>([])
     const [inputValue, setInputValue] = useState<string>("")
+    const [dueDate, setDueDate] = useState<string>("")
+    const [reminder, setReminder] = useState<string>("")
+    const [repeat, setRepeat] = useState<string>("")
+
     const [activeView, setActiveView] = useState<string>("My Day")
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true)
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false)
@@ -34,17 +38,28 @@ export default function Component() {
         setSidebarOpen(!isMobile)
     }, [isMobile])
 
-    const addTask = () => {
+    const addTask = async () => {
         if (inputValue.trim() !== "") {
-            const newTask: Task = {
-                id: Date.now(),
-                text: inputValue.trim(),
-                completed: false,
+            try {
+                await createTask({
+                    text: inputValue.trim(),
+                    completed: false,
+                    dueDate,
+                    reminder,
+                    repeat
+                })
+                setInputValue("")
+                setDueDate("")
+                setReminder("")
+                setRepeat("")
+                const updatedTasks = await fetchTasks()
+                setTasks(updatedTasks)
+            } catch (err) {
+                console.error("Failed to create task:", err)
             }
-            setTasks([...tasks, newTask])
-            setInputValue("")
         }
     }
+
 
     const toggleTask = (id: number) => {
         setTasks(tasks.map((task) =>
@@ -88,6 +103,12 @@ export default function Component() {
                             onChange={setInputValue}
                             onAdd={addTask}
                             onKeyPress={handleKeyPress}
+                            selectedDueDate={dueDate}
+                            setSelectedDueDate={setDueDate}
+                            selectedReminder={reminder}
+                            setSelectedReminder={setReminder}
+                            selectedRepeat={repeat}
+                            setSelectedRepeat={setRepeat}
                         />
 
                         {/* Tasks List/Grid */}

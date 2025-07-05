@@ -20,3 +20,30 @@ export async function fetchTasks(): Promise<Task[]> {
         isImportant: item.isImportant?.BOOL,
     }));
 }
+
+export async function createTask(newTask: {
+    text: string;
+    completed?: boolean;
+    dueDate?: string;
+    reminder?: string;
+    repeat?: string;
+}) {
+    console.log("🚀 Sending newTask to API:", newTask);
+    const res = await fetch(`${BASE_URL}/tasks`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            title: newTask.text,
+            completed: newTask.completed ?? false,
+            dueDate: newTask.dueDate ?? "",
+            reminder: newTask.reminder ?? "",
+            repeat: newTask.repeat ?? "",
+        }),
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to create task");
+    }
+
+    return await res.json();
+}

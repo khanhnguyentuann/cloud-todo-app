@@ -17,12 +17,6 @@ export const sidebarItems: SidebarItem[] = [
   { icon: CheckSquare, label: "Tasks", count: 1 },
 ];
 
-export const dueDateQuickOptions: QuickOption[] = [
-  { label: "Today", value: "Today", day: "Sun" },
-  { label: "Tomorrow", value: "Tomorrow", day: "Mon" },
-  { label: "Next week", value: "Next-week", day: "Mon" },
-];
-
 export const reminderQuickOptions: QuickOption[] = [
   { label: "Later today", time: "6:00 PM" },
   { label: "Tomorrow", time: "Mon, 9 AM" },

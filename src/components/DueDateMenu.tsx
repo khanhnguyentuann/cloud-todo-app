@@ -6,11 +6,20 @@ import { Calendar } from "@/components/ui/calendar"
 import { CalendarIcon } from "lucide-react"
 import type { DueDateMenuProps } from "@/types"
 import { DropdownMenu } from "@/components/DropdownMenuBase"
-import { dueDateQuickOptions } from "@/utils/Constants"
 
 export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: DueDateMenuProps) {
     const [showCalendar, setShowCalendar] = useState(false)
     const [selectedDate, setSelectedDate] = useState<Date>()
+
+    // 👉 Generate quick options dynamically
+    const today = new Date()
+    const tomorrow = new Date()
+    tomorrow.setDate(today.getDate() + 1)
+
+    const dueDateQuickOptions = [
+        { label: "Today", date: today },
+        { label: "Tomorrow", date: tomorrow }
+    ]
 
     const defaultTrigger = (
         <Button
@@ -55,9 +64,9 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: Due
                 <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">Due</div>
                 {dueDateQuickOptions.map((option) => (
                     <button
-                        key={option.value}
+                        key={option.label}
                         onClick={() => {
-                            onDateSelect(option.value ?? "")
+                            onDateSelect(option.date.toDateString())
                             onOpenChange(false)
                         }}
                         className="w-full flex items-center justify-between px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
@@ -66,7 +75,7 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: Due
                             <CalendarIcon className="h-4 w-4" />
                             {option.label}
                         </div>
-                        <span className="text-gray-500 dark:text-gray-400">{option.day}</span>
+                        <span className="text-gray-500 dark:text-gray-400">{option.date.toLocaleDateString("en-US", { weekday: "short" })}</span>
                     </button>
                 ))}
                 <button

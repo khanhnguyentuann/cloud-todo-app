@@ -5,12 +5,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Bell, Clock, CalendarIcon } from "lucide-react"
 import { DropdownMenu } from "@/components/DropdownMenuBase"
 import type { ReminderMenuProps } from "@/types"
-import { reminderQuickOptions } from "@/utils/Constants"
 
 export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect, trigger }: ReminderMenuProps) {
     const [showCalendar, setShowCalendar] = useState(false)
     const [selectedDate, setSelectedDate] = useState<Date>()
     const [selectedTime, setSelectedTime] = useState<string>("4:00 PM")
+
+    // 👉 Generate quick reminder options dynamically
+    const now = new Date()
+    const tomorrow = new Date(now)
+    tomorrow.setDate(now.getDate() + 1)
+
+    const nextWeek = new Date(now)
+    nextWeek.setDate(now.getDate() + 7)
+
+    const reminderQuickOptions = [
+        { label: "Later today", date: now, time: "4:00 PM" },
+        { label: "Tomorrow", date: tomorrow, time: "9:00 AM" },
+        { label: "Next week", date: nextWeek, time: "9:00 AM" },
+    ]
 
     const defaultTrigger = (
         <Button
