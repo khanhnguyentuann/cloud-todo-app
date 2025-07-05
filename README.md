@@ -1,83 +1,77 @@
-# Cloud Native To-Do App
+# 📌 Cloud To-Do App
 
-A modern, cloud-native to-do application built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**.  
-This project demonstrates best practices for building scalable, maintainable, and user-friendly web applications with a focus on cloud-native principles.
-
-## Features
-
-- ✨ Beautiful UI with Tailwind CSS
-- ⚡ Fast development with Vite
-- ✅ Add, complete, and delete tasks
-- 🔒 Simple authentication (login/register)
-- ☁️ Ready for cloud deployment (Vercel, Netlify, Azure Static Web Apps, etc.)
-- 🧩 Modular component structure
-
-## Getting Started
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) (v18+ recommended)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-
-### Installation
-
-```bash
-git clone https://github.com/your-username/cloud-native-to-do-app.git
-cd cloud-native-to-do-app
-npm install
-```
-
-### Development
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) to view the app.
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-### Preview Production Build
-
-```bash
-npm run preview
-```
-
-## Project Structure
-
-```
-src/
-  components/    # React components (TodoApp, UI elements)
-  hooks/         # Custom React hooks
-  lib/           # Utility functions
-  pages/         # Page-level components (if any)
-  services/      # API or backend service logic
-  store/         # State management (if used)
-  types/         # TypeScript types
-  utils/         # Additional utilities
-  index.css      # Tailwind CSS and global styles
-  App.tsx        # Main app component
-  main.tsx       # Entry point
-```
-
-## Cloud Native Principles
-
-- **Stateless UI**: All state is managed client-side or via APIs.
-- **Ready for CI/CD**: Easily deployable to any cloud static hosting.
-- **Scalable**: Modular codebase for easy extension and maintenance.
-
-## Contributing
-
-Contributions are welcome! Please open issues or pull requests for improvements.
-
-## License
-
-MIT
+🚀 **Cloud To-Do App** is a personal task management application (to-do list) built with **React + TypeScript + Vite**, using **Tailwind CSS** for a modern UI, supporting multi-language (i18n) and component-based architecture for easy scalability.  
+Currently, it uses an internal mock API and is ready to integrate with serverless backends (like AWS Lambda, DynamoDB) in the future.
 
 ---
 
-*Built with ❤️ using React, TypeScript, and Tailwind
+## ✨ Features
+
+- ✅ Add, edit, delete tasks
+- ✅ Assign due dates & reminders
+- ✅ Sort & filter tasks
+- ✅ Sidebar to display task details
+- ✅ Multi-language support (LanguageContext + dynamic translation)
+- ✅ Responsive UI for both desktop & mobile
+- ✅ Clean separation of components & types for maintainability
+
+---
+
+## 🚀 Getting Started
+
+```bash
+# Clone the project
+git clone https://github.com/yourusername/cloud-todo-app.git
+cd cloud-todo-app-main/cloud-todo-app-main
+
+# Install dependencies
+npm install
+
+# Start local dev server
+npm run dev
+```
+
+App will be available at [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 🗂 Project Structure
+
+```
+src/
+├── App.tsx               # Main entry component
+├── main.tsx              # Mounts React to DOM
+├── components/           # Main components (Header, Sidebar, TaskList, ...)
+│   └── ui/               # Smaller UI components (button, input, select, ...)
+├── hooks/                # Custom hooks (UseLanguage, UseMobile)
+├── lib/                  
+│   └── api/Todo.ts       # Mock API for tasks
+├── pages/                # Entry page
+├── types/                # Centralized TypeScript types
+├── utils/                # Metadata & translations
+└── index.css             # Tailwind entry point
+```
+
+---
+
+## 🔧 Tech Stack & Config
+
+- ⚛ **React 18 + TypeScript**
+- ⚡ **Vite** (super fast dev server)
+- 🎨 **Tailwind CSS** (utility-first)
+- 🔍 **ESLint + Prettier** (for clean code)
+- 🌐 Multi-language via Context + translation
+- 📁 Type-safe structure via `src/types/`
+
+---
+
+## 🤝 Contributing
+
+- Fork the repo, create a new branch (`feature/your-feature`), and open a PR
+- Or open an Issue if you find bugs or want to discuss improvements.
+
+---
+
+## 📜 License
+
+MIT © 2025 by [khanhtuannguyen]
