@@ -11,6 +11,7 @@ import { TaskList } from "@/components/TaskList"
 import { createTask, fetchTasks } from "@/lib/api/Todo"
 import { TaskDetailSidebar } from "@/components/TaskDetailSideBar"
 import { useLanguage } from "@/hooks/UseLanguage"
+import { HelpPanel } from "@/components/HelpPanel"
 
 export default function Component() {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -29,6 +30,7 @@ export default function Component() {
     const { isDarkMode, toggleDarkMode } = useDarkMode()
     const [sortBy, setSortBy] = useState<string>("Creation date")
     const { t, getCurrentDate } = useLanguage()
+    const [helpOpen, setHelpOpen] = useState(false)
 
     // Fetch tasks from API Gateway + Lambda + DynamoDB
     useEffect(() => {
@@ -120,6 +122,7 @@ export default function Component() {
                 onMenuClick={() => setSidebarOpen(!sidebarOpen)}
                 onSettingsClick={() => setSettingsOpen(true)}
                 onAccountClick={() => setAccountMenuOpen(true)}
+                onHelpClick={() => setHelpOpen(true)}
             />
 
             <div className="flex flex-1 overflow-hidden relative">
@@ -180,6 +183,7 @@ export default function Component() {
                 isDarkMode={isDarkMode}
                 onToggleDarkMode={toggleDarkMode}
             />
+            <HelpPanel isOpen={helpOpen} onClose={() => setHelpOpen(false)} />
             <AccountMenu isOpen={accountMenuOpen} onClose={() => setAccountMenuOpen(false)} />
         </div>
     )

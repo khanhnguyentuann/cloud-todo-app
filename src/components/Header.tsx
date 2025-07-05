@@ -8,7 +8,8 @@ import { useLanguage } from "@/hooks/UseLanguage"
 export const Header: FC<HeaderProps> = ({
     onMenuClick,
     onSettingsClick,
-    onAccountClick
+    onAccountClick,
+    onHelpClick
 }) => {
     const [searchExpanded, setSearchExpanded] = useState(false)
     const { t } = useLanguage()
@@ -82,7 +83,7 @@ export const Header: FC<HeaderProps> = ({
                 >
                     <Settings className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm" className="text-white hover:bg-orange-600 dark:hover:bg-blue-500">
+                <Button variant="ghost" size="sm" className="text-white hover:bg-orange-600 dark:hover:bg-blue-500" onClick={onHelpClick}>
                     <HelpCircle className="h-4 w-4" />
                 </Button>
                 <Button variant="ghost" size="sm" className="text-white hover:bg-orange-600 dark:hover:bg-blue-500 relative">
