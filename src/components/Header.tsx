@@ -9,7 +9,9 @@ export const Header: FC<HeaderProps> = ({
     onMenuClick,
     onSettingsClick,
     onAccountClick,
-    onHelpClick
+    onHelpClick,
+    onNotificationClick,
+    unreadNotificationCount,
 }) => {
     const [searchExpanded, setSearchExpanded] = useState(false)
     const { t } = useLanguage()
@@ -86,11 +88,18 @@ export const Header: FC<HeaderProps> = ({
                 <Button variant="ghost" size="sm" className="text-white hover:bg-orange-600 dark:hover:bg-blue-500" onClick={onHelpClick}>
                     <HelpCircle className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm" className="text-white hover:bg-orange-600 dark:hover:bg-blue-500 relative">
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-white hover:bg-orange-600 dark:hover:bg-blue-500 relative"
+                    onClick={onNotificationClick}
+                >
                     <Bell className="h-4 w-4" />
-                    <span className="absolute -top-1 -right-1 bg-orange-600 dark:bg-blue-500 text-xs rounded-full h-4 w-4 flex items-center justify-center text-white">
-                        2
-                    </span>
+                    {unreadNotificationCount > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full h-4 w-4 flex items-center justify-center text-white">
+                            {unreadNotificationCount > 9 ? "9+" : unreadNotificationCount}
+                        </span>
+                    )}
                 </Button>
                 <Button
                     variant="ghost"

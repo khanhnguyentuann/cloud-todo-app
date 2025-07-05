@@ -3,4 +3,6 @@ export interface HeaderProps {
   onSettingsClick: () => void;
   onAccountClick: () => void;
   onHelpClick: () => void;
+  onNotificationClick: () => void;
+  unreadNotificationCount: number;
 }

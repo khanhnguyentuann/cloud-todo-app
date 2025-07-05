@@ -12,6 +12,7 @@ import { createTask, fetchTasks } from "@/lib/api/Todo"
 import { TaskDetailSidebar } from "@/components/TaskDetailSideBar"
 import { useLanguage } from "@/hooks/UseLanguage"
 import { HelpPanel } from "@/components/HelpPanel"
+import { NotificationPanel } from "@/components/NotificationPanel"
 
 export default function Component() {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -31,6 +32,9 @@ export default function Component() {
     const [sortBy, setSortBy] = useState<string>("Creation date")
     const { t, getCurrentDate } = useLanguage()
     const [helpOpen, setHelpOpen] = useState(false)
+    const [notificationOpen, setNotificationOpen] = useState(false)
+    // Mock unread notification count
+    const [unreadNotificationCount] = useState(2)
 
     // Fetch tasks from API Gateway + Lambda + DynamoDB
     useEffect(() => {
@@ -116,6 +120,15 @@ export default function Component() {
         if (e.key === "Enter") addTask()
     }
 
+    const handleNotificationClick = () => {
+        setNotificationOpen(!notificationOpen)
+        // Close other panels
+        setAccountMenuOpen(false)
+        setSettingsOpen(false)
+        setHelpOpen(false)
+    }
+
+
     return (
         <div className="h-screen flex flex-col bg-amber-50 dark:bg-gray-800">
             <Header
@@ -123,6 +136,8 @@ export default function Component() {
                 onSettingsClick={() => setSettingsOpen(true)}
                 onAccountClick={() => setAccountMenuOpen(true)}
                 onHelpClick={() => setHelpOpen(true)}
+                onNotificationClick={handleNotificationClick}
+                unreadNotificationCount={unreadNotificationCount}
             />
 
             <div className="flex flex-1 overflow-hidden relative">
@@ -184,6 +199,8 @@ export default function Component() {
                 onToggleDarkMode={toggleDarkMode}
             />
             <HelpPanel isOpen={helpOpen} onClose={() => setHelpOpen(false)} />
+            {/* Notification Panel */}
+            <NotificationPanel isOpen={notificationOpen} onClose={() => setNotificationOpen(false)} />
             <AccountMenu isOpen={accountMenuOpen} onClose={() => setAccountMenuOpen(false)} />
         </div>
     )
