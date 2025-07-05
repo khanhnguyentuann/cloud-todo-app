@@ -10,6 +10,7 @@ import type { Task } from "@/types"
 import { TaskList } from "@/components/TaskList"
 import { createTask, fetchTasks } from "@/lib/api/Todo"
 import { TaskDetailSidebar } from "@/components/TaskDetailSideBar"
+import { useLanguage } from "@/hooks/UseLanguage"
 
 export default function Component() {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -27,7 +28,7 @@ export default function Component() {
     const isMobile = useMobile()
     const { isDarkMode, toggleDarkMode } = useDarkMode()
     const [sortBy, setSortBy] = useState<string>("Creation date")
-
+    const { t, getCurrentDate } = useLanguage()
 
     // Fetch tasks from API Gateway + Lambda + DynamoDB
     useEffect(() => {
@@ -132,8 +133,8 @@ export default function Component() {
 
                 <main className="flex-1 flex flex-col overflow-hidden bg-amber-50 dark:bg-gray-900">
                     <ContentHeader
-                        title="My Day"
-                        date="Sunday, June 29"
+                        title={t.myDay}
+                        date={getCurrentDate()}
                         viewMode={viewMode}
                         onViewModeChange={setViewMode}
                         sortBy={sortBy}
@@ -146,6 +147,7 @@ export default function Component() {
                             onChange={setInputValue}
                             onAdd={addTask}
                             onKeyPress={handleKeyPress}
+                            placeholder={t.addTask}
                             selectedDueDate={dueDate}
                             setSelectedDueDate={setDueDate}
                             selectedReminder={reminder}

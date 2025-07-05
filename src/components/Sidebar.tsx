@@ -1,8 +1,16 @@
 import { type FC } from "react"
 import { Button } from "@/components/ui/button"
 import type { SidebarProps } from "@/types"
-import { sidebarItems } from "@/utils/Constants"
 import { Plus, X } from "lucide-react"
+import { useLanguage } from "@/hooks/UseLanguage"
+import {
+    Star,
+    Calendar,
+    UserCheck,
+    CheckSquare,
+    Sun,
+    Flag
+} from "lucide-react";
 
 export const Sidebar: FC<SidebarProps> = ({
     isOpen,
@@ -11,6 +19,17 @@ export const Sidebar: FC<SidebarProps> = ({
     onViewChange,
     isMobile
 }) => {
+
+    const { t } = useLanguage()
+
+    const sidebarItems = [
+        { icon: Sun, label: t.myDay, count: 1, active: true },
+        { icon: Star, label: t.important, count: 0 },
+        { icon: Calendar, label: t.planned, count: 1 },
+        { icon: UserCheck, label: t.assignedToMe, count: 0 },
+        { icon: Flag, label: t.flaggedEmail, count: 0 },
+        { icon: CheckSquare, label: t.tasks, count: 1 },
+    ]
     // Desktop: không render nếu đóng
     if (!isMobile && !isOpen) return null
 
@@ -25,7 +44,7 @@ export const Sidebar: FC<SidebarProps> = ({
                 {/* Mobile header */}
                 {isMobile && (
                     <div className="flex items-center justify-between p-4 border-b border-amber-300 dark:border-gray-700">
-                        <h2 className="font-semibold text-gray-800 dark:text-gray-200">Menu</h2>
+                        <h2 className="font-semibold text-gray-800 dark:text-gray-200">{t.menu}</h2>
                         <Button
                             variant="ghost"
                             size="sm"
@@ -72,7 +91,7 @@ export const Sidebar: FC<SidebarProps> = ({
                         className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
                     >
                         <Plus className="h-4 w-4 mr-2" />
-                        New list
+                        {t.newList}
                     </Button>
                 </div>
             </aside>

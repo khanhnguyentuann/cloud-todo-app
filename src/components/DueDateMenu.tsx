@@ -1,24 +1,27 @@
-"use client"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { CalendarIcon } from "lucide-react"
 import type { DueDateMenuProps } from "@/types"
 import { DropdownMenu } from "@/components/DropdownMenuBase"
+import { useLanguage } from "@/hooks/UseLanguage"
 
 export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: DueDateMenuProps) {
     const [showCalendar, setShowCalendar] = useState(false)
     const [selectedDate, setSelectedDate] = useState<Date>()
+    const { t } = useLanguage()
 
     // 👉 Generate quick options dynamically
     const today = new Date()
     const tomorrow = new Date()
     tomorrow.setDate(today.getDate() + 1)
+    const nextWeek = new Date(today)
+    nextWeek.setDate(today.getDate() + 7)
 
     const dueDateQuickOptions = [
-        { label: "Today", date: today },
-        { label: "Tomorrow", date: tomorrow }
+        { label: t.today, value: today, day: "Sun" },
+        { label: t.tomorrow, value: tomorrow, day: "Mon" },
+        { label: t.nextWeek, value: nextWeek, day: "Mon" },
     ]
 
     const defaultTrigger = (
@@ -51,7 +54,7 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: Due
                             }
                         }}
                     >
-                        Save
+                        {t.save}
                     </Button>
                 </div>
             </DropdownMenu>
@@ -61,12 +64,12 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: Due
     return (
         <DropdownMenu trigger={trigger || defaultTrigger} isOpen={isOpen} onOpenChange={onOpenChange}>
             <div className="p-2">
-                <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">Due</div>
+                <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">{t.due}</div>
                 {dueDateQuickOptions.map((option) => (
                     <button
                         key={option.label}
                         onClick={() => {
-                            onDateSelect(option.date.toDateString())
+                            onDateSelect(`${option.value}`)
                             onOpenChange(false)
                         }}
                         className="w-full flex items-center justify-between px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
@@ -75,7 +78,7 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: Due
                             <CalendarIcon className="h-4 w-4" />
                             {option.label}
                         </div>
-                        <span className="text-gray-500 dark:text-gray-400">{option.date.toLocaleDateString("en-US", { weekday: "short" })}</span>
+                        <span className="text-gray-500 dark:text-gray-400">{option.day}</span>
                     </button>
                 ))}
                 <button
@@ -83,7 +86,7 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: Due
                     className="w-full flex items-center gap-3 px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
                 >
                     <CalendarIcon className="h-4 w-4" />
-                    Pick a date
+                    {t.pickDate}
                 </button>
             </div>
         </DropdownMenu>

@@ -5,6 +5,7 @@ export interface TaskInputProps {
   onChange: (value: string) => void;
   onAdd: () => void;
   onKeyPress: (e: KeyboardEvent<HTMLInputElement>) => void;
+  placeholder?: string;
   selectedDueDate: string;
   setSelectedDueDate: (date: string) => void;
   selectedReminder: string;

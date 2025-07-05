@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import type { TaskDetailSidebarProps } from "@/types/components/TaskDetailSidebar";
 import { X, Calendar, Bell, RotateCcw, Star, Trash2 } from "lucide-react";
+import { useLanguage } from "@/hooks/UseLanguage"
 
 export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
     isOpen,
@@ -9,6 +10,7 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
     task,
     isMobile
 }) => {
+    const { t } = useLanguage()
     // Không render sidebar khi đóng trên desktop
     if (!isMobile && !isOpen) {
         return null;
@@ -26,7 +28,7 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
             >
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-amber-300 dark:border-gray-700 flex-shrink-0">
-                    <h2 className="font-semibold text-gray-800 dark:text-gray-200">Task Details</h2>
+                    <h2 className="font-semibold text-gray-800 dark:text-gray-200">{t.taskDetails}</h2>
                     <Button
                         variant="ghost"
                         size="sm"
@@ -76,7 +78,7 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
                             className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
                         >
                             <Star className={`h-4 w-4 mr-2 ${task.isImportant ? "fill-current" : ""}`} />
-                            {task.isImportant ? "Remove from Important" : "Mark as Important"}
+                            {task.isImportant ? t.removeFromImportant : t.markAsImportant}
                         </Button>
 
                         <Button
@@ -84,7 +86,7 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
                             className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
                         >
                             <Calendar className="h-4 w-4 mr-2" />
-                            {task.dueDate ? `Due: ${task.dueDate}` : "Add due date"}
+                            {task.dueDate ? `Due: ${task.dueDate}` : t.addDueDate}
                         </Button>
 
                         <Button
@@ -92,7 +94,7 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
                             className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
                         >
                             <Bell className="h-4 w-4 mr-2" />
-                            Add reminder
+                            {t.addReminder}
                         </Button>
 
                         <Button
@@ -100,14 +102,16 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
                             className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
                         >
                             <RotateCcw className="h-4 w-4 mr-2" />
-                            Add repeat
+                            {t.addRepeat}
                         </Button>
                     </div>
 
                     {/* Metadata */}
                     <div className="pt-4 border-t border-amber-300 dark:border-gray-700">
                         <div className="text-sm text-gray-500 dark:text-gray-400 space-y-1">
-                            <div>Created: Today</div>
+                            <div>
+                                {t.created}: {t.today}
+                            </div>
                             <div>List: Tasks</div>
                             {task.dueDate && <div>Due: {task.dueDate}</div>}
                         </div>
@@ -121,7 +125,7 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
                         className="w-full justify-start text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
                     >
                         <Trash2 className="h-4 w-4 mr-2" />
-                        Delete task
+                        {t.deleteTask}
                     </Button>
                 </div>
             </aside>

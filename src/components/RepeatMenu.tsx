@@ -4,19 +4,21 @@ import { RotateCcw } from "lucide-react"
 import { useState } from "react"
 import { DropdownMenu } from "@/components/DropdownMenuBase"
 import type { RepeatMenuProps } from "@/types"
+import { useLanguage } from "@/hooks/UseLanguage"
 
 export function RepeatMenu({ isOpen, onOpenChange, onRepeatSelect, trigger }: RepeatMenuProps) {
     const [showCustom, setShowCustom] = useState(false)
     const [customInterval, setCustomInterval] = useState<string>("1")
     const [customUnit, setCustomUnit] = useState<string>("weeks")
     const [selectedDays, setSelectedDays] = useState<string[]>([])
+    const { t } = useLanguage()
 
     const repeatOptions: { label: string }[] = [
-        { label: "Daily" },
-        { label: "Weekdays" },
-        { label: "Weekly" },
-        { label: "Monthly" },
-        { label: "Yearly" },
+        { label: t.daily },
+        { label: t.weekdays },
+        { label: t.weekly },
+        { label: t.monthly },
+        { label: t.yearly },
     ]
 
     const days: string[] = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
@@ -52,9 +54,9 @@ export function RepeatMenu({ isOpen, onOpenChange, onRepeatSelect, trigger }: Re
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="weeks">weeks</SelectItem>
-                                <SelectItem value="months">months</SelectItem>
-                                <SelectItem value="years">years</SelectItem>
+                                <SelectItem value="weeks">{t.weeks}</SelectItem>
+                                <SelectItem value="months">{t.months}</SelectItem>
+                                <SelectItem value="years">{t.years}</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -84,7 +86,7 @@ export function RepeatMenu({ isOpen, onOpenChange, onRepeatSelect, trigger }: Re
                             setShowCustom(false)
                         }}
                     >
-                        Save
+                        {t.save}
                     </Button>
                 </div>
             </DropdownMenu>
@@ -94,7 +96,7 @@ export function RepeatMenu({ isOpen, onOpenChange, onRepeatSelect, trigger }: Re
     return (
         <DropdownMenu trigger={trigger || defaultTrigger} isOpen={isOpen} onOpenChange={onOpenChange}>
             <div className="p-2">
-                <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">Repeat</div>
+                <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">{t.repeat}</div>
                 {repeatOptions.map((option) => (
                     <button
                         key={option.label}
@@ -113,7 +115,7 @@ export function RepeatMenu({ isOpen, onOpenChange, onRepeatSelect, trigger }: Re
                     className="w-full flex items-center gap-3 px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
                 >
                     <RotateCcw className="h-4 w-4" />
-                    Custom
+                    {t.custom}
                 </button>
             </div>
         </DropdownMenu>

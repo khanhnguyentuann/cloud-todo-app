@@ -7,8 +7,9 @@ import { DueDateMenu } from "@/components/DueDateMenu"
 import { ReminderMenu } from "@/components/ReminderMenu"
 import { RepeatMenu } from "@/components/RepeatMenu"
 import { Tooltip } from "@/components/Tooltip"
+import { useLanguage } from "@/hooks/UseLanguage";
 
-export function TaskInput({ value, onChange, onAdd, onKeyPress, selectedDueDate,
+export function TaskInput({ value, onChange, onAdd, onKeyPress, placeholder, selectedDueDate,
     setSelectedDueDate,
     selectedReminder,
     setSelectedReminder,
@@ -17,6 +18,7 @@ export function TaskInput({ value, onChange, onAdd, onKeyPress, selectedDueDate,
     const [dueDateMenuOpen, setDueDateMenuOpen] = useState(false)
     const [reminderMenuOpen, setReminderMenuOpen] = useState(false)
     const [repeatMenuOpen, setRepeatMenuOpen] = useState(false)
+    const { t } = useLanguage()
 
     return (
         <div className="mb-4 sm:mb-6">
@@ -24,7 +26,7 @@ export function TaskInput({ value, onChange, onAdd, onKeyPress, selectedDueDate,
                 <Plus className="w-4 h-4 text-orange-500 dark:text-blue-400 flex-shrink-0" />
                 <Input
                     type="text"
-                    placeholder="Add a task"
+                    placeholder={placeholder || t.addTask}
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     onKeyPress={onKeyPress}
@@ -36,13 +38,13 @@ export function TaskInput({ value, onChange, onAdd, onKeyPress, selectedDueDate,
                     size="sm"
                     className="text-orange-500 dark:text-blue-400 hover:text-orange-600 dark:hover:text-blue-300 hover:bg-orange-50 dark:hover:bg-gray-600 flex-shrink-0"
                 >
-                    Add
+                    {t.add}
                 </Button>
             </div>
 
             {/* Action buttons with values */}
             <div className="flex items-center gap-2 mt-2">
-                <Tooltip content="Add due date">
+                <Tooltip content={t.addDueDate}>
                     <DueDateMenu
                         isOpen={dueDateMenuOpen}
                         onOpenChange={setDueDateMenuOpen}
@@ -62,7 +64,7 @@ export function TaskInput({ value, onChange, onAdd, onKeyPress, selectedDueDate,
                         }
                     />
                 </Tooltip>
-                <Tooltip content="Add reminder">
+                <Tooltip content={t.remindMe}>
                     <ReminderMenu
                         isOpen={reminderMenuOpen}
                         onOpenChange={setReminderMenuOpen}
@@ -82,7 +84,7 @@ export function TaskInput({ value, onChange, onAdd, onKeyPress, selectedDueDate,
                         }
                     />
                 </Tooltip>
-                <Tooltip content="Set repeat options">
+                <Tooltip content={t.repeat}>
                     <RepeatMenu
                         isOpen={repeatMenuOpen}
                         onOpenChange={setRepeatMenuOpen}

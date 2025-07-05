@@ -3,15 +3,17 @@ import { Star, CalendarIcon, ArrowUpDown, Clock } from "lucide-react"
 import { DropdownMenu } from "@/components/DropdownMenuBase"
 import type { SortMenuProps, SortOption } from "@/types"
 import { useRef } from "react"
+import { useLanguage } from "@/hooks/UseLanguage"
 
 export function SortMenu({ isOpen, onOpenChange, onSortChange, currentSort }: SortMenuProps) {
     const timeoutRef = useRef<number | null>(null)
+    const { t } = useLanguage()
 
     const sortOptions: SortOption[] = [
-        { icon: Star, label: "Important" },
-        { icon: CalendarIcon, label: "Due date" },
-        { icon: ArrowUpDown, label: "Alphabetical" },
-        { icon: Clock, label: "Creation date" },
+        { icon: Star, label: t.important },
+        { icon: CalendarIcon, label: t.dueDate },
+        { icon: ArrowUpDown, label: t.alphabetical },
+        { icon: Clock, label: t.creationDate },
     ]
 
     const handleMouseEnter = () => {
@@ -39,14 +41,14 @@ export function SortMenu({ isOpen, onOpenChange, onSortChange, currentSort }: So
                             }`}
                     >
                         <ArrowUpDown className="h-4 w-4" />
-                        <span className="hidden lg:inline ml-1">Sort</span>
+                        <span className="hidden lg:inline ml-1">{t.sort}</span>
                     </Button>
                 }
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
             >
                 <div className="p-2">
-                    <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">Sort by</div>
+                    <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">{t.sortBy}</div>
                     {sortOptions.map((option) => (
                         <button
                             key={option.label}
@@ -55,8 +57,8 @@ export function SortMenu({ isOpen, onOpenChange, onSortChange, currentSort }: So
                                 onOpenChange(false)
                             }}
                             className={`w-full flex items-center gap-3 px-2 py-2 text-sm rounded transition-colors ${currentSort === option.label
-                                    ? "bg-amber-200 dark:bg-blue-600 text-orange-600 dark:text-white font-medium"
-                                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600"
+                                ? "bg-amber-200 dark:bg-blue-600 text-orange-600 dark:text-white font-medium"
+                                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600"
                                 }`}
                         >
                             <option.icon className="h-4 w-4" />

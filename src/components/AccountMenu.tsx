@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button"
 import type { AccountMenuProps } from "@/types"
 import { User } from "lucide-react"
 import type { FC } from "react"
+import { useLanguage } from "@/hooks/UseLanguage"
 
 export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose }) => {
+    const { t } = useLanguage()
     if (!isOpen) return null
 
     return (
@@ -14,7 +16,7 @@ export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose }) => {
             >
                 <div className="text-right mb-4">
                     <Button variant="ghost" size="sm" className="text-orange-500 dark:text-blue-400 hover:bg-orange-50 dark:hover:bg-gray-600">
-                        Sign out
+                        {t.signOut}
                     </Button>
                 </div>
 
@@ -30,7 +32,7 @@ export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose }) => {
 
                 <div className="space-y-2">
                     <Button variant="ghost" className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-orange-50 dark:hover:bg-gray-600">
-                        View account
+                        {t.viewAccount}
                     </Button>
                 </div>
             </div>
