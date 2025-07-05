@@ -2,7 +2,7 @@ import { TaskItem } from "@/components/TaskItem"
 import { TaskGridItem } from "@/components/TaskGridItem"
 import type { TaskListProps } from "@/types"
 
-export function TaskList({ tasks, viewMode, onToggle, onToggleImportant }: TaskListProps) {
+export function TaskList({ tasks, viewMode, onToggle, onToggleImportant, onTaskSelect }: TaskListProps) {
     if (viewMode === "grid") {
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -12,6 +12,7 @@ export function TaskList({ tasks, viewMode, onToggle, onToggleImportant }: TaskL
                         task={task}
                         onToggle={onToggle}
                         onToggleImportant={onToggleImportant}
+                        onTaskSelect={onTaskSelect}
                     />
                 ))}
             </div>
@@ -26,6 +27,7 @@ export function TaskList({ tasks, viewMode, onToggle, onToggleImportant }: TaskL
                     task={task}
                     onToggle={onToggle}
                     onToggleImportant={onToggleImportant}
+                    onTaskSelect={onTaskSelect}
                 />
             ))}
         </div>

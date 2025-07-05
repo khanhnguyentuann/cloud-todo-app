@@ -5,12 +5,14 @@ export interface TaskItemProps {
   task: Task;
   onToggle: (id: number, e?: MouseEvent<HTMLButtonElement>) => void;
   onToggleImportant: (id: number, e?: MouseEvent<HTMLButtonElement>) => void;
+  onTaskSelect: (task: Task) => void;
 }
 
 export interface TaskGridItemProps {
   task: Task;
   onToggle: (id: number) => void;
   onToggleImportant: (id: number) => void;
+  onTaskSelect: (task: Task) => void;
 }
 
 export interface TaskListProps {
@@ -18,4 +20,5 @@ export interface TaskListProps {
   viewMode: "grid" | "list";
   onToggle: (id: number) => void;
   onToggleImportant: (id: number) => void;
+  onTaskSelect: (task: Task) => void;
 }

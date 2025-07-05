@@ -6,7 +6,7 @@ import { useState } from "react"
 import { SortMenu } from "@/components/SortMenu"
 import { Tooltip } from "@/components/Tooltip"
 
-export const ContentHeader: FC<ContentHeaderProps> = ({ title, date, viewMode, onViewModeChange }) => {
+export const ContentHeader: FC<ContentHeaderProps> = ({ title, date, viewMode, onViewModeChange, sortBy, onSortChange }) => {
     const [sortMenuOpen, setSortMenuOpen] = useState(false)
 
     return (
@@ -57,7 +57,8 @@ export const ContentHeader: FC<ContentHeaderProps> = ({ title, date, viewMode, o
                     <SortMenu
                         isOpen={sortMenuOpen}
                         onOpenChange={setSortMenuOpen}
-                        onSortChange={(sort) => console.log("Sort:", sort)}
+                        onSortChange={onSortChange}
+                        currentSort={sortBy}
                     />
                 </div>
             </div>

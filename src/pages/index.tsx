@@ -9,6 +9,7 @@ import { useMobile, useDarkMode } from "@/hooks/UseMobile"
 import type { Task } from "@/types"
 import { TaskList } from "@/components/TaskList"
 import { createTask, fetchTasks } from "@/lib/api/Todo"
+import { TaskDetailSidebar } from "@/components/TaskDetailSideBar"
 
 export default function Component() {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -16,7 +17,8 @@ export default function Component() {
     const [dueDate, setDueDate] = useState<string>("")
     const [reminder, setReminder] = useState<string>("")
     const [repeat, setRepeat] = useState<string>("")
-
+    const [taskDetailSidebarOpen, setTaskDetailSidebarOpen] = useState(false)
+    const [selectedTask, setSelectedTask] = useState<Task | null>(null)
     const [activeView, setActiveView] = useState<string>("My Day")
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true)
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false)
@@ -24,6 +26,7 @@ export default function Component() {
     const [viewMode, setViewMode] = useState<"grid" | "list">("list")
     const isMobile = useMobile()
     const { isDarkMode, toggleDarkMode } = useDarkMode()
+    const [sortBy, setSortBy] = useState<string>("Creation date")
 
 
     // Fetch tasks from API Gateway + Lambda + DynamoDB
@@ -35,8 +38,9 @@ export default function Component() {
 
     // On viewport change, adjust sidebar
     useLayoutEffect(() => {
-        setSidebarOpen(!isMobile)
-    }, [isMobile])
+        setSidebarOpen(!isMobile);
+        setTaskDetailSidebarOpen(false);
+    }, [isMobile]);
 
     const addTask = async () => {
         if (inputValue.trim() !== "") {
@@ -60,6 +64,33 @@ export default function Component() {
         }
     }
 
+    const sortTasks = (tasks: Task[], sortType: string): Task[] => {
+        const tasksCopy = [...tasks]
+
+        switch (sortType) {
+            case "Important":
+                return tasksCopy.sort((a, b) => {
+                    if (a.isImportant && !b.isImportant) return -1
+                    if (!a.isImportant && b.isImportant) return 1
+                    return 0
+                })
+
+            case "Due date":
+                return tasksCopy.sort((a, b) => {
+                    if (!a.dueDate && !b.dueDate) return 0
+                    if (!a.dueDate) return 1
+                    if (!b.dueDate) return -1
+                    return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+                })
+
+            case "Alphabetical":
+                return tasksCopy.sort((a, b) => a.text.localeCompare(b.text))
+
+            case "Creation date":
+            default:
+                return tasksCopy.sort((a, b) => a.id - b.id)
+        }
+    }
 
     const toggleTask = (id: number) => {
         setTasks(tasks.map((task) =>
@@ -71,6 +102,11 @@ export default function Component() {
         setTasks(tasks.map((task) =>
             task.id === id ? { ...task, isImportant: !task.isImportant } : task
         ))
+    }
+
+    const handleTaskSelect = (task: Task) => {
+        setSelectedTask(task)
+        setTaskDetailSidebarOpen(true)
     }
 
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -95,7 +131,14 @@ export default function Component() {
                 />
 
                 <main className="flex-1 flex flex-col overflow-hidden bg-amber-50 dark:bg-gray-900">
-                    <ContentHeader title="My Day" date="Sunday, June 29" viewMode={viewMode} onViewModeChange={setViewMode} />
+                    <ContentHeader
+                        title="My Day"
+                        date="Sunday, June 29"
+                        viewMode={viewMode}
+                        onViewModeChange={setViewMode}
+                        sortBy={sortBy}
+                        onSortChange={setSortBy}
+                    />
 
                     <div className="flex-1 p-3 sm:p-6 overflow-y-auto">
                         <TaskInput
@@ -112,9 +155,21 @@ export default function Component() {
                         />
 
                         {/* Tasks List/Grid */}
-                        <TaskList tasks={tasks} viewMode={viewMode} onToggle={toggleTask} onToggleImportant={toggleImportant} />
+                        <TaskList
+                            tasks={sortTasks(tasks, sortBy)}
+                            viewMode={viewMode}
+                            onToggle={toggleTask}
+                            onToggleImportant={toggleImportant}
+                            onTaskSelect={handleTaskSelect}
+                        />
                     </div>
                 </main>
+                <TaskDetailSidebar
+                    isOpen={taskDetailSidebarOpen}
+                    onClose={() => setTaskDetailSidebarOpen(false)}
+                    task={selectedTask}
+                    isMobile={isMobile}
+                />
             </div>
 
             <SettingsPanel

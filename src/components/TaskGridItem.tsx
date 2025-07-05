@@ -1,12 +1,16 @@
 import type { TaskGridItemProps } from "@/types"
 import { Star, CalendarDays, Clock } from "lucide-react"
 
-export function TaskGridItem({ task, onToggle, onToggleImportant }: TaskGridItemProps) {
+export function TaskGridItem({ task, onToggle, onToggleImportant, onTaskSelect }: TaskGridItemProps) {
     return (
-        <div className="p-4 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-600 transition-colors group bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600 hover:border-amber-400 dark:hover:border-gray-500 min-h-[120px] flex flex-col">
+        <div className="p-4 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-600 transition-colors group bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600 hover:border-amber-400 dark:hover:border-gray-500 min-h-[120px] flex flex-col cursor-pointer"
+            onClick={() => onTaskSelect(task)}>
             <div className="flex items-start justify-between mb-3">
                 <button
-                    onClick={() => onToggle(task.id)}
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        onToggle(task.id)
+                    }}
                     className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${task.completed
                         ? "bg-emerald-500 border-emerald-500"
                         : "border-amber-300 dark:border-gray-600 hover:border-orange-500 dark:hover:border-blue-400"
@@ -24,7 +28,10 @@ export function TaskGridItem({ task, onToggle, onToggleImportant }: TaskGridItem
                 </button>
 
                 <button
-                    onClick={() => onToggleImportant(task.id)}
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        onToggleImportant(task.id)
+                    }}
                     className={`opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 ${task.isImportant
                         ? "text-orange-600 dark:text-blue-400 opacity-100"
                         : "text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-blue-400"

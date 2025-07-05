@@ -1,11 +1,17 @@
 import type { TaskItemProps } from "@/types"
 import { Star, CalendarDays, Clock } from "lucide-react"
 
-export function TaskItem({ task, onToggle, onToggleImportant }: TaskItemProps) {
+export function TaskItem({ task, onToggle, onToggleImportant, onTaskSelect }: TaskItemProps) {
     return (
-        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-600 transition-colors group bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600 hover:border-amber-400 dark:hover:border-gray-500">
+        <div
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-600 transition-colors group bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600 hover:border-amber-400 dark:hover:border-gray-500 cursor-pointer"
+            onClick={() => onTaskSelect(task)}
+        >
             <button
-                onClick={(e) => onToggle(task.id, e)}
+                onClick={(e) => {
+                    e.stopPropagation()
+                    onToggle(task.id)
+                }}
                 className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${task.completed
                     ? "bg-emerald-500 border-emerald-500"
                     : "border-amber-300 dark:border-gray-600 hover:border-orange-500 dark:hover:border-blue-400"
@@ -44,7 +50,10 @@ export function TaskItem({ task, onToggle, onToggleImportant }: TaskItemProps) {
             </div>
 
             <button
-                onClick={(e) => onToggleImportant(task.id, e)}
+                onClick={(e) => {
+                    e.stopPropagation()
+                    onToggleImportant(task.id)
+                }}
                 className={`opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 ${task.isImportant
                     ? "text-orange-600 dark:text-blue-400 opacity-100"
                     : "text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-blue-400"
