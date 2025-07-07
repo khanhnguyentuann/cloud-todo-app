@@ -4,9 +4,14 @@ import { User } from "lucide-react"
 import type { FC } from "react"
 import { useLanguage } from "@/hooks/UseLanguage"
 
-export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose, onViewAccount }) => {
+export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose, onViewAccount, onSignOut, user }) => {
     const { t } = useLanguage()
     if (!isOpen) return null
+
+    const handleSignOut = () => {
+        onSignOut()
+        onClose()
+    }
 
     return (
         <div className="fixed inset-0 z-50" onClick={onClose}>
@@ -15,18 +20,25 @@ export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose, onViewAccou
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="text-right mb-4">
-                    <Button variant="ghost" size="sm" className="text-orange-500 dark:text-blue-400 hover:bg-orange-50 dark:hover:bg-gray-600">
+                    <Button variant="ghost" size="sm" onClick={handleSignOut}
+                        className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
                         {t.signOut}
                     </Button>
                 </div>
 
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-orange-500 dark:bg-blue-500 rounded-full flex items-center justify-center">
-                        <User className="h-6 w-6 text-white" />
+                    <div className="w-12 h-12 bg-orange-500 dark:bg-blue-500 rounded-full flex items-center justify-center overflow-hidden">
+                        {user?.avatar ? (
+                            <img src={user.avatar || "/placeholder.svg"} alt={user.name} className="w-full h-full object-cover" />
+                        ) : (
+                            <User className="h-6 w-6 text-white" />
+                        )}
                     </div>
                     <div>
-                        <div className="font-semibold text-gray-800 dark:text-gray-200">Khanh Nguyễn</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">khanhnguyentuann@gmail.com...</div>
+                        <div className="font-semibold text-gray-800 dark:text-gray-200">{user?.name}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                            {user?.email && user.email.length > 25 ? `${user.email.substring(0, 25)}...` : user?.email}
+                        </div>
                     </div>
                 </div>
 

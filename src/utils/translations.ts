@@ -160,70 +160,85 @@ export interface Translations {
     systemUpdate: string;
 
     // Add to the Translations interface
-    profile: string
-    subscription: string
-    usage: string
-    privacy: string
-    billing: string
-    myAccount: string
-    freeAccount: string
-    changePicture: string
-    personalInformation: string
-    fullName: string
-    phoneNumber: string
-    email: string
-    timezone: string
-    preferences: string
-    emailNotifications: string
-    pushNotifications: string
-    weeklyDigest: string
-    taskReminders: string
-    edit: string
-    saveChanges: string
-    currentPlan: string
-    freeAccountDescription: string
-    upgrade: string
-    planFeatures: string
-    unlimitedTasks: string
-    basicReminders: string
-    webAccess: string
-    basicSupport: string
-    premiumAccount: string
-    allFreeFeatures: string
-    advancedReminders: string
-    fileAttachments: string
-    prioritySupport: string
-    teamCollaboration: string
-    usageStatistics: string
-    totalTasks: string
-    thisMonth: string
-    completedTasks: string
-    completionRate: string
-    activeReminders: string
-    upcoming: string
-    accountActivity: string
-    accountCreated: string
-    lastLogin: string
-    dataUsage: string
-    privacySettings: string
-    dataExport: string
-    dataExportDescription: string
-    exportMyData: string
-    deleteAccount: string
-    deleteAccountDescription: string
-    deleteMyAccount: string
-    privacyControls: string
-    dataCollection: string
-    dataCollectionDescription: string
-    analytics: string
-    analyticsDescription: string
-    marketingEmails: string
-    marketingEmailsDescription: string
-    billingInformation: string
-    noBillingInfo: string
-    upgradeToPremium: string
-    billingHistory: string
-    noBillingHistory: string
+    profile: string;
+    subscription: string;
+    usage: string;
+    privacy: string;
+    billing: string;
+    myAccount: string;
+    freeAccount: string;
+    changePicture: string;
+    personalInformation: string;
+    fullName: string;
+    phoneNumber: string;
+    email: string;
+    timezone: string;
+    preferences: string;
+    emailNotifications: string;
+    pushNotifications: string;
+    weeklyDigest: string;
+    taskReminders: string;
+    edit: string;
+    saveChanges: string;
+    currentPlan: string;
+    freeAccountDescription: string;
+    upgrade: string;
+    planFeatures: string;
+    unlimitedTasks: string;
+    basicReminders: string;
+    webAccess: string;
+    basicSupport: string;
+    premiumAccount: string;
+    allFreeFeatures: string;
+    advancedReminders: string;
+    fileAttachments: string;
+    prioritySupport: string;
+    teamCollaboration: string;
+    usageStatistics: string;
+    totalTasks: string;
+    thisMonth: string;
+    completedTasks: string;
+    completionRate: string;
+    activeReminders: string;
+    upcoming: string;
+    accountActivity: string;
+    accountCreated: string;
+    lastLogin: string;
+    dataUsage: string;
+    privacySettings: string;
+    dataExport: string;
+    dataExportDescription: string;
+    exportMyData: string;
+    deleteAccount: string;
+    deleteAccountDescription: string;
+    deleteMyAccount: string;
+    privacyControls: string;
+    dataCollection: string;
+    dataCollectionDescription: string;
+    analytics: string;
+    analyticsDescription: string;
+    marketingEmails: string;
+    marketingEmailsDescription: string;
+    billingInformation: string;
+    noBillingInfo: string;
+    upgradeToPremium: string;
+    billingHistory: string;
+    noBillingHistory: string;
+
+    // Login
+    loginWelcome: string;
+    welcomeBack: string;
+    signInToContinue: string;
+    signInWithGoogle: string;
+    signingIn: string;
+    or: string;
+    demoMode: string;
+    tryDemo: string;
+    termsText: string;
+    termsOfService: string;
+    and: string;
+    privacyPolicy: string;
+    changeLanguageHint: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -449,16 +464,33 @@ export const translations: Record<Language, Translations> = {
         deleteMyAccount: "Delete My Account",
         privacyControls: "Privacy Controls",
         dataCollection: "Data Collection",
-        dataCollectionDescription: "Allow us to collect usage data to improve the service",
+        dataCollectionDescription:
+            "Allow us to collect usage data to improve the service",
         analytics: "Analytics",
         analyticsDescription: "Help us understand how you use the app",
         marketingEmails: "Marketing Emails",
         marketingEmailsDescription: "Receive updates about new features and offers",
         billingInformation: "Billing Information",
-        noBillingInfo: "You're currently on the free plan. Upgrade to access premium features.",
+        noBillingInfo:
+            "You're currently on the free plan. Upgrade to access premium features.",
         upgradeToPremium: "Upgrade to Premium",
         billingHistory: "Billing History",
         noBillingHistory: "No billing history available",
+
+        // Login
+        loginWelcome: "Organize your tasks and boost your productivity",
+        welcomeBack: "Welcome Back",
+        signInToContinue: "Sign in to continue to your tasks",
+        signInWithGoogle: "Continue with Google",
+        signingIn: "Signing in...",
+        or: "or",
+        demoMode: "Demo Mode",
+        tryDemo: "Try Demo Account",
+        termsText: "By signing in, you agree to our",
+        termsOfService: "Terms of Service",
+        and: "and",
+        privacyPolicy: "Privacy Policy",
+        changeLanguageHint: "You can change language after signing in",
     },
     ja: {
         // Header
@@ -682,17 +714,35 @@ export const translations: Record<Language, Translations> = {
         deleteMyAccount: "Delete My Account",
         privacyControls: "Privacy Controls",
         dataCollection: "Data Collection",
-        dataCollectionDescription: "Allow us to collect usage data to improve the service",
+        dataCollectionDescription:
+            "Allow us to collect usage data to improve the service",
         analytics: "Analytics",
         analyticsDescription: "Help us understand how you use the app",
         marketingEmails: "Marketing Emails",
         marketingEmailsDescription: "Receive updates about new features and offers",
         billingInformation: "Billing Information",
-        noBillingInfo: "You're currently on the free plan. Upgrade to access premium features.",
+        noBillingInfo:
+            "You're currently on the free plan. Upgrade to access premium features.",
         upgradeToPremium: "Upgrade to Premium",
         billingHistory: "Billing History",
         noBillingHistory: "No billing history available",
+
+        // Login
+        loginWelcome: "タスクを整理して生産性を向上させましょう",
+        welcomeBack: "おかえりなさい",
+        signInToContinue: "タスクを続けるためにサインインしてください",
+        signInWithGoogle: "Googleで続行",
+        signingIn: "サインイン中...",
+        or: "または",
+        demoMode: "デモモード",
+        tryDemo: "デモアカウントを試す",
+        termsText: "サインインすることで、以下に同意したことになります",
+        termsOfService: "利用規約",
+        and: "と",
+        privacyPolicy: "プライバシーポリシー",
+        changeLanguageHint: "サインイン後に言語を変更できます",
     },
+
     vi: {
         // Header
         appName: "Việc cần làm",
@@ -915,15 +965,32 @@ export const translations: Record<Language, Translations> = {
         deleteMyAccount: "Delete My Account",
         privacyControls: "Privacy Controls",
         dataCollection: "Data Collection",
-        dataCollectionDescription: "Allow us to collect usage data to improve the service",
+        dataCollectionDescription:
+            "Allow us to collect usage data to improve the service",
         analytics: "Analytics",
         analyticsDescription: "Help us understand how you use the app",
         marketingEmails: "Marketing Emails",
         marketingEmailsDescription: "Receive updates about new features and offers",
         billingInformation: "Billing Information",
-        noBillingInfo: "You're currently on the free plan. Upgrade to access premium features.",
+        noBillingInfo:
+            "You're currently on the free plan. Upgrade to access premium features.",
         upgradeToPremium: "Upgrade to Premium",
         billingHistory: "Billing History",
         noBillingHistory: "No billing history available",
+
+        // Login
+        loginWelcome: "Sắp xếp công việc và tăng năng suất của bạn",
+        welcomeBack: "Chào mừng trở lại",
+        signInToContinue: "Đăng nhập để tiếp tục với các nhiệm vụ của bạn",
+        signInWithGoogle: "Tiếp tục với Google",
+        signingIn: "Đang đăng nhập...",
+        or: "hoặc",
+        demoMode: "Chế độ Demo",
+        tryDemo: "Thử tài khoản Demo",
+        termsText: "Bằng cách đăng nhập, bạn đồng ý với",
+        termsOfService: "Điều khoản Dịch vụ",
+        and: "và",
+        privacyPolicy: "Chính sách Bảo mật",
+        changeLanguageHint: "Bạn có thể thay đổi ngôn ngữ sau khi đăng nhập",
     },
 };

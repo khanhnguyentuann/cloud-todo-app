@@ -1,5 +1,3 @@
-"use client"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
@@ -20,11 +18,7 @@ import {
 } from "lucide-react"
 import { useState } from "react"
 import { useLanguage } from "@/hooks/UseLanguage"
-
-interface AccountViewProps {
-    isOpen: boolean
-    onClose: () => void
-}
+import type { AccountViewProps } from "@/types/components/AccountView"
 
 export function AccountView({ isOpen, onClose }: AccountViewProps) {
     const { t } = useLanguage()
@@ -422,8 +416,8 @@ export function AccountView({ isOpen, onClose }: AccountViewProps) {
                                             setShowSidebar(false)
                                         }}
                                         className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${activeTab === tab.id
-                                                ? "bg-amber-200 dark:bg-blue-600 text-orange-600 dark:text-white font-medium"
-                                                : "text-gray-700 dark:text-gray-300 hover:bg-amber-100 dark:hover:bg-gray-700"
+                                            ? "bg-amber-200 dark:bg-blue-600 text-orange-600 dark:text-white font-medium"
+                                            : "text-gray-700 dark:text-gray-300 hover:bg-amber-100 dark:hover:bg-gray-700"
                                             }`}
                                     >
                                         <tab.icon className="h-4 w-4" />

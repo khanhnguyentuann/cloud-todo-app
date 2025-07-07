@@ -5,7 +5,8 @@ import { ContentHeader } from "@/components/ContentHeader"
 import { TaskInput } from "@/components/TaskInput"
 import { SettingsPanel } from "@/components/SettingsPanel"
 import { AccountMenu } from "@/components/AccountMenu"
-import { useMobile, useDarkMode } from "@/hooks/UseMobile"
+import { useMobile } from "@/hooks/UseMobile"
+import { useDarkMode } from "@/hooks/UseDarkMode"
 import type { Task } from "@/types"
 import { TaskList } from "@/components/TaskList"
 import { createTask, fetchTasks } from "@/lib/api/Todo"
@@ -14,6 +15,9 @@ import { useLanguage } from "@/hooks/UseLanguage"
 import { HelpPanel } from "@/components/HelpPanel"
 import { NotificationPanel } from "@/components/NotificationPanel"
 import { AccountView } from "@/components/AccountView"
+import { LoginScreen } from "@/components/LoginScreen"
+import { useAuth } from "@/hooks/UseAuth"
+
 
 export default function Component() {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -37,6 +41,7 @@ export default function Component() {
     // Mock unread notification count
     const [unreadNotificationCount] = useState(2)
     const [accountViewOpen, setAccountViewOpen] = useState(false)
+    const { isAuthenticated, isLoading, signInWithGoogle, signOut, user } = useAuth()
 
     // Fetch tasks from API Gateway + Lambda + DynamoDB
     useEffect(() => {
@@ -130,6 +135,30 @@ export default function Component() {
         setHelpOpen(false)
     }
 
+    // Show loading screen while checking auth
+    if (isLoading) {
+        return (
+            <div className="h-screen flex items-center justify-center bg-amber-50 dark:bg-gray-900">
+                <div className="text-center">
+                    <div className="w-16 h-16 bg-orange-500 dark:bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+                </div>
+            </div>
+        )
+    }
+
+    // Show login screen if not authenticated
+    if (!isAuthenticated) {
+        return <LoginScreen onSignIn={signInWithGoogle} />
+    }
 
     return (
         <div className="h-screen flex flex-col bg-amber-50 dark:bg-gray-800">
@@ -207,9 +236,11 @@ export default function Component() {
                 isOpen={accountMenuOpen}
                 onClose={() => setAccountMenuOpen(false)}
                 onViewAccount={() => setAccountViewOpen(true)}
+                onSignOut={signOut}
+                user={user}
             />
 
-            <AccountView isOpen={accountViewOpen} onClose={() => setAccountViewOpen(false)} />
+            <AccountView isOpen={accountViewOpen} onClose={() => setAccountViewOpen(false)} user={user} />
         </div>
     )
 }
