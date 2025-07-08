@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/common/Button";
-import type { TaskDetailSidebarProps } from "@/types/components/TaskDetailSidebar";
+import type { TaskDetailSidebarProps } from "@/types";
 import { X, Calendar, Bell, RotateCcw, Star, Trash2 } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage"
 

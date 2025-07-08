@@ -18,7 +18,7 @@ import {
 } from "lucide-react"
 import { useState } from "react"
 import { useLanguage } from "@/hooks/useLanguage"
-import type { AccountViewProps } from "@/types/components/AccountView"
+import type { AccountViewProps } from "@/types"
 
 export function AccountView({ isOpen, onClose }: AccountViewProps) {
     const { t } = useLanguage()
