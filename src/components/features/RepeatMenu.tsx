@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Button } from "@/components/common/Button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/common/Select"
 import { RotateCcw } from "lucide-react"
 import { useState } from "react"
-import { DropdownMenu } from "@/components/DropdownMenuBase"
+import { DropdownMenu } from "@/components/common/DropdownMenuBase"
 import type { RepeatMenuProps } from "@/types"
-import { useLanguage } from "@/hooks/UseLanguage"
+import { useLanguage } from "@/hooks/useLanguage"
 
 export function RepeatMenu({ isOpen, onOpenChange, onRepeatSelect, trigger }: RepeatMenuProps) {
     const [showCustom, setShowCustom] = useState(false)

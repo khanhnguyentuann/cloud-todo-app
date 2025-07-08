@@ -1,13 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import '@/index.css'
-import App from '@/App.tsx'
-import { LanguageProvider } from '@/hooks/LanguageProvider'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "@/assets/styles/tailwind.css";
+import App from "@/App.tsx";
+import { LanguageProvider } from "@/context/LanguageProvider";
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <LanguageProvider>
       <App />
     </LanguageProvider>
-  </StrictMode>,
-)
+  </StrictMode>
+);

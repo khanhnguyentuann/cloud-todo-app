@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/common/Button"
 import type { AccountMenuProps } from "@/types"
 import { User } from "lucide-react"
 import type { FC } from "react"
-import { useLanguage } from "@/hooks/UseLanguage"
+import { useLanguage } from "@/hooks/useLanguage"
 
 export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose, onViewAccount, onSignOut, user }) => {
     const { t } = useLanguage()

@@ -1,9 +1,9 @@
 import { type FC } from "react"
-import { Button } from "@/components/ui/button"
-import { Switch } from "@/components/ui/switch"
+import { Button } from "@/components/common/Button"
+import { Switch } from "@/components/common/Switch"
 import type { SettingsPanelProps } from "@/types"
 import { X, ArrowRight, Check } from "lucide-react"
-import { useLanguage } from "@/hooks/UseLanguage"
+import { useLanguage } from "@/hooks/useLanguage"
 import { useState } from "react"
 
 export const SettingsPanel: FC<SettingsPanelProps> = ({ isOpen, onClose, isDarkMode, onToggleDarkMode }) => {

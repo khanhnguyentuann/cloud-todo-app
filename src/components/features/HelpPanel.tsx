@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/common/Button"
+import { Input } from "@/components/common/Input"
 import { X, Search, BookOpen, Star, Calendar, Keyboard, MessageCircle, Mail, Phone, ChevronLeft } from "lucide-react"
 import { useState } from "react"
-import { useLanguage } from "@/hooks/UseLanguage"
+import { useLanguage } from "@/hooks/useLanguage"
 
 interface HelpPanelProps {
     isOpen: boolean

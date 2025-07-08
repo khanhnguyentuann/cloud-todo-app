@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/common/Button"
 import { X, Check, Clock, Star, Trash2 } from "lucide-react"
 import { useState } from "react"
-import { useLanguage } from "@/hooks/UseLanguage"
+import { useLanguage } from "@/hooks/useLanguage"
 
 interface Notification {
     id: number

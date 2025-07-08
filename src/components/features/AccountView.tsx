@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Switch } from "@/components/ui/switch"
+import { Button } from "@/components/common/Button"
+import { Input } from "@/components/common/Input"
+import { Switch } from "@/components/common/Switch"
 import {
     X,
     User,
@@ -17,7 +17,7 @@ import {
     ChevronLeft,
 } from "lucide-react"
 import { useState } from "react"
-import { useLanguage } from "@/hooks/UseLanguage"
+import { useLanguage } from "@/hooks/useLanguage"
 import type { AccountViewProps } from "@/types/components/AccountView"
 
 export function AccountView({ isOpen, onClose }: AccountViewProps) {

@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/common/Button"
 import { Chrome, Globe, Loader2, Moon, Sun } from "lucide-react"
 import { useState } from "react"
-import { useLanguage } from "@/hooks/UseLanguage"
-import { useDarkMode } from "@/hooks/UseDarkMode"
+import { useLanguage } from "@/hooks/useLanguage"
+import { useDarkMode } from "@/hooks/useDarkMode"
 
 interface LoginScreenProps {
     onSignIn: () => Promise<void>

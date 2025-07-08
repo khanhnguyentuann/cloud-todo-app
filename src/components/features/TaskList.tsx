@@ -1,5 +1,5 @@
-import { TaskItem } from "@/components/TaskItem"
-import { TaskGridItem } from "@/components/TaskGridItem"
+import { TaskItem } from "@/components/features/TaskItem"
+import { TaskGridItem } from "@/components/features/TaskGridItem"
 import type { TaskListProps } from "@/types"
 
 export function TaskList({ tasks, viewMode, onToggle, onToggleImportant, onTaskSelect }: TaskListProps) {

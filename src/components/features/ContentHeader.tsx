@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/common/Button"
 import type { ContentHeaderProps } from "@/types"
 import { Sun, Grid3X3, List, MoreHorizontal } from "lucide-react"
 import type { FC } from "react"
 import { useState } from "react"
-import { SortMenu } from "@/components/SortMenu"
-import { Tooltip } from "@/components/Tooltip"
-import { useLanguage } from "@/hooks/UseLanguage"
+import { SortMenu } from "@/components/features/SortMenu"
+import { Tooltip } from "@/components/common/Tooltip"
+import { useLanguage } from "@/hooks/useLanguage"
 
 export const ContentHeader: FC<ContentHeaderProps> = ({ title, date, viewMode, onViewModeChange, sortBy, onSortChange }) => {
     const [sortMenuOpen, setSortMenuOpen] = useState(false)

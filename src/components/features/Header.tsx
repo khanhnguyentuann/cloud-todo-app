@@ -1,9 +1,9 @@
 import { useState, type FC } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/common/Button"
+import { Input } from "@/components/common/Input"
 import { Menu, Search, Settings, HelpCircle, Bell, User } from "lucide-react"
 import type { HeaderProps } from "@/types"
-import { useLanguage } from "@/hooks/UseLanguage"
+import { useLanguage } from "@/hooks/useLanguage"
 
 export const Header: FC<HeaderProps> = ({
     onMenuClick,

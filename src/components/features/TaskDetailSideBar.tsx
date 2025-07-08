@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/common/Button";
 import type { TaskDetailSidebarProps } from "@/types/components/TaskDetailSidebar";
 import { X, Calendar, Bell, RotateCcw, Star, Trash2 } from "lucide-react";
-import { useLanguage } from "@/hooks/UseLanguage"
+import { useLanguage } from "@/hooks/useLanguage"
 
 export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
     isOpen,

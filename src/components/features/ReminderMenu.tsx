@@ -1,11 +1,11 @@
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Button } from "@/components/common/Button"
+import { Calendar } from "@/components/common/Calendar"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/common/Select"
 import { Bell, Clock, CalendarIcon } from "lucide-react"
-import { DropdownMenu } from "@/components/DropdownMenuBase"
+import { DropdownMenu } from "@/components/common/DropdownMenuBase"
 import type { ReminderMenuProps } from "@/types"
-import { useLanguage } from "@/hooks/UseLanguage"
+import { useLanguage } from "@/hooks/useLanguage"
 
 export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect, trigger }: ReminderMenuProps) {
     const [showCalendar, setShowCalendar] = useState(false)

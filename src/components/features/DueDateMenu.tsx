@@ -1,10 +1,10 @@
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { Button } from "@/components/common/Button"
+import { Calendar } from "@/components/common/Calendar"
 import { CalendarIcon } from "lucide-react"
 import type { DueDateMenuProps } from "@/types"
-import { DropdownMenu } from "@/components/DropdownMenuBase"
-import { useLanguage } from "@/hooks/UseLanguage"
+import { DropdownMenu } from "@/components/common/DropdownMenuBase"
+import { useLanguage } from "@/hooks/useLanguage"
 
 export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: DueDateMenuProps) {
     const [showCalendar, setShowCalendar] = useState(false)

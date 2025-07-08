@@ -1,8 +1,8 @@
 import { type FC } from "react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/common/Button"
 import type { SidebarProps } from "@/types"
 import { Plus, X } from "lucide-react"
-import { useLanguage } from "@/hooks/UseLanguage"
+import { useLanguage } from "@/hooks/useLanguage"
 import {
     Star,
     Calendar,

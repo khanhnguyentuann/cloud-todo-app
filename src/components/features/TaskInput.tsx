@@ -1,13 +1,13 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/common/Button"
+import { Input } from "@/components/common/Input"
 import type { TaskInputProps } from "@/types"
 import { Bell, CalendarIcon, Plus, RotateCcw } from "lucide-react"
 import { useState } from "react"
-import { DueDateMenu } from "@/components/DueDateMenu"
-import { ReminderMenu } from "@/components/ReminderMenu"
-import { RepeatMenu } from "@/components/RepeatMenu"
-import { Tooltip } from "@/components/Tooltip"
-import { useLanguage } from "@/hooks/UseLanguage";
+import { DueDateMenu } from "@/components/features/DueDateMenu"
+import { ReminderMenu } from "@/components/features/ReminderMenu"
+import { RepeatMenu } from "@/components/features/RepeatMenu"
+import { Tooltip } from "@/components/common/Tooltip"
+import { useLanguage } from "@/hooks/useLanguage";
 
 export function TaskInput({ value, onChange, onAdd, onKeyPress, placeholder, selectedDueDate,
     setSelectedDueDate,
