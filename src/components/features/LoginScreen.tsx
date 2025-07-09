@@ -1,8 +1,8 @@
+import { useState } from "react"
 import { Button } from "@/components/common/Button"
 import { Chrome, Globe, Loader2, Moon, Sun } from "lucide-react"
-import { useState } from "react"
-import { useLanguage } from "@/hooks/useLanguage"
 import { useDarkMode } from "@/hooks/useDarkMode"
+import { useTranslation } from "react-i18next"
 
 interface LoginScreenProps {
     onSignIn: () => Promise<void>
@@ -10,15 +10,17 @@ interface LoginScreenProps {
 
 export function LoginScreen({ onSignIn }: LoginScreenProps) {
     const [isLoading, setIsLoading] = useState(false)
-    const { t, language, setLanguage } = useLanguage()
-    const { isDarkMode, toggleDarkMode } = useDarkMode()
     const [showLanguageMenu, setShowLanguageMenu] = useState(false)
+    const { isDarkMode, toggleDarkMode } = useDarkMode()
+    const { t, i18n } = useTranslation()
 
     const languages = [
-        { code: "en" as const, name: "English", flag: "🇺🇸" },
-        { code: "ja" as const, name: "日本語", flag: "🇯🇵" },
-        { code: "vi" as const, name: "Tiếng Việt", flag: "🇻🇳" },
+        { code: "en", name: "English", flag: "🇺🇸" },
+        { code: "ja", name: "日本語", flag: "🇯🇵" },
+        { code: "vi", name: "Tiếng Việt", flag: "🇻🇳" },
     ]
+
+    const currentLang = i18n.language as string
 
     const handleSignIn = async () => {
         setIsLoading(true)
@@ -44,21 +46,21 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
                         className="text-white hover:bg-white/10 backdrop-blur-sm border border-white/20"
                     >
                         <Globe className="h-4 w-4 mr-1" />
-                        {languages.find((l) => l.code === language)?.flag}
+                        {languages.find(l => l.code === currentLang)?.flag}
                     </Button>
 
                     {showLanguageMenu && (
                         <>
                             <div className="fixed inset-0 z-10" onClick={() => setShowLanguageMenu(false)} />
                             <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-20 min-w-40">
-                                {languages.map((lang) => (
+                                {languages.map(lang => (
                                     <button
                                         key={lang.code}
                                         onClick={() => {
-                                            setLanguage(lang.code)
+                                            i18n.changeLanguage(lang.code)
                                             setShowLanguageMenu(false)
                                         }}
-                                        className={`w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${language === lang.code
+                                        className={`w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${currentLang === lang.code
                                             ? "bg-orange-50 dark:bg-blue-900/20 text-orange-600 dark:text-blue-400"
                                             : "text-gray-700 dark:text-gray-300"
                                             }`}
@@ -82,6 +84,7 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
                     {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
                 </Button>
             </div>
+
             <div className="w-full max-w-md">
                 {/* Logo and Title */}
                 <div className="text-center mb-8">
@@ -96,21 +99,17 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
                             </svg>
                         </div>
                     </div>
-                    <h1 className="text-3xl font-bold text-white mb-2">{t.appName}</h1>
-                    <p className="text-orange-100 dark:text-gray-300">
-                        {t.loginWelcome || "Organize your tasks and boost your productivity"}
-                    </p>
+                    <h1 className="text-3xl font-bold text-white mb-2">{t("appName")}</h1>
+                    <p className="text-orange-100 dark:text-gray-300">{t("loginWelcome")}</p>
                 </div>
 
                 {/* Login Card */}
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-orange-200 dark:border-gray-700">
                     <div className="text-center mb-6">
                         <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                            {t.welcomeBack || "Welcome Back"}
+                            {t("welcomeBack")}
                         </h2>
-                        <p className="text-gray-600 dark:text-gray-400">
-                            {t.signInToContinue || "Sign in to continue to your tasks"}
-                        </p>
+                        <p className="text-gray-600 dark:text-gray-400">{t("signInToContinue")}</p>
                     </div>
 
                     {/* Google Sign In Button */}
@@ -120,11 +119,16 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
                         className="w-full h-12 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600 shadow-sm transition-all duration-200 hover:shadow-md"
                     >
                         {isLoading ? (
-                            <Loader2 className="h-5 w-5 animate-spin mr-3" />
+                            <>
+                                <Loader2 className="h-5 w-5 animate-spin mr-3" />
+                                {t("signingIn")}
+                            </>
                         ) : (
-                            <Chrome className="h-5 w-5 mr-3 text-blue-500" />
+                            <>
+                                <Chrome className="h-5 w-5 mr-3 text-blue-500" />
+                                {t("signInWithGoogle")}
+                            </>
                         )}
-                        {isLoading ? t.signingIn || "Signing in..." : t.signInWithGoogle || "Continue with Google"}
                     </Button>
 
                     {/* Divider */}
@@ -133,43 +137,38 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
                             <div className="w-full border-t border-gray-300 dark:border-gray-600" />
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">{t.or || "or"}</span>
+                            <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
+                                {t("or")}
+                            </span>
                         </div>
                     </div>
 
                     {/* Demo Login */}
                     <div className="text-center">
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{t.demoMode || "Demo Mode"}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{t("demoMode")}</p>
                         <Button
                             onClick={handleSignIn}
                             disabled={isLoading}
                             variant="outline"
                             className="w-full border-orange-300 dark:border-blue-500 text-orange-600 dark:text-blue-400 hover:bg-orange-50 dark:hover:bg-blue-900/20 bg-transparent"
                         >
-                            {t.tryDemo || "Try Demo Account"}
+                            {t("tryDemo")}
                         </Button>
                     </div>
 
                     {/* Footer */}
                     <div className="mt-8 text-center text-xs text-gray-500 dark:text-gray-400">
                         <p>
-                            {t.termsText || "By signing in, you agree to our"}{" "}
+                            {t("termsText")}{" "}
                             <a href="#" className="text-orange-600 dark:text-blue-400 hover:underline">
-                                {t.termsOfService || "Terms of Service"}
+                                {t("termsOfService")}
                             </a>{" "}
-                            {t.and || "and"}{" "}
+                            {t("and")}{" "}
                             <a href="#" className="text-orange-600 dark:text-blue-400 hover:underline">
-                                {t.privacyPolicy || "Privacy Policy"}
+                                {t("privacyPolicy")}
                             </a>
                         </p>
                     </div>
-                </div>
-
-                {/* Language Switcher */}
-                <div className="mt-6 text-center">
-                    <p className="text-orange-100 dark:text-gray-400 text-sm">
-                        {t.changeLanguageHint || "You can change language after signing in"}
-                    </p>
                 </div>
             </div>
         </div>

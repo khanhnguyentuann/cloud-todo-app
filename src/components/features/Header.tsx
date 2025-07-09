@@ -3,7 +3,7 @@ import { Button } from "@/components/common/Button"
 import { Input } from "@/components/common/Input"
 import { Menu, Search, Settings, HelpCircle, Bell, User } from "lucide-react"
 import type { HeaderProps } from "@/types"
-import { useLanguage } from "@/hooks/useLanguage"
+import { useTranslation } from "react-i18next"
 
 export const Header: FC<HeaderProps> = ({
     onMenuClick,
@@ -14,7 +14,7 @@ export const Header: FC<HeaderProps> = ({
     unreadNotificationCount,
 }) => {
     const [searchExpanded, setSearchExpanded] = useState(false)
-    const { t } = useLanguage()
+    const { t } = useTranslation()
 
     return (
         <header className="border-b border-amber-300 dark:border-gray-600 bg-orange-500 dark:bg-gray-800 text-white px-2 sm:px-4 h-16 flex items-center justify-between relative z-50">
@@ -27,7 +27,7 @@ export const Header: FC<HeaderProps> = ({
                 >
                     <Menu className="h-4 w-4" />
                 </Button>
-                <h1 className="text-base sm:text-lg font-semibold">{t.appName}</h1>
+                <h1 className="text-base sm:text-lg font-semibold">{t("appName")}</h1>
             </div>
 
             {/* Desktop Search */}
@@ -35,7 +35,7 @@ export const Header: FC<HeaderProps> = ({
                 <div className="relative w-full">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 h-4 w-4" />
                     <Input
-                        placeholder={t.search}
+                        placeholder={t("search")}
                         className="pl-10 bg-white dark:bg-gray-800 border-0 text-gray-800 dark:text-gray-200 text-sm w-full"
                     />
                 </div>
@@ -48,7 +48,7 @@ export const Header: FC<HeaderProps> = ({
                         <div className="relative flex-1">
                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 h-4 w-4" />
                             <Input
-                                placeholder={t.search}
+                                placeholder={t("search")}
                                 className="pl-10 bg-white dark:bg-gray-800 border-0 text-gray-800 dark:text-gray-200 text-sm w-full"
                                 autoFocus
                                 onBlur={() => setSearchExpanded(false)}
@@ -60,7 +60,7 @@ export const Header: FC<HeaderProps> = ({
                             className="text-white hover:bg-orange-600 dark:hover:bg-blue-500"
                             onClick={() => setSearchExpanded(false)}
                         >
-                            {t.cancel}
+                            {t("cancel")}
                         </Button>
                     </div>
                 ) : (

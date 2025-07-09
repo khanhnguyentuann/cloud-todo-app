@@ -1,4 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from "react"
+import { useTranslation } from "react-i18next"
 import { Header } from "@/components/features/Header"
 import { Sidebar } from "@/components/features/Sidebar"
 import { ContentHeader } from "@/components/features/ContentHeader"
@@ -11,50 +12,57 @@ import type { Task } from "@/types"
 import { TaskList } from "@/components/features/TaskList"
 import { createTask, fetchTasks } from "@/services/api/Todo"
 import { TaskDetailSidebar } from "@/components/features/TaskDetailSideBar"
-import { useLanguage } from "@/hooks/useLanguage"
 import { HelpPanel } from "@/components/features/HelpPanel"
 import { NotificationPanel } from "@/components/features/NotificationPanel"
 import { AccountView } from "@/components/features/AccountView"
 import { LoginScreen } from "@/components/features/LoginScreen"
 import { useAuth } from "@/hooks/useAuth"
 
-
 export default function Component() {
+    const { t, i18n } = useTranslation()
     const [tasks, setTasks] = useState<Task[]>([])
-    const [inputValue, setInputValue] = useState<string>("")
-    const [dueDate, setDueDate] = useState<string>("")
-    const [reminder, setReminder] = useState<string>("")
-    const [repeat, setRepeat] = useState<string>("")
+    const [inputValue, setInputValue] = useState("")
+    const [dueDate, setDueDate] = useState("")
+    const [reminder, setReminder] = useState("")
+    const [repeat, setRepeat] = useState("")
     const [taskDetailSidebarOpen, setTaskDetailSidebarOpen] = useState(false)
     const [selectedTask, setSelectedTask] = useState<Task | null>(null)
-    const [activeView, setActiveView] = useState<string>("My Day")
-    const [sidebarOpen, setSidebarOpen] = useState<boolean>(true)
-    const [settingsOpen, setSettingsOpen] = useState<boolean>(false)
-    const [accountMenuOpen, setAccountMenuOpen] = useState<boolean>(false)
+    const [activeView, setActiveView] = useState("My Day")
+    const [sidebarOpen, setSidebarOpen] = useState(true)
+    const [settingsOpen, setSettingsOpen] = useState(false)
+    const [accountMenuOpen, setAccountMenuOpen] = useState(false)
     const [viewMode, setViewMode] = useState<"grid" | "list">("list")
     const isMobile = useMobile()
     const { isDarkMode, toggleDarkMode } = useDarkMode()
-    const [sortBy, setSortBy] = useState<string>("Creation date")
-    const { t, getCurrentDate } = useLanguage()
+    const [sortBy, setSortBy] = useState("Creation date")
     const [helpOpen, setHelpOpen] = useState(false)
     const [notificationOpen, setNotificationOpen] = useState(false)
-    // Mock unread notification count
     const [unreadNotificationCount] = useState(2)
     const [accountViewOpen, setAccountViewOpen] = useState(false)
     const { isAuthenticated, isLoading, signInWithGoogle, signOut, user } = useAuth()
 
-    // Fetch tasks from API Gateway + Lambda + DynamoDB
+    // Fetch tasks
     useEffect(() => {
         fetchTasks()
             .then(setTasks)
             .catch((err) => console.error("Failed to load tasks:", err))
     }, [])
 
-    // On viewport change, adjust sidebar
+    // Sidebar auto adjust
     useLayoutEffect(() => {
-        setSidebarOpen(!isMobile);
-        setTaskDetailSidebarOpen(false);
-    }, [isMobile]);
+        setSidebarOpen(!isMobile)
+        setTaskDetailSidebarOpen(false)
+    }, [isMobile])
+
+    // Helper for date
+    const getCurrentDate = () => {
+        return new Date().toLocaleDateString(i18n.language, {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        })
+    }
 
     const addTask = async () => {
         if (inputValue.trim() !== "") {
@@ -80,15 +88,9 @@ export default function Component() {
 
     const sortTasks = (tasks: Task[], sortType: string): Task[] => {
         const tasksCopy = [...tasks]
-
         switch (sortType) {
             case "Important":
-                return tasksCopy.sort((a, b) => {
-                    if (a.isImportant && !b.isImportant) return -1
-                    if (!a.isImportant && b.isImportant) return 1
-                    return 0
-                })
-
+                return tasksCopy.sort((a, b) => (a.isImportant === b.isImportant ? 0 : a.isImportant ? -1 : 1))
             case "Due date":
                 return tasksCopy.sort((a, b) => {
                     if (!a.dueDate && !b.dueDate) return 0
@@ -96,26 +98,19 @@ export default function Component() {
                     if (!b.dueDate) return -1
                     return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
                 })
-
             case "Alphabetical":
                 return tasksCopy.sort((a, b) => a.text.localeCompare(b.text))
-
-            case "Creation date":
             default:
                 return tasksCopy.sort((a, b) => a.id - b.id)
         }
     }
 
     const toggleTask = (id: number) => {
-        setTasks(tasks.map((task) =>
-            task.id === id ? { ...task, completed: !task.completed } : task
-        ))
+        setTasks(tasks.map(task => task.id === id ? { ...task, completed: !task.completed } : task))
     }
 
     const toggleImportant = (id: number) => {
-        setTasks(tasks.map((task) =>
-            task.id === id ? { ...task, isImportant: !task.isImportant } : task
-        ))
+        setTasks(tasks.map(task => task.id === id ? { ...task, isImportant: !task.isImportant } : task))
     }
 
     const handleTaskSelect = (task: Task) => {
@@ -129,13 +124,11 @@ export default function Component() {
 
     const handleNotificationClick = () => {
         setNotificationOpen(!notificationOpen)
-        // Close other panels
         setAccountMenuOpen(false)
         setSettingsOpen(false)
         setHelpOpen(false)
     }
 
-    // Show loading screen while checking auth
     if (isLoading) {
         return (
             <div className="h-screen flex items-center justify-center bg-amber-50 dark:bg-gray-900">
@@ -155,7 +148,6 @@ export default function Component() {
         )
     }
 
-    // Show login screen if not authenticated
     if (!isAuthenticated) {
         return <LoginScreen onSignIn={signInWithGoogle} />
     }
@@ -182,7 +174,7 @@ export default function Component() {
 
                 <main className="flex-1 flex flex-col overflow-hidden bg-amber-50 dark:bg-gray-900">
                     <ContentHeader
-                        title={t.myDay}
+                        title={t("myDay")}
                         date={getCurrentDate()}
                         viewMode={viewMode}
                         onViewModeChange={setViewMode}
@@ -196,7 +188,7 @@ export default function Component() {
                             onChange={setInputValue}
                             onAdd={addTask}
                             onKeyPress={handleKeyPress}
-                            placeholder={t.addTask}
+                            placeholder={t("addTask")}
                             selectedDueDate={dueDate}
                             setSelectedDueDate={setDueDate}
                             selectedReminder={reminder}
@@ -205,7 +197,6 @@ export default function Component() {
                             setSelectedRepeat={setRepeat}
                         />
 
-                        {/* Tasks List/Grid */}
                         <TaskList
                             tasks={sortTasks(tasks, sortBy)}
                             viewMode={viewMode}
@@ -230,7 +221,6 @@ export default function Component() {
                 onToggleDarkMode={toggleDarkMode}
             />
             <HelpPanel isOpen={helpOpen} onClose={() => setHelpOpen(false)} />
-            {/* Notification Panel */}
             <NotificationPanel isOpen={notificationOpen} onClose={() => setNotificationOpen(false)} />
             <AccountMenu
                 isOpen={accountMenuOpen}
@@ -239,7 +229,6 @@ export default function Component() {
                 onSignOut={signOut}
                 user={user}
             />
-
             <AccountView isOpen={accountViewOpen} onClose={() => setAccountViewOpen(false)} user={user} />
         </div>
     )

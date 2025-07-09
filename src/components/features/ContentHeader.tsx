@@ -5,11 +5,11 @@ import type { FC } from "react"
 import { useState } from "react"
 import { SortMenu } from "@/components/features/SortMenu"
 import { Tooltip } from "@/components/common/Tooltip"
-import { useLanguage } from "@/hooks/useLanguage"
+import { useTranslation } from "react-i18next"
 
 export const ContentHeader: FC<ContentHeaderProps> = ({ title, date, viewMode, onViewModeChange, sortBy, onSortChange }) => {
     const [sortMenuOpen, setSortMenuOpen] = useState(false)
-    const { t } = useLanguage()
+    const { t } = useTranslation()
 
     return (
         <div className="border-b border-amber-300 dark:border-gray-700 p-3 sm:p-6 bg-white dark:bg-gray-800">
@@ -26,7 +26,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({ title, date, viewMode, o
                     >
                         <MoreHorizontal className="h-4 w-4" />
                     </Button>
-                    <Tooltip content={t.grid}>
+                    <Tooltip content={t("grid")}>
                         <Button
                             variant="ghost"
                             size="sm"
@@ -35,12 +35,11 @@ export const ContentHeader: FC<ContentHeaderProps> = ({ title, date, viewMode, o
                                 }`}
                         >
                             <Grid3X3 className="h-4 w-4" />
-                            <span className="hidden sm:inline ml-1">{t.grid}</span>
+                            <span className="hidden sm:inline ml-1">{t("grid")}</span>
                         </Button>
                     </Tooltip>
 
-                    {/* List button */}
-                    <Tooltip content={t.list}>
+                    <Tooltip content={t("list")}>
                         <Button
                             variant="ghost"
                             size="sm"
@@ -49,12 +48,11 @@ export const ContentHeader: FC<ContentHeaderProps> = ({ title, date, viewMode, o
                                 }`}
                         >
                             <List className="h-4 w-4" />
-                            <span className="hidden sm:inline ml-1">{t.list}</span>
+                            <span className="hidden sm:inline ml-1">{t("list")}</span>
                         </Button>
                     </Tooltip>
                 </div>
 
-                {/* Toolbar */}
                 <div className="flex items-center gap-1 sm:gap-2">
                     <SortMenu
                         isOpen={sortMenuOpen}

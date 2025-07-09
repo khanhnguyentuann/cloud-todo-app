@@ -5,15 +5,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Bell, Clock, CalendarIcon } from "lucide-react"
 import { DropdownMenu } from "@/components/common/DropdownMenuBase"
 import type { ReminderMenuProps } from "@/types"
-import { useLanguage } from "@/hooks/useLanguage"
+import { useTranslation } from "react-i18next"
 
 export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect, trigger }: ReminderMenuProps) {
     const [showCalendar, setShowCalendar] = useState(false)
     const [selectedDate, setSelectedDate] = useState<Date>()
     const [selectedTime, setSelectedTime] = useState<string>("4:00 PM")
-    const { t } = useLanguage()
+    const { t } = useTranslation()
 
-    // 👉 Generate quick reminder options dynamically
+    // 👉 Generate quick options
     const today = new Date()
     const tomorrow = new Date(today)
     tomorrow.setDate(today.getDate() + 1)
@@ -21,9 +21,9 @@ export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect, trigger }
     nextWeek.setDate(today.getDate() + 7)
 
     const reminderQuickOptions = [
-        { label: t.today, value: today, time: "4:00 PM" },
-        { label: t.tomorrow, value: tomorrow, time: "9:00 AM" },
-        { label: t.nextWeek, value: nextWeek, time: "9:00 AM" },
+        { label: t("today"), value: today, time: "4:00 PM" },
+        { label: t("tomorrow"), value: tomorrow, time: "9:00 AM" },
+        { label: t("nextWeek"), value: nextWeek, time: "9:00 AM" },
     ]
 
     const defaultTrigger = (
@@ -39,7 +39,7 @@ export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect, trigger }
     if (showCalendar) {
         return (
             <DropdownMenu trigger={trigger || defaultTrigger} isOpen={isOpen} onOpenChange={onOpenChange}>
-                <div className="p-1 w-70 flex items-center justify-between flex-col">
+                <div className="p-4 w-72 flex flex-col items-center">
                     <Calendar
                         mode="single"
                         selected={selectedDate}
@@ -48,7 +48,7 @@ export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect, trigger }
                     />
                     <Select value={selectedTime} onValueChange={setSelectedTime}>
                         <SelectTrigger className="w-full mt-3">
-                            <SelectValue />
+                            <SelectValue placeholder="4:00 PM" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="4:00 PM">4:00 PM</SelectItem>
@@ -60,12 +60,15 @@ export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect, trigger }
                     <Button
                         className="w-full mt-3 bg-blue-500 hover:bg-blue-600 text-white"
                         onClick={() => {
-                            onReminderSelect(`${selectedDate?.toDateString()} ${selectedTime}`)
+                            onReminderSelect(
+                                `${selectedDate?.toLocaleDateString()} ${selectedTime}`
+                            )
                             onOpenChange(false)
                             setShowCalendar(false)
                         }}
+                        disabled={!selectedDate}
                     >
-                        {t.save}
+                        {t("save")}
                     </Button>
                 </div>
             </DropdownMenu>
@@ -75,12 +78,14 @@ export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect, trigger }
     return (
         <DropdownMenu trigger={trigger || defaultTrigger} isOpen={isOpen} onOpenChange={onOpenChange}>
             <div className="p-2 w-60">
-                <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">{t.reminder}</div>
+                <div className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2 px-2">{t("reminder")}</div>
                 {reminderQuickOptions.map((option) => (
                     <button
                         key={option.label}
                         onClick={() => {
-                            onReminderSelect(`${option.value} ${option.time}`)
+                            onReminderSelect(
+                                `${option.value.toLocaleDateString()} ${option.time}`
+                            )
                             onOpenChange(false)
                         }}
                         className="w-full flex items-center justify-between px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
@@ -97,7 +102,7 @@ export function ReminderMenu({ isOpen, onOpenChange, onReminderSelect, trigger }
                     className="w-full flex items-center gap-3 px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
                 >
                     <CalendarIcon className="h-4 w-4" />
-                    {t.pickDateTime}
+                    {t("pickDateTime")}
                 </button>
             </div>
         </DropdownMenu>

@@ -2,10 +2,10 @@ import { Button } from "@/components/common/Button"
 import type { AccountMenuProps } from "@/types"
 import { User } from "lucide-react"
 import type { FC } from "react"
-import { useLanguage } from "@/hooks/useLanguage"
+import { useTranslation } from 'react-i18next';
 
 export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose, onViewAccount, onSignOut, user }) => {
-    const { t } = useLanguage()
+    const { t } = useTranslation()
     if (!isOpen) return null
 
     const handleSignOut = () => {
@@ -22,7 +22,7 @@ export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose, onViewAccou
                 <div className="text-right mb-4">
                     <Button variant="ghost" size="sm" onClick={handleSignOut}
                         className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
-                        {t.signOut}
+                        {t('signOut')}
                     </Button>
                 </div>
 
@@ -47,7 +47,7 @@ export const AccountMenu: FC<AccountMenuProps> = ({ isOpen, onClose, onViewAccou
                         onViewAccount()
                         onClose()
                     }}>
-                        {t.viewAccount}
+                        {t('viewAccount')}
                     </Button>
                 </div>
             </div>
