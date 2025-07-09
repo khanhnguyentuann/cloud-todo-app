@@ -11,18 +11,35 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: Due
     const [selectedDate, setSelectedDate] = useState<Date>()
     const { t } = useTranslation()
 
-    // 👉 Generate quick options dynamically
     const today = new Date()
     const tomorrow = new Date()
     tomorrow.setDate(today.getDate() + 1)
-    const nextWeek = new Date(today)
-    nextWeek.setDate(today.getDate() + 7)
+
+    const nextMonday = new Date(today)
+    nextMonday.setDate(today.getDate() + ((8 - today.getDay()) % 7 || 7))
+
+    const formatShortDay = (date: Date) =>
+        date.toLocaleDateString(undefined, { weekday: "short" })
+    const formatLongDate = (date: Date) =>
+        date.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })
 
     const dueDateQuickOptions = [
-        { label: t("today"), value: today, day: "Sun" },
-        { label: t("tomorrow"), value: tomorrow, day: "Mon" },
-        { label: t("nextWeek"), value: nextWeek, day: "Mon" },
+        { label: t("today"), value: today, day: formatShortDay(today) },
+        { label: t("tomorrow"), value: tomorrow, day: formatShortDay(tomorrow) },
+        { label: t("nextWeek"), value: nextMonday, day: formatShortDay(nextMonday) },
     ]
+
+    const handleSave = (date: Date) => {
+        if (date.toDateString() === today.toDateString()) {
+            onDateSelect(t("today"))
+        } else if (date.toDateString() === tomorrow.toDateString()) {
+            onDateSelect(t("tomorrow"))
+        } else {
+            onDateSelect(`Due ${formatLongDate(date)}`)
+        }
+        onOpenChange(false)
+        setShowCalendar(false)
+    }
 
     const defaultTrigger = (
         <Button
@@ -46,13 +63,7 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: Due
                     />
                     <Button
                         className="w-full mt-3 bg-blue-500 hover:bg-blue-600 text-white"
-                        onClick={() => {
-                            if (selectedDate) {
-                                onDateSelect(selectedDate.toDateString())
-                                onOpenChange(false)
-                                setShowCalendar(false)
-                            }
-                        }}
+                        onClick={() => selectedDate && handleSave(selectedDate)}
                     >
                         {t("save")}
                     </Button>
@@ -68,10 +79,7 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: Due
                 {dueDateQuickOptions.map((option) => (
                     <button
                         key={option.label}
-                        onClick={() => {
-                            onDateSelect(`${option.value}`)
-                            onOpenChange(false)
-                        }}
+                        onClick={() => handleSave(option.value)}
                         className="w-full flex items-center justify-between px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
                     >
                         <div className="flex items-center gap-3">
