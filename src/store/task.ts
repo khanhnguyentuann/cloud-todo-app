@@ -1,12 +1,10 @@
-import axios from "axios"
+import axios from "@/plugins/axios"
 import { toast } from "sonner"
 import type { Task, DynamoDBTask } from "@/types"
 
-const BASE_URL = import.meta.env.VITE_API_URL
-
 export async function fetchTasks(): Promise<Task[]> {
     try {
-        const response = await axios.get<DynamoDBTask[]>(`${BASE_URL}/tasks`)
+        const response = await axios.get<DynamoDBTask[]>("/tasks")
         const data = response.data
 
         if (!Array.isArray(data)) {
@@ -45,9 +43,9 @@ export async function createTask(newTask: {
             repeat: newTask.repeat ?? "",
         }
 
-        await axios.post<Task>(`${BASE_URL}/tasks`, payload)
+        await axios.post<Task>("/tasks", payload)
         toast.success("Created task successfully")
-        return null 
+        return null
     } catch (error) {
         toast.error("Failed to create task")
         console.error("❌ Create task error:", error)
