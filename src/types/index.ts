@@ -1,3 +1,7 @@
+// =============================================================================
+// CORE DOMAIN TYPES
+// =============================================================================
+
 import type {
     ReactNode,
     ComponentType,
@@ -6,7 +10,7 @@ import type {
     FC
 } from "react";
 
-// Core domain types
+// Domain Entities
 export interface User {
     id: string;
     name: string;
@@ -22,7 +26,21 @@ export interface Task {
     isImportant?: boolean;
 }
 
-// Database types
+export interface Notification {
+    id: number;
+    type: "task" | "reminder" | "system";
+    title: string;
+    message: string;
+    time: string;
+    isRead: boolean;
+    isImportant?: boolean;
+}
+
+// =============================================================================
+// DATA LAYER TYPES
+// =============================================================================
+
+// Database DTOs
 export interface DynamoDBTask {
     taskId: { S: string };
     title: { S: string };
@@ -31,10 +49,42 @@ export interface DynamoDBTask {
     isImportant: { BOOL: boolean };
 }
 
-// Common UI types
+// API Types
+export interface ApiResponse<T> {
+    data: T;
+    error?: string;
+    success: boolean;
+}
+
+// =============================================================================
+// BUSINESS LOGIC TYPES
+// =============================================================================
+
+// Form Data
+export interface TaskFormData {
+    text: string;
+    dueDate: string;
+    reminder: string;
+    repeat: string;
+}
+
+// Configuration
+export interface AppConfig {
+    isDarkMode: boolean;
+    viewMode: ViewMode;
+    sortBy: string;
+    activeView: string;
+}
+
+// =============================================================================
+// UI/PRESENTATION TYPES
+// =============================================================================
+
+// Common UI Enums & Unions
 export type ViewMode = "grid" | "list";
 export type MenuAlignment = "left" | "right";
 
+// UI Data Structures
 export interface QuickOption {
     label: string;
     value?: string;
@@ -54,9 +104,17 @@ export interface SidebarItem {
     active?: boolean;
 }
 
-// Component Props Interfaces
+export interface Section {
+    id: string;
+    label: string;
+    icon: React.ElementType;
+}
 
-// Header and Navigation
+// =============================================================================
+// LAYOUT COMPONENT PROPS
+// =============================================================================
+
+// Main Layout
 export interface HeaderProps {
     onMenuClick: () => void;
     onSettingsClick: () => void;
@@ -83,29 +141,11 @@ export interface ContentHeaderProps {
     onSortChange: (sort: string) => void;
 }
 
-// Account and Settings
-export interface AccountMenuProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onViewAccount: () => void;
-    onSignOut: () => void;
-    user: User | null;
-}
+// =============================================================================
+// FEATURE COMPONENT PROPS
+// =============================================================================
 
-export interface AccountViewProps {
-    isOpen: boolean;
-    onClose: () => void;
-    user: User | null;
-}
-
-export interface SettingsPanelProps {
-    isOpen: boolean;
-    onClose: () => void;
-    isDarkMode: boolean;
-    onToggleDarkMode: () => void;
-}
-
-// Task-related components
+// Task Management
 export interface TaskInputProps {
     value: string;
     onChange: (value: string) => void;
@@ -149,7 +189,45 @@ export interface TaskDetailSidebarProps {
     isMobile: boolean;
 }
 
-// Menu components
+// User Management
+export interface AccountMenuProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onViewAccount: () => void;
+    onSignOut: () => void;
+    user: User | null;
+}
+
+export interface AccountViewProps {
+    isOpen: boolean;
+    onClose: () => void;
+    user: User | null;
+}
+
+// Settings
+export interface SettingsPanelProps {
+    isOpen: boolean;
+    onClose: () => void;
+    isDarkMode: boolean;
+    onToggleDarkMode: () => void;
+}
+
+// Notifications
+export interface NotificationPanelProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+// Help System
+export interface HelpPanelProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+// =============================================================================
+// MENU COMPONENT PROPS
+// =============================================================================
+
 export interface BaseMenuProps {
     isOpen: boolean;
     onOpenChange: (open: boolean) => void;
@@ -173,7 +251,10 @@ export interface SortMenuProps extends BaseMenuProps {
     currentSort: string;
 }
 
-// Generic UI components
+// =============================================================================
+// GENERIC UI COMPONENT PROPS
+// =============================================================================
+
 export interface DropdownMenuProps {
     trigger: ReactNode;
     children: ReactNode;
@@ -188,38 +269,121 @@ export interface TooltipProps {
     disabled?: boolean;
 }
 
-// Utility types for better type safety
+export interface PanelHeaderProps {
+    title: string;
+    onBack: () => void;
+    onClose: () => void;
+}
+
+// =============================================================================
+// MOBILE-SPECIFIC COMPONENT PROPS
+// =============================================================================
+
+export interface MobileSidebarProps {
+    show: boolean;
+    sections: Section[];
+    activeSection: string;
+    onSelect: (id: string) => void;
+    onClose: () => void;
+    t: (key: string) => string;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
+}
+
+export interface SidebarHeaderProps {
+    onClose: () => void;
+    t: (key: string) => string;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
+}
+
+export interface SidebarNavProps {
+    sections: Section[];
+    activeSection: string;
+    onSelect: (id: string) => void;
+}
+
+// =============================================================================
+// SPECIALIZED CONTENT COMPONENT PROPS
+// =============================================================================
+
+export interface FeatureCardProps {
+    icon: React.ElementType;
+    title: string;
+    desc: string;
+}
+
+export interface ShortcutProps {
+    keyCombo: string;
+    desc: string;
+}
+
+export interface FAQProps {
+    question: string;
+    answer: string;
+}
+
+export interface ContactSupportProps {
+    icon: React.ElementType;
+    contact: string;
+}
+
+// =============================================================================
+// EVENT HANDLER TYPES
+// =============================================================================
+
 export type TaskToggleHandler = (id: number, e?: MouseEvent<HTMLButtonElement>) => void;
 export type TaskSelectHandler = (task: Task) => void;
 export type ViewChangeHandler = (view: string) => void;
 export type SortChangeHandler = (sort: string) => void;
 
-// Event handler types
+// Grouped Event Handlers
 export interface TaskEventHandlers {
     onToggle: TaskToggleHandler;
     onToggleImportant: TaskToggleHandler;
     onTaskSelect: TaskSelectHandler;
 }
 
-// Form-related types
-export interface TaskFormData {
-    text: string;
-    dueDate: string;
-    reminder: string;
-    repeat: string;
+// =============================================================================
+// UTILITY TYPES FOR FUTURE EXTENSIBILITY
+// =============================================================================
+
+// Generic base types for consistent interfaces
+export interface BaseEntity {
+    id: string | number;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
-// API response types
-export interface ApiResponse<T> {
-    data: T;
-    error?: string;
-    success: boolean;
+export interface BasePanelProps {
+    isOpen: boolean;
+    onClose: () => void;
 }
 
-// Configuration types
-export interface AppConfig {
-    isDarkMode: boolean;
-    viewMode: ViewMode;
-    sortBy: string;
-    activeView: string;
+export interface BaseMenuOptions {
+    label: string;
+    value: string;
+    icon?: React.ElementType;
+    disabled?: boolean;
+}
+
+// Generic API patterns
+export interface PaginatedResponse<T> {
+    data: T[];
+    pagination: {
+        page: number;
+        limit: number;
+        total: number;
+        totalPages: number;
+    };
+}
+
+// Filter value types
+export type FilterValue = string | number | boolean | Date | string[] | number[];
+
+export interface FilterOptions {
+    search?: string;
+    sortBy?: string;
+    sortOrder?: 'asc' | 'desc';
+    filters?: Record<string, FilterValue>;
 }

@@ -5,68 +5,7 @@ import {
     X, Search, BookOpen, Star, Calendar, Keyboard, MessageCircle, Mail, Phone, ChevronLeft
 } from "lucide-react"
 import { useTranslation } from "react-i18next"
-
-interface HelpPanelProps {
-    isOpen: boolean
-    onClose: () => void
-}
-
-interface Section {
-    id: string
-    label: string
-    icon: React.ElementType
-}
-
-interface MobileSidebarProps {
-    show: boolean
-    sections: Section[]
-    activeSection: string
-    onSelect: (id: string) => void
-    onClose: () => void
-    t: (key: string) => string
-    searchQuery: string
-    setSearchQuery: (query: string) => void
-}
-
-interface SidebarHeaderProps {
-    onClose: () => void
-    t: (key: string) => string
-    searchQuery: string
-    setSearchQuery: (query: string) => void
-}
-
-interface SidebarNavProps {
-    sections: Section[]
-    activeSection: string
-    onSelect: (id: string) => void
-}
-
-interface PanelHeaderProps {
-    title: string
-    onBack: () => void
-    onClose: () => void
-}
-
-interface FeatureCardProps {
-    icon: React.ElementType
-    title: string
-    desc: string
-}
-
-interface ShortcutProps {
-    keyCombo: string
-    desc: string
-}
-
-interface FAQProps {
-    question: string
-    answer: string
-}
-
-interface ContactSupportProps {
-    icon: React.ElementType
-    contact: string
-}
+import type { ContactSupportProps, FAQProps, FeatureCardProps, HelpPanelProps, MobileSidebarProps, PanelHeaderProps, Section, ShortcutProps, SidebarHeaderProps, SidebarNavProps } from "@/types"
 
 export function HelpPanel({ isOpen, onClose }: HelpPanelProps) {
     const { t } = useTranslation()

@@ -1,22 +1,8 @@
 import { Button } from "@/components/common/Button"
+import type { Notification, NotificationPanelProps } from "@/types"
 import { X, Check, Clock, Star, Trash2 } from "lucide-react"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
-
-interface Notification {
-    id: number
-    type: "task" | "reminder" | "system"
-    title: string
-    message: string
-    time: string
-    isRead: boolean
-    isImportant?: boolean
-}
-
-interface NotificationPanelProps {
-    isOpen: boolean
-    onClose: () => void
-}
 
 export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
     const { t } = useTranslation()
