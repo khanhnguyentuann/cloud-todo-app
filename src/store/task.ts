@@ -1,10 +1,11 @@
 import axios from "@/plugins/axios"
 import { toast } from "sonner"
+import { API_ENDPOINTS } from "@/store/common/endpoint"
 import type { Task, DynamoDBTask } from "@/types"
 
 export async function fetchTasks(): Promise<Task[]> {
     try {
-        const response = await axios.get<DynamoDBTask[]>("/tasks")
+        const response = await axios.get<DynamoDBTask[]>(API_ENDPOINTS.TASK.FETCH_TASKS)
         const data = response.data
 
         if (!Array.isArray(data)) {
@@ -43,7 +44,7 @@ export async function createTask(newTask: {
             repeat: newTask.repeat ?? "",
         }
 
-        await axios.post<Task>("/tasks", payload)
+        await axios.post<Task>(API_ENDPOINTS.TASK.CREATE_TASK, payload)
         toast.success("Created task successfully")
         return null
     } catch (error) {
