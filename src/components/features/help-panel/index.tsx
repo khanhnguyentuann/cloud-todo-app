@@ -12,7 +12,7 @@ import { Features } from "@/components/features/help-panel/Features"
 import { Shortcuts } from "@/components/features/help-panel/Shortcuts"
 import { FAQ } from "@/components/features/help-panel/FAQ"
 
-export function HelpPanel({ isOpen, onClose }: HelpPanelProps) {
+export default function HelpPanel({ isOpen, onClose }: HelpPanelProps) {
     const { t } = useTranslation()
     const [activeSection, setActiveSection] = useState("getting-started")
     const [searchQuery, setSearchQuery] = useState("")
