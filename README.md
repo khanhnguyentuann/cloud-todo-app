@@ -19,7 +19,7 @@
 
 ## 🚀 Getting Started
 
-\`\`\`bash
+```bash
 # Clone the project
 git clone https://github.com/khanhnguyentuann/cloud-todo-app.git
 
@@ -33,7 +33,8 @@ cp .env.example .env
 
 # Start local dev server
 npm run dev
-\`\`\`
+```
+
 
 App will be available at [http://localhost:5173](http://localhost:5173)
 
@@ -41,7 +42,7 @@ App will be available at [http://localhost:5173](http://localhost:5173)
 
 ## 🗂 Project Structure
 
-\`\`\`
+```
 src/
 ├── App.tsx               # Main entry component
 ├── main.tsx              # Mounts React to DOM
@@ -52,7 +53,7 @@ src/
 ├── types/                # Centralized TypeScript types
 ├── utils/                # Helpers (className, date localization)
 └── assets/styles/        # Tailwind entry
-\`\`\`
+```
 
 ---
 
