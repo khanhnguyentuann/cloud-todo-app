@@ -57,14 +57,24 @@ export default function AccountView({ isOpen, onClose }: AccountViewProps) {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-black bg-opacity-30" onClick={onClose} />
-            <div className="relative w-full max-w-4xl h-[90vh] bg-white dark:bg-gray-700 shadow-xl rounded-lg flex flex-col lg:flex-row overflow-hidden border border-amber-300 dark:border-gray-600">
+
+            <div className="relative w-full max-w-sm md:max-w-md lg:max-w-3xl max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-700 shadow-xl rounded-lg flex flex-col lg:flex-row overflow-hidden border border-amber-300 dark:border-gray-600">
+                {/* MOBILE SIDEBAR */}
                 <div className={`lg:hidden ${showSidebar ? "flex" : "hidden"} flex-col w-full h-full bg-amber-50 dark:bg-gray-800`}>
-                    <div className="p-4 border-b border-amber-300 dark:border-gray-600">
+                    <div className="flex items-center justify-between p-4 border-b border-amber-300 dark:border-gray-600">
                         <h2 className="text-lg font-semibold">{t("myAccount")}</h2>
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={onClose}
+                            className="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                        >
+                            <X className="h-4 w-4" />
+                        </Button>
                     </div>
-                    <nav className="flex-1 p-4">
+                    <nav className="flex-1 p-4 overflow-y-auto">
                         <ul className="space-y-1">
-                            {tabs.map((tab) => (
+                            {tabs.map(tab => (
                                 <li key={tab.id}>
                                     <button
                                         onClick={() => {
@@ -84,26 +94,40 @@ export default function AccountView({ isOpen, onClose }: AccountViewProps) {
                     </nav>
                 </div>
 
-                <div className={`lg:hidden ${showSidebar ? "hidden" : "flex"} flex-col w-full h-full`}>
-                    <div className="flex items-center justify-between p-4 border-b border-amber-300 dark:border-gray-600">
-                        <Button variant="ghost" size="sm" onClick={() => setShowSidebar(true)}>
-                            <ChevronLeft className="h-4 w-4" />
-                        </Button>
-                        <h2 className="text-lg font-semibold">{tabs.find((s) => s.id === activeTab)?.label}</h2>
-                        <Button variant="ghost" size="sm" onClick={onClose}>
-                            <X className="h-4 w-4" />
-                        </Button>
+                {/* MOBILE CONTENT */}
+                <div className={`lg:hidden ${showSidebar ? "hidden" : "flex"} flex-col w-full h-full overflow-y-auto`}>
+                    <div className="sticky top-0 z-10 bg-white dark:bg-gray-700 p-4 border-b border-amber-300 dark:border-gray-600">
+                        <div className="flex items-center justify-between">
+                            <Button variant="ghost" size="sm" onClick={() => setShowSidebar(true)}>
+                                <ChevronLeft className="h-4 w-4" />
+                            </Button>
+                            <h2 className="text-lg font-semibold">{tabs.find(s => s.id === activeTab)?.label}</h2>
+                            <Button variant="ghost" size="sm" onClick={onClose}>
+                                <X className="h-4 w-4" />
+                            </Button>
+                        </div>
                     </div>
-                    <div className="flex-1 p-4 overflow-y-auto">{renderTabContent()}</div>
+                    <div className="p-4">{renderTabContent()}</div>
                 </div>
 
+                {/* DESKTOP SIDEBAR */}
                 <div className="hidden lg:flex w-64 flex-col bg-amber-50 dark:bg-gray-800 border-r border-amber-300 dark:border-gray-600">
-                    <div className="p-4 border-b">
-                        <h2 className="text-lg font-semibold">{t("myAccount")}</h2>
+                    <div className="sticky top-0 z-10 bg-amber-50 dark:bg-gray-800 p-4 border-b border-amber-300 dark:border-gray-600">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{t("myAccount")}</h2>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={onClose}
+                                className="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                            >
+                                <X className="h-4 w-4" />
+                            </Button>
+                        </div>
                     </div>
-                    <nav className="flex-1 p-4">
+                    <nav className="flex-1 overflow-y-auto p-4">
                         <ul className="space-y-1">
-                            {tabs.map((tab) => (
+                            {tabs.map(tab => (
                                 <li key={tab.id}>
                                     <button
                                         onClick={() => setActiveTab(tab.id)}
@@ -119,7 +143,14 @@ export default function AccountView({ isOpen, onClose }: AccountViewProps) {
                         </ul>
                     </nav>
                 </div>
-                <div className="hidden lg:flex flex-1 flex-col p-6 overflow-y-auto">{renderTabContent()}</div>
+
+                {/* DESKTOP CONTENT */}
+                <div className="hidden lg:flex flex-1 flex-col overflow-y-auto">
+                    <div className="sticky top-0 z-10 bg-white dark:bg-gray-700 p-6 border-b border-amber-300 dark:border-gray-600">
+                        <h2 className="text-lg font-semibold">{tabs.find(s => s.id === activeTab)?.label}</h2>
+                    </div>
+                    <div className="p-6">{renderTabContent()}</div>
+                </div>
             </div>
         </div>
     )

@@ -1,7 +1,22 @@
-import Home from "@/pages"
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
+import GlobalLayout from "@/layouts/GlobalLayout"
+import MyDay from "@/pages/MyDay"
+import Important from "@/pages/Important"
+import Tasks from "@/pages/Tasks"
+import Planned from "./pages/Planned"
 
-function App() {
-  return <Home />
+export default function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<GlobalLayout />}>
+          <Route index element={<Navigate to="/my-day" />} />
+          <Route path="my-day" element={<MyDay />} />
+          <Route path="important" element={<Important />} />
+          <Route path="planned" element={<Planned />} />
+          <Route path="tasks" element={<Tasks />} />
+        </Route>
+      </Routes>
+    </Router>
+  )
 }
-
-export default App

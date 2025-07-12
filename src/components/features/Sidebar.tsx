@@ -1,25 +1,28 @@
 import { type FC } from "react";
 import { Button } from "@/components/common/Button";
-import type { SidebarProps } from "@/types";
-import { Plus, X, Star, Calendar, UserCheck, CheckSquare, Sun, Flag } from "lucide-react";
+import { X, Star, Calendar, CheckSquare, Sun } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Link, useLocation } from "react-router-dom";
+
+type SidebarProps = {
+    isOpen: boolean
+    onClose: () => void
+    isMobile: boolean
+};
 
 export const Sidebar: FC<SidebarProps> = ({
     isOpen,
     onClose,
-    activeView,
-    onViewChange,
     isMobile
 }) => {
     const { t } = useTranslation();
+    const location = useLocation();
 
     const sidebarItems = [
-        { icon: Sun, key: "myDay", count: 1 },
-        { icon: Star, key: "important", count: 0 },
-        { icon: Calendar, key: "planned", count: 1 },
-        { icon: UserCheck, key: "assignedToMe", count: 0 },
-        { icon: Flag, key: "flaggedEmail", count: 0 },
-        { icon: CheckSquare, key: "tasks", count: 1 },
+        { icon: Sun, key: "myDay", count: 1, path: "/my-day" },
+        { icon: Star, key: "important", count: 0, path: "/important" },
+        { icon: Calendar, key: "planned", count: 1, path: "/planned" },
+        { icon: CheckSquare, key: "tasks", count: 1, path: "/tasks" },
     ];
 
     if (!isMobile && !isOpen) return null;
@@ -52,17 +55,20 @@ export const Sidebar: FC<SidebarProps> = ({
                     <ul className="space-y-1">
                         {sidebarItems.map((item) => {
                             const label = t(item.key);
+                            const isActive = location.pathname === item.path;
+
                             return (
                                 <li key={item.key}>
-                                    <button
-                                        onClick={() => {
-                                            onViewChange(label);
-                                            if (isMobile) onClose();
-                                        }}
-                                        className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-sm transition-colors ${activeView === label
+                                    <Link
+                                        to={item.path}
+                                        onClick={() => { if (isMobile) onClose(); }}
+                                        className={`
+                                            w-full flex items-center justify-between px-3 py-2 rounded-md text-sm transition-colors
+                                            ${isActive
                                                 ? "bg-amber-300 dark:bg-blue-500 text-orange-600 dark:text-white font-medium"
                                                 : "text-gray-800 dark:text-gray-200 hover:bg-amber-100 dark:hover:bg-gray-700"
-                                            }`}
+                                            }
+                                        `}
                                     >
                                         <div className="flex items-center gap-3">
                                             <item.icon className="h-4 w-4" />
@@ -73,22 +79,12 @@ export const Sidebar: FC<SidebarProps> = ({
                                                 {item.count}
                                             </span>
                                         )}
-                                    </button>
+                                    </Link>
                                 </li>
                             );
                         })}
                     </ul>
                 </nav>
-
-                <div className="p-4 border-t border-amber-300 dark:border-gray-700">
-                    <Button
-                        variant="ghost"
-                        className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
-                    >
-                        <Plus className="h-4 w-4 mr-2" />
-                        {t("newList")}
-                    </Button>
-                </div>
             </aside>
 
             {isMobile && isOpen && (
