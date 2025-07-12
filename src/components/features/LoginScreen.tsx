@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Button } from "@/components/common/Button"
 import { Chrome, Globe, Loader2, Moon, Sun } from "lucide-react"
-import { useDarkMode } from "../../hooks/useDarkMode"
+import { useDarkMode } from "@/hooks/useDarkMode"
 import { useTranslation } from "react-i18next"
 
 interface LoginScreenProps {
