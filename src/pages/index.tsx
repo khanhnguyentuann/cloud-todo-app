@@ -17,9 +17,11 @@ import { NotificationPanel } from "@/components/features/NotificationPanel"
 import { AccountView } from "@/components/features/AccountView"
 import { LoginScreen } from "@/components/features/LoginScreen"
 import { useAuth } from "@/hooks/useAuth"
+import { getCurrentDate } from "@/utils/getCurrentDate"
+import { sortTasks } from "@/utils/sortTask"
 
 export default function Component() {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
     const [tasks, setTasks] = useState<Task[]>([])
     const [inputValue, setInputValue] = useState("")
     const [dueDate, setDueDate] = useState("")
@@ -54,16 +56,6 @@ export default function Component() {
         setTaskDetailSidebarOpen(false)
     }, [isMobile])
 
-    // Helper for date
-    const getCurrentDate = () => {
-        return new Date().toLocaleDateString(i18n.language, {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-        })
-    }
-
     const addTask = async () => {
         if (inputValue.trim() !== "") {
             try {
@@ -83,25 +75,6 @@ export default function Component() {
             } catch (err) {
                 console.error("Failed to create task:", err)
             }
-        }
-    }
-
-    const sortTasks = (tasks: Task[], sortType: string): Task[] => {
-        const tasksCopy = [...tasks]
-        switch (sortType) {
-            case "Important":
-                return tasksCopy.sort((a, b) => (a.isImportant === b.isImportant ? 0 : a.isImportant ? -1 : 1))
-            case "Due date":
-                return tasksCopy.sort((a, b) => {
-                    if (!a.dueDate && !b.dueDate) return 0
-                    if (!a.dueDate) return 1
-                    if (!b.dueDate) return -1
-                    return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
-                })
-            case "Alphabetical":
-                return tasksCopy.sort((a, b) => a.text.localeCompare(b.text))
-            default:
-                return tasksCopy.sort((a, b) => a.id - b.id)
         }
     }
 

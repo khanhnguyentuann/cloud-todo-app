@@ -5,6 +5,8 @@ import { CalendarIcon } from "lucide-react"
 import type { DueDateMenuProps } from "@/types"
 import { DropdownMenu } from "@/components/common/DropdownMenuBase"
 import { useTranslation } from "react-i18next"
+import { formatLongDate } from "@/utils/formatDate"
+import { getQuickDueDateOptions } from "@/utils/getQuickDueDates"
 
 export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: DueDateMenuProps) {
     const [showCalendar, setShowCalendar] = useState(false)
@@ -12,31 +14,19 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: Due
     const { t } = useTranslation()
 
     const today = new Date()
-    const tomorrow = new Date()
-    tomorrow.setDate(today.getDate() + 1)
-
-    const nextMonday = new Date(today)
-    nextMonday.setDate(today.getDate() + ((8 - today.getDay()) % 7 || 7))
-
-    const formatShortDay = (date: Date) =>
-        date.toLocaleDateString(undefined, { weekday: "short" })
-    const formatLongDate = (date: Date) =>
-        date.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })
-
-    const dueDateQuickOptions = [
-        { label: t("today"), value: today, day: formatShortDay(today) },
-        { label: t("tomorrow"), value: tomorrow, day: formatShortDay(tomorrow) },
-        { label: t("nextWeek"), value: nextMonday, day: formatShortDay(nextMonday) },
-    ]
+    const dueDateQuickOptions = getQuickDueDateOptions(today, t)
 
     const handleSave = (date: Date) => {
-        if (date.toDateString() === today.toDateString()) {
-            onDateSelect(t("today"))
-        } else if (date.toDateString() === tomorrow.toDateString()) {
-            onDateSelect(t("tomorrow"))
+        const matchedOption = dueDateQuickOptions.find(opt =>
+            opt.value.toDateString() === date.toDateString()
+        )
+
+        if (matchedOption) {
+            onDateSelect(matchedOption.label)
         } else {
             onDateSelect(`Due ${formatLongDate(date)}`)
         }
+
         onOpenChange(false)
         setShowCalendar(false)
     }
