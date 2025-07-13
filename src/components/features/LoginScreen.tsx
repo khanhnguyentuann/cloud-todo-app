@@ -3,6 +3,8 @@ import { Button } from "@/components/common/Button"
 import { Chrome, Globe, Loader2, Moon, Sun } from "lucide-react"
 import { useDarkMode } from "@/hooks/useDarkMode"
 import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 interface LoginScreenProps {
     onSignIn: () => Promise<void>
@@ -22,12 +24,17 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
 
     const currentLang = i18n.language as string
 
-    const handleSignIn = async () => {
+    const handleGoogleSignIn = () => {
+        toast.info("Coming soon!", { position: "top-center" })
+    }
+
+    const handleDemoLogin = async () => {
         setIsLoading(true)
         try {
             await onSignIn()
         } catch (error) {
-            console.error("Sign in failed:", error)
+            console.error("Demo sign in failed:", error)
+            toast.error("Demo login failed", { position: "top-center" })
         } finally {
             setIsLoading(false)
         }
@@ -86,24 +93,16 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
             </div>
 
             <div className="w-full max-w-md">
-                {/* Logo and Title */}
                 <div className="text-center mb-8">
                     <div className="w-20 h-20 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <div className="w-12 h-12 bg-orange-500 dark:bg-blue-500 rounded-lg flex items-center justify-center">
-                            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    fillRule="evenodd"
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                    clipRule="evenodd"
-                                />
-                            </svg>
-                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="text-orange-500 dark:text-blue-400 size-20">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        </svg>
                     </div>
                     <h1 className="text-3xl font-bold text-white mb-2">{t("appName")}</h1>
                     <p className="text-orange-100 dark:text-gray-300">{t("loginWelcome")}</p>
                 </div>
 
-                {/* Login Card */}
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-orange-200 dark:border-gray-700">
                     <div className="text-center mb-6">
                         <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
@@ -114,21 +113,12 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
 
                     {/* Google Sign In Button */}
                     <Button
-                        onClick={handleSignIn}
+                        onClick={handleGoogleSignIn}
                         disabled={isLoading}
                         className="w-full h-12 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600 shadow-sm transition-all duration-200 hover:shadow-md"
                     >
-                        {isLoading ? (
-                            <>
-                                <Loader2 className="h-5 w-5 animate-spin mr-3" />
-                                {t("signingIn")}
-                            </>
-                        ) : (
-                            <>
-                                <Chrome className="h-5 w-5 mr-3 text-blue-500" />
-                                {t("signInWithGoogle")}
-                            </>
-                        )}
+                        <Chrome className="h-5 w-5 mr-3 text-blue-500" />
+                        {t("signInWithGoogle")}
                     </Button>
 
                     {/* Divider */}
@@ -147,16 +137,22 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
                     <div className="text-center">
                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{t("demoMode")}</p>
                         <Button
-                            onClick={handleSignIn}
+                            onClick={handleDemoLogin}
                             disabled={isLoading}
                             variant="outline"
                             className="w-full border-orange-300 dark:border-blue-500 text-orange-600 dark:text-blue-400 hover:bg-orange-50 dark:hover:bg-blue-900/20 bg-transparent"
                         >
-                            {t("tryDemo")}
+                            {isLoading ? (
+                                <>
+                                    <Loader2 className="h-5 w-5 animate-spin mr-3" />
+                                    {t("signingIn")}
+                                </>
+                            ) : (
+                                t("tryDemo")
+                            )}
                         </Button>
                     </div>
 
-                    {/* Footer */}
                     <div className="mt-8 text-center text-xs text-gray-500 dark:text-gray-400">
                         <p>
                             {t("termsText")}{" "}
