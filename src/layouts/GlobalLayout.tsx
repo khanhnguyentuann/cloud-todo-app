@@ -15,6 +15,8 @@ import { LoginScreen } from "@/components/features/LoginScreen"
 import { useAuth } from "@/hooks/useAuth"
 import type { Task } from "@/types"
 import { TaskContext } from "@/context/TaskContext"
+import { Loader2 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 export default function GlobalLayout() {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -36,6 +38,7 @@ export default function GlobalLayout() {
     const [unreadNotificationCount] = useState(2)
     const [accountViewOpen, setAccountViewOpen] = useState(false)
     const { isAuthenticated, isLoading, signInWithGoogle, signOut, user } = useAuth()
+    const { t } = useTranslation()
 
     useEffect(() => {
         fetchTasks()
@@ -85,8 +88,14 @@ export default function GlobalLayout() {
     }
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
+            <div className="flex flex-col items-center">
+                <Loader2 className="h-12 w-12 animate-spin text-orange-500" />
+                <p className="mt-4 text-gray-700 dark:text-gray-300 animate-pulse">{t("loadingMessage")}</p>
+            </div>
+        </div>
     }
+
 
     if (!isAuthenticated) {
         return <LoginScreen onSignIn={signInWithGoogle} />

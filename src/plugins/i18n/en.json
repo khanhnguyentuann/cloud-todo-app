@@ -218,5 +218,6 @@
   "termsOfService": "Terms of Service",
   "and": "and",
   "privacyPolicy": "Privacy Policy",
-  "noTasksFound": "No tasks found"
+  "noTasksFound": "No tasks found",
+  "loadingMessage": "Loading data, please wait..."
 }

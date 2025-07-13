@@ -197,5 +197,6 @@
   "termsOfService": "利用規約",
   "and": "と",
   "privacyPolicy": "プライバシーポリシー",
-  "noTasksFound": "タスクが見つかりません"
+  "noTasksFound": "タスクが見つかりません",
+  "loadingMessage": "データを読み込み中です。しばらくお待ちください..."
 }

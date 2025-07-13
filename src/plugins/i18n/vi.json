@@ -197,5 +197,7 @@
   "termsOfService": "Điều khoản Dịch vụ",
   "and": "và",
   "privacyPolicy": "Chính sách Bảo mật",
-  "noTasksFound": "Không tìm thấy công việc nào"
+  "noTasksFound": "Không tìm thấy công việc nào",
+  "loadingMessage": "Đang tải dữ liệu, vui lòng chờ..."
+
 }
