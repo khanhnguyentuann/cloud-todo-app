@@ -7,7 +7,7 @@ import Planned from "./pages/Planned"
 
 export default function App() {
   return (
-    <Router>
+    <Router basename="/cloud-todo-app">
       <Routes>
         <Route path="/" element={<GlobalLayout />}>
           <Route index element={<Navigate to="/my-day" />} />
