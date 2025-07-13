@@ -5,9 +5,11 @@ import { useDarkMode } from "@/hooks/useDarkMode"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { useAuth } from "@/hooks/useAuth"
+import type { User } from "@/types" // import type User
 
 interface LoginScreenProps {
-    onSignIn: () => Promise<void>
+    onSignIn: () => Promise<User | null | void>
 }
 
 export function LoginScreen({ onSignIn }: LoginScreenProps) {
@@ -15,6 +17,12 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
     const [showLanguageMenu, setShowLanguageMenu] = useState(false)
     const { isDarkMode, toggleDarkMode } = useDarkMode()
     const { t, i18n } = useTranslation()
+    const { setIsAuthenticated, setUser } = useAuth()
+    const currentLang = i18n.language as string
+
+    const handleGoogleSignIn = () => {
+        toast.info("Coming soon!", { position: "top-center" })
+    }
 
     const languages = [
         { code: "en", name: "English", flag: "🇺🇸" },
@@ -22,16 +30,14 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
         { code: "vi", name: "Tiếng Việt", flag: "🇻🇳" },
     ]
 
-    const currentLang = i18n.language as string
-
-    const handleGoogleSignIn = () => {
-        toast.info("Coming soon!", { position: "top-center" })
-    }
-
     const handleDemoLogin = async () => {
         setIsLoading(true)
         try {
-            await onSignIn()
+            const user = await onSignIn()
+            if (user) {
+                setUser(user)
+                setIsAuthenticated(true)
+            }
         } catch (error) {
             console.error("Demo sign in failed:", error)
             toast.error("Demo login failed", { position: "top-center" })
@@ -95,8 +101,8 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
             <div className="w-full max-w-md">
                 <div className="text-center mb-8">
                     <div className="w-20 h-20 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="text-orange-500 dark:text-blue-400 size-20">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="text-orange-500 dark:text-blue-400 size-20">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
                         </svg>
                     </div>
                     <h1 className="text-3xl font-bold text-white mb-2">{t("appName")}</h1>
@@ -111,7 +117,6 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
                         <p className="text-gray-600 dark:text-gray-400">{t("signInToContinue")}</p>
                     </div>
 
-                    {/* Google Sign In Button */}
                     <Button
                         onClick={handleGoogleSignIn}
                         disabled={isLoading}
@@ -121,7 +126,6 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
                         {t("signInWithGoogle")}
                     </Button>
 
-                    {/* Divider */}
                     <div className="relative my-6">
                         <div className="absolute inset-0 flex items-center">
                             <div className="w-full border-t border-gray-300 dark:border-gray-600" />
@@ -133,7 +137,6 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
                         </div>
                     </div>
 
-                    {/* Demo Login */}
                     <div className="text-center">
                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{t("demoMode")}</p>
                         <Button

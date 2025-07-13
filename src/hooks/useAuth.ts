@@ -7,11 +7,18 @@ export function useAuth() {
         name: string
         email: string
         avatar?: string
+        phone?: string
+        timezone?: string
+        preferences?: {
+            emailNotifications: boolean
+            pushNotifications: boolean
+            weeklyDigest: boolean
+            taskReminders: boolean
+        }
     } | null>(null)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        // Check for saved auth state
         const savedAuth = localStorage.getItem("auth")
         const savedUser = localStorage.getItem("user")
 
@@ -22,25 +29,7 @@ export function useAuth() {
         setIsLoading(false)
     }, [])
 
-    const signInWithGoogle = async () => {
-        setIsLoading(true)
-
-        // Mock Google Sign-In - replace with actual Google API later
-        await new Promise((resolve) => setTimeout(resolve, 1500)) // Simulate API call
-
-        const mockUser = {
-            id: "mock-user-123",
-            name: "Khanh Nguyễn",
-            email: "khanhnguyentuann@gmail.com",
-            avatar: "https://lh3.googleusercontent.com/a/default-user=s96-c",
-        }
-
-        setUser(mockUser)
-        setIsAuthenticated(true)
-        localStorage.setItem("auth", "true")
-        localStorage.setItem("user", JSON.stringify(mockUser))
-        setIsLoading(false)
-    }
+    const signInWithGoogle = async () => {}
 
     const signOut = () => {
         setUser(null)
@@ -55,5 +44,7 @@ export function useAuth() {
         isLoading,
         signInWithGoogle,
         signOut,
+        setIsAuthenticated,
+        setUser
     }
 }

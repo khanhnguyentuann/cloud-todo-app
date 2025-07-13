@@ -17,6 +17,7 @@ import type { Task } from "@/types"
 import { TaskContext } from "@/context/TaskContext"
 import { Loader2 } from "lucide-react"
 import { useTranslation } from "react-i18next"
+import { loginDemoUser } from "@/store/user"
 
 export default function GlobalLayout() {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -37,7 +38,7 @@ export default function GlobalLayout() {
     const [notificationOpen, setNotificationOpen] = useState(false)
     const [unreadNotificationCount] = useState(2)
     const [accountViewOpen, setAccountViewOpen] = useState(false)
-    const { isAuthenticated, isLoading, signInWithGoogle, signOut, user } = useAuth()
+    const { isAuthenticated, isLoading, signOut, user } = useAuth()
     const { t } = useTranslation()
 
     useEffect(() => {
@@ -98,7 +99,7 @@ export default function GlobalLayout() {
 
 
     if (!isAuthenticated) {
-        return <LoginScreen onSignIn={signInWithGoogle} />
+        return <LoginScreen onSignIn={loginDemoUser} />
     }
 
     return (

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { X, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/common/Button"
@@ -9,18 +9,34 @@ import { AccountUsageTab } from "@/components/features/account-view/AccountUsage
 import { AccountPrivacyTab } from "@/components/features/account-view/AccountPrivacyTab"
 import { AccountBillingTab } from "@/components/features/account-view/AccountBillingTab"
 import type { AccountViewProps, ProfileData, Preferences } from "./types"
+import { useAuth } from "@/hooks/useAuth"
 
 export default function AccountView({ isOpen, onClose }: AccountViewProps) {
     const { t } = useTranslation()
+    const { user } = useAuth() // 🔥 lấy user từ context
     const [activeTab, setActiveTab] = useState("profile")
     const [showSidebar, setShowSidebar] = useState(true)
     const [isEditing, setIsEditing] = useState(false)
+
     const [profileData, setProfileData] = useState<ProfileData>({
-        name: "Khanh Nguyễn",
-        email: "khanhnguyentuann@gmail.com",
-        phone: "+84 123 456 789",
-        timezone: "Asia/Ho_Chi_Minh",
+        name: "",
+        email: "",
+        phone: "",
+        timezone: ""
     })
+
+    useEffect(() => {
+        if (user) {
+            setProfileData({
+                name: user.name ?? "",
+                email: user.email ?? "",
+                phone: user.phone ?? "",
+                timezone: user.timezone ?? ""
+            })
+        }
+    }, [user])
+
+
     const [preferences, setPreferences] = useState<Preferences>({
         emailNotifications: true,
         pushNotifications: true,
@@ -40,7 +56,17 @@ export default function AccountView({ isOpen, onClose }: AccountViewProps) {
     const renderTabContent = () => {
         switch (activeTab) {
             case "profile":
-                return <AccountProfileTab {...{ profileData, setProfileData, isEditing, setIsEditing, preferences, setPreferences, handleSaveProfile }} />
+                return (
+                    <AccountProfileTab
+                        profileData={profileData}
+                        setProfileData={setProfileData}
+                        isEditing={isEditing}
+                        setIsEditing={setIsEditing}
+                        preferences={preferences}
+                        setPreferences={setPreferences}
+                        handleSaveProfile={handleSaveProfile}
+                    />
+                )
             case "subscription":
                 return <AccountSubscriptionTab />
             case "usage":
