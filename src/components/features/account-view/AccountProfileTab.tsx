@@ -3,7 +3,7 @@ import { Button } from "@/components/common/Button"
 import { Input } from "@/components/common/Input"
 import { Switch } from "@/components/common/Switch"
 import { useTranslation } from "react-i18next"
-import type { ProfileData, Preferences } from "./types"
+import type { ProfileData, Preferences } from "@/types/features/account"
 
 type Props = {
     profileData: ProfileData

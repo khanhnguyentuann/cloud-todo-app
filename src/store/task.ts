@@ -1,6 +1,6 @@
-import axios from "@/plugins/axios"
+import axios from "@/lib/axios"
 import { toast } from "sonner"
-import { API_ENDPOINTS } from "@/store/common/endpoint"
+import { API_ENDPOINTS } from "@/store/api/endpoints"
 import type { Task, DynamoDBTask } from "@/types"
 
 export async function fetchTasks(): Promise<Task[]> {
