@@ -203,5 +203,16 @@
   "comingSoon": "Sắp ra mắt!",
   "demoLoginFailed": "Đăng nhập demo thất bại",
   "termsOfServiceComingSoon": "Điều khoản Dịch vụ - Sắp ra mắt!",
-  "privacyPolicyComingSoon": "Chính sách Bảo mật - Sắp ra mắt!"
+  "privacyPolicyComingSoon": "Chính sách Bảo mật - Sắp ra mắt!",
+  "allTasks": "Tất cả nhiệm vụ",
+
+  "pageNotFoundTitle": "Không tìm thấy trang",
+  "pageNotFoundDescription": "Trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển.",
+  "pageNotFoundSubtext": "Đừng lo lắng, hãy để chúng tôi đưa bạn trở lại đúng hướng!",
+  "goToHome": "Về trang chủ",
+  "goBack": "Quay lại",
+  "helpfulLinks": "Liên kết hữu ích",
+  "errorCode": "Mã lỗi",
+  "needHelp": "Cần trợ giúp?",
+  "loginSuccess": "Đăng nhập thành công!"
 }

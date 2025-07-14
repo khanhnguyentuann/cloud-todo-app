@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { useAuth } from "@/hooks/useAuth"
+import { LoadingScreen } from "@/components/common/LoadingScreen"
 import type { User } from "@/types"
 
 interface LoginScreenProps {
@@ -33,6 +34,9 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
     const handleDemoLogin = async () => {
         setIsLoading(true)
         try {
+            // Add a small delay to show the loading screen
+            await new Promise(resolve => setTimeout(resolve, 1500))
+
             const user = await onSignIn()
             if (user) {
                 // The signIn method will handle setting user, auth state, and navigation
@@ -46,6 +50,11 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
         } finally {
             setIsLoading(false)
         }
+    }
+
+    // Show loading screen during authentication
+    if (isLoading) {
+        return <LoadingScreen variant="login" message={t("signingIn")} />
     }
 
     return (

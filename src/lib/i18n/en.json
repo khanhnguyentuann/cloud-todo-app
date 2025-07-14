@@ -225,5 +225,15 @@
   "demoLoginFailed": "Demo login failed",
   "termsOfServiceComingSoon": "Terms of Service - Coming soon!",
   "privacyPolicyComingSoon": "Privacy Policy - Coming soon!",
-  "allTasks": "All Tasks"
+  "allTasks": "All Tasks",
+
+  "pageNotFoundTitle": "Page Not Found",
+  "pageNotFoundDescription": "The page you're looking for doesn't exist or has been moved.",
+  "pageNotFoundSubtext": "Don't worry, let's get you back on track!",
+  "goToHome": "Go to Home",
+  "goBack": "Go Back",
+  "helpfulLinks": "Helpful Links",
+  "errorCode": "Error Code",
+  "needHelp": "Need help?",
+  "loginSuccess": "Login Successful!"
 }

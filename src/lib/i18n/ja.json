@@ -204,5 +204,15 @@
   "demoLoginFailed": "デモログインに失敗しました",
   "termsOfServiceComingSoon": "利用規約 - 近日公開！",
   "privacyPolicyComingSoon": "プライバシーポリシー - 近日公開！",
-  "allTasks": "すべてのタスク"
+  "allTasks": "すべてのタスク",
+
+  "pageNotFoundTitle": "ページが見つかりません",
+  "pageNotFoundDescription": "お探しのページは存在しないか、移動されました。",
+  "pageNotFoundSubtext": "ご心配なく、正しい場所にご案内します！",
+  "goToHome": "ホームに戻る",
+  "goBack": "戻る",
+  "helpfulLinks": "便利なリンク",
+  "errorCode": "エラーコード",
+  "needHelp": "サポートが必要ですか？",
+  "loginSuccess": "ログイン成功！"
 }

@@ -3,7 +3,8 @@ import GlobalLayout from "@/layouts/GlobalLayout"
 import MyDay from "@/pages/MyDay"
 import Important from "@/pages/Important"
 import Tasks from "@/pages/Tasks"
-import Planned from "./pages/Planned"
+import Planned from "@/pages/Planned"
+import NotFound from "@/pages/NotFound"
 
 export default function App() {
   return (
@@ -15,9 +16,9 @@ export default function App() {
           <Route path="important" element={<Important />} />
           <Route path="planned" element={<Planned />} />
           <Route path="tasks" element={<Tasks />} />
-          {/* Catch-all route for 404 - redirect to my-day */}
-          <Route path="*" element={<Navigate to="/my-day" replace />} />
         </Route>
+        {/* 404 Not Found route - outside of GlobalLayout to avoid auth check */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   )

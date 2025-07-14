@@ -11,8 +11,8 @@ import HelpPanel from "@/components/features/help-panel"
 import { NotificationPanel } from "@/components/features/NotificationPanel"
 import AccountView from "@/components/features/account-view"
 import { LoginScreen } from "@/components/features/LoginScreen"
+import { LoadingScreen } from "@/components/common/LoadingScreen"
 import { useAuth } from "@/hooks/useAuth"
-import { Loader2 } from "lucide-react"
 import { useTranslation } from "react-i18next"
 import { loginDemoUser } from "@/store/user"
 import { useTaskContext } from "@/context/taskContext"
@@ -45,16 +45,7 @@ function GlobalLayoutContent() {
     } = useTaskContext()
 
     if (isLoading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-                <div className="flex flex-col items-center">
-                    <Loader2 className="h-12 w-12 animate-spin text-orange-500" />
-                    <p className="mt-4 text-gray-700 dark:text-gray-300 animate-pulse">
-                        {t("loadingMessage")}
-                    </p>
-                </div>
-            </div>
-        )
+        return <LoadingScreen message={t("loadingMessage")} />
     }
 
     // Handle demo login with proper navigation
