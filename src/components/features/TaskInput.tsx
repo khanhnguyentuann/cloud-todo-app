@@ -1,24 +1,40 @@
 import { Button } from "@/components/common/Button"
 import { Input } from "@/components/common/Input"
-import type { TaskInputProps } from "@/types"
 import { Bell, CalendarIcon, Plus, RotateCcw } from "lucide-react"
 import { useState } from "react"
 import { DueDateMenu } from "@/components/features/DueDateMenu"
 import { ReminderMenu } from "@/components/features/ReminderMenu"
 import { RepeatMenu } from "@/components/features/RepeatMenu"
 import { Tooltip } from "@/components/common/Tooltip"
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
+import { useTaskContext } from "@/context/taskContext"
 
-export function TaskInput({
-    value, onChange, onAdd, onKeyPress, placeholder,
-    selectedDueDate, setSelectedDueDate,
-    selectedReminder, setSelectedReminder,
-    selectedRepeat, setSelectedRepeat
-}: TaskInputProps) {
+interface TaskInputProps {
+    placeholder?: string
+}
+
+export function TaskInput({ placeholder }: TaskInputProps) {
+    const {
+        inputValue,
+        setInputValue,
+        dueDate,
+        setDueDate,
+        reminder,
+        setReminder,
+        repeat,
+        setRepeat,
+        addTaskWithInput
+    } = useTaskContext()
     const [dueDateMenuOpen, setDueDateMenuOpen] = useState(false)
     const [reminderMenuOpen, setReminderMenuOpen] = useState(false)
     const [repeatMenuOpen, setRepeatMenuOpen] = useState(false)
     const { t } = useTranslation()
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            addTaskWithInput()
+        }
+    }
 
     return (
         <div className="mb-4 sm:mb-6">
@@ -27,13 +43,13 @@ export function TaskInput({
                 <Input
                     type="text"
                     placeholder={placeholder || t('addTask')}
-                    value={value}
-                    onChange={(e) => onChange(e.target.value)}
-                    onKeyDown={onKeyPress} // thay vì onKeyPress
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={handleKeyDown}
                     className="border-0 shadow-none text-gray-800 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus-visible:ring-0 p-0 text-sm sm:text-base bg-transparent"
                 />
                 <Button
-                    onClick={onAdd}
+                    onClick={addTaskWithInput}
                     variant="ghost"
                     size="sm"
                     className="text-orange-500 dark:text-blue-400 hover:text-orange-600 dark:hover:text-blue-300 hover:bg-orange-50 dark:hover:bg-gray-600 flex-shrink-0"
@@ -47,19 +63,19 @@ export function TaskInput({
                     <DueDateMenu
                         isOpen={dueDateMenuOpen}
                         onOpenChange={setDueDateMenuOpen}
-                        onDateSelect={setSelectedDueDate}
+                        onDateSelect={setDueDate}
                         trigger={
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${selectedDueDate
+                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${dueDate
                                         ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
                                         : "border border-transparent"
                                     }`}
                             >
                                 <CalendarIcon className="h-4 w-4" />
-                                {selectedDueDate && (
-                                    <span className="text-xs font-medium">{selectedDueDate}</span>
+                                {dueDate && (
+                                    <span className="text-xs font-medium">{dueDate}</span>
                                 )}
                             </Button>
                         }
@@ -70,19 +86,19 @@ export function TaskInput({
                     <ReminderMenu
                         isOpen={reminderMenuOpen}
                         onOpenChange={setReminderMenuOpen}
-                        onReminderSelect={setSelectedReminder}
+                        onReminderSelect={setReminder}
                         trigger={
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${selectedReminder
+                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${reminder
                                         ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
                                         : "border border-transparent"
                                     }`}
                             >
                                 <Bell className="h-4 w-4" />
-                                {selectedReminder && (
-                                    <span className="text-xs font-medium">{selectedReminder}</span>
+                                {reminder && (
+                                    <span className="text-xs font-medium">{reminder}</span>
                                 )}
                             </Button>
                         }
@@ -93,19 +109,19 @@ export function TaskInput({
                     <RepeatMenu
                         isOpen={repeatMenuOpen}
                         onOpenChange={setRepeatMenuOpen}
-                        onRepeatSelect={setSelectedRepeat}
+                        onRepeatSelect={setRepeat}
                         trigger={
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${selectedRepeat
+                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${repeat
                                         ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
                                         : "border border-transparent"
                                     }`}
                             >
                                 <RotateCcw className="h-4 w-4" />
-                                {selectedRepeat && (
-                                    <span className="text-xs font-medium">{selectedRepeat}</span>
+                                {repeat && (
+                                    <span className="text-xs font-medium">{repeat}</span>
                                 )}
                             </Button>
                         }

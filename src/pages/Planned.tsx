@@ -1,4 +1,4 @@
-import { useTaskContext } from "@/context/TaskContext"
+import { useTaskContext } from "@/context/taskContext"
 import { ContentHeader } from "@/components/features/ContentHeader"
 import { TaskList } from "@/components/features/TaskList"
 import { getCurrentDate } from "@/utils/getCurrentDate"
@@ -20,10 +20,6 @@ export default function Planned() {
             <div className="p-4">
                 <TaskList
                     tasks={sortTasks(ctx.tasks.filter(task => task.dueDate !== ""), ctx.sortBy)}
-                    viewMode={ctx.viewMode}
-                    onToggle={ctx.toggleTask}
-                    onToggleImportant={ctx.toggleImportant}
-                    onTaskSelect={ctx.handleTaskSelect}
                 />
             </div>
         </>

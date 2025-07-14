@@ -1,6 +1,6 @@
 import { ContentHeader } from "@/components/features/ContentHeader"
 import { TaskList } from "@/components/features/TaskList"
-import { useTaskContext } from "@/context/TaskContext"
+import { useTaskContext } from "@/context/taskContext"
 import { getCurrentDate } from "@/utils/getCurrentDate"
 
 export default function Tasks() {
@@ -17,10 +17,6 @@ export default function Tasks() {
             <div className="p-4">
                 <TaskList
                     tasks={ctx.tasks}
-                    viewMode={ctx.viewMode}
-                    onToggle={ctx.toggleTask}
-                    onToggleImportant={ctx.toggleImportant}
-                    onTaskSelect={ctx.handleTaskSelect}
                 />
             </div>
         </>

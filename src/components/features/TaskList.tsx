@@ -1,10 +1,16 @@
 import { TaskItem } from "@/components/features/TaskItem"
 import { TaskGridItem } from "@/components/features/TaskGridItem"
-import type { TaskListProps } from "@/types"
 import { useTranslation } from "react-i18next"
+import { useTaskContext } from "@/context/taskContext"
+import type { Task } from "@/types"
 
-export function TaskList({ tasks, viewMode, onToggle, onToggleImportant, onTaskSelect }: TaskListProps) {
+interface TaskListProps {
+    tasks: Task[]
+}
+
+export function TaskList({ tasks }: TaskListProps) {
     const { t } = useTranslation()
+    const { viewMode, toggleTask, toggleImportant, handleTaskSelect } = useTaskContext()
 
     if (tasks.length === 0) {
         return (
@@ -21,9 +27,9 @@ export function TaskList({ tasks, viewMode, onToggle, onToggleImportant, onTaskS
                     <TaskGridItem
                         key={task.id}
                         task={task}
-                        onToggle={onToggle}
-                        onToggleImportant={onToggleImportant}
-                        onTaskSelect={onTaskSelect}
+                        onToggle={toggleTask}
+                        onToggleImportant={toggleImportant}
+                        onTaskSelect={handleTaskSelect}
                     />
                 ))}
             </div>
@@ -36,9 +42,9 @@ export function TaskList({ tasks, viewMode, onToggle, onToggleImportant, onTaskS
                 <TaskItem
                     key={task.id}
                     task={task}
-                    onToggle={onToggle}
-                    onToggleImportant={onToggleImportant}
-                    onTaskSelect={onTaskSelect}
+                    onToggle={toggleTask}
+                    onToggleImportant={toggleImportant}
+                    onTaskSelect={handleTaskSelect}
                 />
             ))}
         </div>
