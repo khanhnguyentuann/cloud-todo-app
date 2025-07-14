@@ -31,7 +31,36 @@
         --chart-3: 197 37% 24%;
         --chart-4: 43 74% 66%;
         --chart-5: 27 87% 67%;
-        --radius: 0.5rem
+        --radius: 0.5rem;
+
+        /* Theme-aware colors */
+        --theme-primary: 24 100% 50%;
+        --theme-primary-foreground: 0 0% 100%;
+        --theme-primary-hover: 24 100% 45%;
+        --theme-accent: 24 100% 50%;
+        --theme-accent-foreground: 0 0% 100%;
+        --theme-accent-hover: 24 100% 45%;
+        --theme-success: 142 76% 36%;
+        --theme-success-foreground: 0 0% 100%;
+        --theme-warning: 38 92% 50%;
+        --theme-warning-foreground: 0 0% 100%;
+        --theme-error: 0 84% 60%;
+        --theme-error-foreground: 0 0% 100%;
+        --theme-info: 217 91% 60%;
+        --theme-info-foreground: 0 0% 100%;
+
+        /* Surface colors */
+        --theme-surface: 0 0% 100%;
+        --theme-surface-hover: 210 40% 96%;
+        --theme-surface-active: 24 100% 97%;
+        --theme-border: 24 100% 88%;
+        --theme-border-hover: 24 100% 80%;
+
+        /* Text colors */
+        --theme-text-primary: 222.2 84% 4.9%;
+        --theme-text-secondary: 215.4 16.3% 46.9%;
+        --theme-text-muted: 215.4 16.3% 65%;
+        --theme-text-inverse: 0 0% 100%;
     }
 
     .dark {
@@ -58,7 +87,36 @@
         --chart-2: 160 60% 45%;
         --chart-3: 30 80% 55%;
         --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%
+        --chart-5: 340 75% 55%;
+
+        /* Dark theme colors */
+        --theme-primary: 217 91% 60%;
+        --theme-primary-foreground: 0 0% 100%;
+        --theme-primary-hover: 217 91% 55%;
+        --theme-accent: 217 91% 60%;
+        --theme-accent-foreground: 0 0% 100%;
+        --theme-accent-hover: 217 91% 55%;
+        --theme-success: 142 76% 36%;
+        --theme-success-foreground: 0 0% 100%;
+        --theme-warning: 38 92% 50%;
+        --theme-warning-foreground: 0 0% 100%;
+        --theme-error: 0 84% 60%;
+        --theme-error-foreground: 0 0% 100%;
+        --theme-info: 217 91% 60%;
+        --theme-info-foreground: 0 0% 100%;
+
+        /* Dark surface colors */
+        --theme-surface: 217.2 32.6% 17.5%;
+        --theme-surface-hover: 217.2 32.6% 20%;
+        --theme-surface-active: 217 91% 15%;
+        --theme-border: 217.2 32.6% 25%;
+        --theme-border-hover: 217.2 32.6% 30%;
+
+        /* Dark text colors */
+        --theme-text-primary: 210 40% 98%;
+        --theme-text-secondary: 215 20.2% 65.1%;
+        --theme-text-muted: 215 20.2% 50%;
+        --theme-text-inverse: 222.2 84% 4.9%;
     }
 }
 

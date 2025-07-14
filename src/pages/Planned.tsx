@@ -3,14 +3,16 @@ import { ContentHeader } from "@/components/features/ContentHeader"
 import { TaskList } from "@/components/features/TaskList"
 import { getCurrentDate } from "@/utils/getCurrentDate"
 import { sortTasks } from "@/utils/sortTask"
+import { useTranslation } from "react-i18next"
 
 export default function Planned() {
     const ctx = useTaskContext()
+    const { t } = useTranslation()
 
     return (
         <>
             <ContentHeader
-                title="Planned"
+                title={t("planned")}
                 date={getCurrentDate()}
                 viewMode={ctx.viewMode}
                 onViewModeChange={ctx.setViewMode}

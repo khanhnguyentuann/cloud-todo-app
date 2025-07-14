@@ -219,5 +219,11 @@
   "and": "and",
   "privacyPolicy": "Privacy Policy",
   "noTasksFound": "No tasks found",
-  "loadingMessage": "Loading data, please wait..."
+  "loadingMessage": "Loading data, please wait...",
+
+  "comingSoon": "Coming soon!",
+  "demoLoginFailed": "Demo login failed",
+  "termsOfServiceComingSoon": "Terms of Service - Coming soon!",
+  "privacyPolicyComingSoon": "Privacy Policy - Coming soon!",
+  "allTasks": "All Tasks"
 }

@@ -198,6 +198,10 @@
   "and": "và",
   "privacyPolicy": "Chính sách Bảo mật",
   "noTasksFound": "Không tìm thấy công việc nào",
-  "loadingMessage": "Đang tải dữ liệu, vui lòng chờ..."
+  "loadingMessage": "Đang tải dữ liệu, vui lòng chờ...",
 
+  "comingSoon": "Sắp ra mắt!",
+  "demoLoginFailed": "Đăng nhập demo thất bại",
+  "termsOfServiceComingSoon": "Điều khoản Dịch vụ - Sắp ra mắt!",
+  "privacyPolicyComingSoon": "Chính sách Bảo mật - Sắp ra mắt!"
 }

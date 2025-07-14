@@ -198,5 +198,11 @@
   "and": "と",
   "privacyPolicy": "プライバシーポリシー",
   "noTasksFound": "タスクが見つかりません",
-  "loadingMessage": "データを読み込み中です。しばらくお待ちください..."
+  "loadingMessage": "データを読み込み中です。しばらくお待ちください...",
+
+  "comingSoon": "近日公開！",
+  "demoLoginFailed": "デモログインに失敗しました",
+  "termsOfServiceComingSoon": "利用規約 - 近日公開！",
+  "privacyPolicyComingSoon": "プライバシーポリシー - 近日公開！",
+  "allTasks": "すべてのタスク"
 }

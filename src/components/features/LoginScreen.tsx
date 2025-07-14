@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { useAuth } from "@/hooks/useAuth"
-import type { User } from "@/types" // import type User
+import type { User } from "@/types"
 
 interface LoginScreenProps {
     onSignIn: () => Promise<User | null | void>
@@ -21,7 +21,7 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
     const currentLang = i18n.language as string
 
     const handleGoogleSignIn = () => {
-        toast.info("Coming soon!", { position: "top-center" })
+        toast.info(t("comingSoon"))
     }
 
     const languages = [
@@ -42,7 +42,7 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
             }
         } catch (error) {
             console.error("Demo sign in failed:", error)
-            toast.error("Demo login failed", { position: "top-center" })
+            toast.error(t("demoLoginFailed"))
         } finally {
             setIsLoading(false)
         }
@@ -161,17 +161,17 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
                     <div className="mt-8 text-center text-xs text-gray-500 dark:text-gray-400">
                         <p>
                             {t("termsText")}{" "}
-                            <button 
+                            <button
                                 type="button"
-                                onClick={() => toast.info("Terms of Service - Coming soon!", { position: "top-center" })}
+                                onClick={() => toast.info(t("termsOfServiceComingSoon"))}
                                 className="text-orange-600 dark:text-blue-400 hover:underline bg-transparent border-none p-0 cursor-pointer"
                             >
                                 {t("termsOfService")}
                             </button>{" "}
                             {t("and")}{" "}
-                            <button 
+                            <button
                                 type="button"
-                                onClick={() => toast.info("Privacy Policy - Coming soon!", { position: "top-center" })}
+                                onClick={() => toast.info(t("privacyPolicyComingSoon"))}
                                 className="text-orange-600 dark:text-blue-400 hover:underline bg-transparent border-none p-0 cursor-pointer"
                             >
                                 {t("privacyPolicy")}

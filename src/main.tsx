@@ -6,19 +6,11 @@ import "@/plugins/i18n";
 
 // React Toastify
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import { ThemedToastContainer } from "@/components/common/ThemedToastContainer";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />
-    <ToastContainer
-      position="top-center"
-      autoClose={2000}
-      hideProgressBar
-      closeOnClick
-      pauseOnHover
-      draggable={false}
-      theme="colored"
-    />
+    <ThemedToastContainer />
   </StrictMode>
 );
