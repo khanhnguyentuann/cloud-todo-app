@@ -32,19 +32,19 @@ export const Sidebar: FC<SidebarProps> = ({
             <aside
                 className={`
                     ${isMobile ? "fixed top-16 h-[calc(100vh-4rem)]" : "relative"} inset-y-0 left-0 z-40 w-64
-                    bg-white dark:bg-gray-800 border-r border-amber-300 dark:border-gray-700
-                    flex flex-col transform transition-transform duration-300 ease-in-out
+                    bg-theme-surface dark:bg-theme-surface border-r border-theme-border dark:border-theme-border
+                    flex flex-col transform transition-transform duration-300 ease-in-out shadow-lg
                     ${isOpen ? "translate-x-0" : isMobile ? "-translate-x-full" : "translate-x-0"}
                 `}
             >
                 {isMobile && (
-                    <div className="flex items-center justify-between p-4 border-b border-amber-300 dark:border-gray-700">
-                        <h2 className="font-semibold text-gray-800 dark:text-gray-200">{t("menu")}</h2>
+                    <div className="flex items-center justify-between p-4 border-b border-theme-border dark:border-theme-border">
+                        <h2 className="font-semibold text-theme-text-primary dark:text-theme-text-primary">{t("menu")}</h2>
                         <Button
                             variant="ghost"
                             size="sm"
                             onClick={onClose}
-                            className="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                            className="text-theme-text-secondary hover:text-theme-text-primary hover:bg-theme-surface-hover dark:hover:bg-theme-surface-hover rounded-lg transition-all duration-200"
                         >
                             <X className="h-4 w-4" />
                         </Button>
@@ -52,7 +52,7 @@ export const Sidebar: FC<SidebarProps> = ({
                 )}
 
                 <nav className="flex-1 p-4">
-                    <ul className="space-y-1">
+                    <ul className="space-y-2">
                         {sidebarItems.map((item) => {
                             const label = t(item.key);
                             const isActive = location.pathname === item.path;
@@ -63,19 +63,19 @@ export const Sidebar: FC<SidebarProps> = ({
                                         to={item.path}
                                         onClick={() => { if (isMobile) onClose(); }}
                                         className={`
-                                            w-full flex items-center justify-between px-3 py-2 rounded-md text-sm transition-colors
+                                            w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm transition-all duration-200 font-medium
                                             ${isActive
-                                                ? "bg-amber-300 dark:bg-blue-500 text-orange-600 dark:text-white font-medium"
-                                                : "text-gray-800 dark:text-gray-200 hover:bg-amber-100 dark:hover:bg-gray-700"
+                                                ? "bg-theme-surface-active dark:bg-theme-surface-active text-theme-primary dark:text-theme-primary border-l-2 border-l-theme-primary shadow-sm"
+                                                : "text-theme-text-primary dark:text-theme-text-primary hover:bg-theme-surface-hover dark:hover:bg-theme-surface-hover"
                                             }
                                         `}
                                     >
                                         <div className="flex items-center gap-3">
-                                            <item.icon className="h-4 w-4" />
+                                            <item.icon className="h-5 w-5" />
                                             <span>{label}</span>
                                         </div>
                                         {item.count > 0 && (
-                                            <span className="text-xs bg-amber-300 dark:bg-blue-500 text-orange-600 dark:text-white px-2 py-0.5 rounded-full">
+                                            <span className="text-xs bg-theme-primary text-theme-primary-foreground px-2.5 py-1 rounded-full font-semibold shadow-sm">
                                                 {item.count}
                                             </span>
                                         )}
@@ -89,7 +89,7 @@ export const Sidebar: FC<SidebarProps> = ({
 
             {isMobile && isOpen && (
                 <div
-                    className="fixed inset-0 bg-black bg-opacity-50 z-30"
+                    className="fixed inset-0 bg-black/20 dark:bg-black/40 z-30 backdrop-blur-sm"
                     onClick={onClose}
                 />
             )}

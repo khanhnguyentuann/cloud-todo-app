@@ -17,7 +17,7 @@ export default function Important() {
                 onViewModeChange={ctx.setViewMode}
                 sortBy={ctx.sortBy}
                 onSortChange={ctx.setSortBy} />
-            <div className="p-3 sm:p-4 lg:p-6">
+            <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
                 <TaskInput placeholder={t("addImportantTask")} />
                 <TaskList
                     tasks={ctx.tasks.filter(task => task.isImportant)}

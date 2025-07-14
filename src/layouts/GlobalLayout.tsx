@@ -62,7 +62,7 @@ function GlobalLayoutContent() {
     }
 
     return (
-        <div className="h-screen flex flex-col">
+        <div className="h-screen flex flex-col bg-theme-background dark:bg-theme-background">
             <Header
                 onMenuClick={() => setSidebarOpen(!sidebarOpen)}
                 onSettingsClick={() => setSettingsOpen(true)}
@@ -78,7 +78,7 @@ function GlobalLayoutContent() {
                     isMobile={isMobile}
                 />
                 <div className="relative flex flex-1">
-                    <main className="flex-1 overflow-y-auto">
+                    <main className="flex-1 overflow-y-auto bg-theme-background dark:bg-theme-background">
                         <Outlet />
                     </main>
                     <TaskDetailSidebar

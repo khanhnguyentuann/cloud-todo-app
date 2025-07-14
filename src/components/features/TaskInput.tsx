@@ -38,27 +38,27 @@ export function TaskInput({ placeholder }: TaskInputProps) {
 
     return (
         <div className="mb-4 sm:mb-6">
-            <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600">
-                <Plus className="w-4 h-4 text-orange-500 dark:text-blue-400 flex-shrink-0" />
+            <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl hover:bg-theme-surface-hover dark:hover:bg-theme-surface-hover transition-all duration-200 bg-theme-surface dark:bg-theme-surface border border-theme-border dark:border-theme-border shadow-sm hover:shadow-md">
+                <Plus className="w-5 h-5 text-theme-primary dark:text-theme-primary flex-shrink-0" />
                 <Input
                     type="text"
                     placeholder={placeholder || t('addTask')}
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className="border-0 shadow-none text-gray-800 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus-visible:ring-0 p-0 text-sm sm:text-base bg-transparent"
+                    className="border-0 shadow-none text-theme-text-primary dark:text-theme-text-primary placeholder:text-theme-text-muted dark:placeholder:text-theme-text-muted focus-visible:ring-0 p-0 text-sm sm:text-base bg-transparent font-medium"
                 />
                 <Button
                     onClick={addTaskWithInput}
                     variant="ghost"
                     size="sm"
-                    className="text-orange-500 dark:text-blue-400 hover:text-orange-600 dark:hover:text-blue-300 hover:bg-orange-50 dark:hover:bg-gray-600 flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3"
+                    className="text-theme-primary dark:text-theme-primary hover:text-theme-primary-hover dark:hover:text-theme-primary-hover hover:bg-theme-surface-hover dark:hover:bg-theme-surface-hover flex-shrink-0 text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-lg font-semibold transition-all duration-200"
                 >
                     {t('add')}
                 </Button>
             </div>
 
-            <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-2">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-3">
                 <Tooltip content={t('addDueDate')}>
                     <DueDateMenu
                         isOpen={dueDateMenuOpen}
@@ -68,14 +68,14 @@ export function TaskInput({ placeholder }: TaskInputProps) {
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${dueDate
-                                    ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                className={`text-theme-info dark:text-theme-info hover:bg-theme-info/10 dark:hover:bg-theme-info/10 flex items-center gap-2 transition-all duration-200 rounded-lg px-3 py-2 font-medium ${dueDate
+                                    ? "border border-theme-info/30 dark:border-theme-info/30 bg-theme-info/10 dark:bg-theme-info/10"
                                     : "border border-transparent"
                                     }`}
                             >
                                 <CalendarIcon className="h-4 w-4" />
                                 {dueDate && (
-                                    <span className="text-xs font-medium">{dueDate}</span>
+                                    <span className="text-xs font-semibold">{dueDate}</span>
                                 )}
                             </Button>
                         }
@@ -91,14 +91,14 @@ export function TaskInput({ placeholder }: TaskInputProps) {
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${reminder
-                                    ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                className={`text-theme-warning dark:text-theme-warning hover:bg-theme-warning/10 dark:hover:bg-theme-warning/10 flex items-center gap-2 transition-all duration-200 rounded-lg px-3 py-2 font-medium ${reminder
+                                    ? "border border-theme-warning/30 dark:border-theme-warning/30 bg-theme-warning/10 dark:bg-theme-warning/10"
                                     : "border border-transparent"
                                     }`}
                             >
                                 <Bell className="h-4 w-4" />
                                 {reminder && (
-                                    <span className="text-xs font-medium">{reminder}</span>
+                                    <span className="text-xs font-semibold">{reminder}</span>
                                 )}
                             </Button>
                         }
@@ -114,14 +114,14 @@ export function TaskInput({ placeholder }: TaskInputProps) {
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${repeat
-                                    ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                className={`text-theme-success dark:text-theme-success hover:bg-theme-success/10 dark:hover:bg-theme-success/10 flex items-center gap-2 transition-all duration-200 rounded-lg px-3 py-2 font-medium ${repeat
+                                    ? "border border-theme-success/30 dark:border-theme-success/30 bg-theme-success/10 dark:bg-theme-success/10"
                                     : "border border-transparent"
                                     }`}
                             >
                                 <RotateCcw className="h-4 w-4" />
                                 {repeat && (
-                                    <span className="text-xs font-medium">{repeat}</span>
+                                    <span className="text-xs font-semibold">{repeat}</span>
                                 )}
                             </Button>
                         }
