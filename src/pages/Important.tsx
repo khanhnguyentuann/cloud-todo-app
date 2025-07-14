@@ -1,4 +1,5 @@
 import { ContentHeader } from "@/components/features/ContentHeader"
+import { TaskInput } from "@/components/features/TaskInput"
 import { TaskList } from "@/components/features/TaskList"
 import { useTaskContext } from "@/context/taskContext"
 import { getCurrentDate } from "@/utils/getCurrentDate"
@@ -16,7 +17,8 @@ export default function Important() {
                 onViewModeChange={ctx.setViewMode}
                 sortBy={ctx.sortBy}
                 onSortChange={ctx.setSortBy} />
-            <div className="p-4">
+            <div className="p-3 sm:p-4 lg:p-6">
+                <TaskInput placeholder={t("addImportantTask")} />
                 <TaskList
                     tasks={ctx.tasks.filter(task => task.isImportant)}
                 />

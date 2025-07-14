@@ -1,5 +1,6 @@
 import { useTaskContext } from "@/context/taskContext"
 import { ContentHeader } from "@/components/features/ContentHeader"
+import { TaskInput } from "@/components/features/TaskInput"
 import { TaskList } from "@/components/features/TaskList"
 import { getCurrentDate } from "@/utils/getCurrentDate"
 import { sortTasks } from "@/utils/sortTask"
@@ -19,7 +20,8 @@ export default function Planned() {
                 sortBy={ctx.sortBy}
                 onSortChange={ctx.setSortBy}
             />
-            <div className="p-4">
+            <div className="p-3 sm:p-4 lg:p-6">
+                <TaskInput placeholder={t("addPlannedTask")} />
                 <TaskList
                     tasks={sortTasks(ctx.tasks.filter(task => task.dueDate !== ""), ctx.sortBy)}
                 />

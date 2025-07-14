@@ -63,17 +63,15 @@ function GlobalLayoutContent() {
 
     return (
         <div className="h-screen flex flex-col">
-            <div className="shrink-0">
-                <Header
-                    onMenuClick={() => setSidebarOpen(!sidebarOpen)}
-                    onSettingsClick={() => setSettingsOpen(true)}
-                    onAccountClick={() => setAccountMenuOpen(true)}
-                    onHelpClick={() => setHelpOpen(true)}
-                    onNotificationClick={handleNotificationClick}
-                    unreadNotificationCount={unreadNotificationCount}
-                />
-            </div>
-            <div className="flex flex-1">
+            <Header
+                onMenuClick={() => setSidebarOpen(!sidebarOpen)}
+                onSettingsClick={() => setSettingsOpen(true)}
+                onAccountClick={() => setAccountMenuOpen(true)}
+                onHelpClick={() => setHelpOpen(true)}
+                onNotificationClick={handleNotificationClick}
+                unreadNotificationCount={unreadNotificationCount}
+            />
+            <div className="flex flex-1 overflow-hidden">
                 <Sidebar
                     isOpen={sidebarOpen}
                     onClose={() => setSidebarOpen(false)}

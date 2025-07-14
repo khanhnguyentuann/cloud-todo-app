@@ -20,7 +20,7 @@ export default function MyDay() {
                 sortBy={ctx.sortBy}
                 onSortChange={ctx.setSortBy}
             />
-            <div className="p-4">
+            <div className="p-3 sm:p-4 lg:p-6">
                 <TaskInput />
                 <TaskList
                     tasks={sortTasks(ctx.tasks, ctx.sortBy)}

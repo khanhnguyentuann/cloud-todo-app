@@ -7,7 +7,7 @@ export function TaskGridItem({ task, onToggle, onToggleImportant, onTaskSelect }
 
     return (
         <div
-            className="p-4 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-600 transition-colors group bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600 hover:border-amber-400 dark:hover:border-gray-500 min-h-[120px] flex flex-col cursor-pointer"
+            className="p-3 sm:p-4 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-600 transition-colors group bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600 hover:border-amber-400 dark:hover:border-gray-500 min-h-[100px] sm:min-h-[120px] flex flex-col cursor-pointer"
             onClick={() => onTaskSelect(task)}
         >
             <div className="flex items-start justify-between mb-3">
@@ -17,8 +17,8 @@ export function TaskGridItem({ task, onToggle, onToggleImportant, onTaskSelect }
                         onToggle(task.id)
                     }}
                     className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${task.completed
-                            ? "bg-emerald-500 border-emerald-500"
-                            : "border-amber-300 dark:border-gray-600 hover:border-orange-500 dark:hover:border-blue-400"
+                        ? "bg-emerald-500 border-emerald-500"
+                        : "border-amber-300 dark:border-gray-600 hover:border-orange-500 dark:hover:border-blue-400"
                         }`}
                 >
                     {task.completed && (
@@ -38,8 +38,8 @@ export function TaskGridItem({ task, onToggle, onToggleImportant, onTaskSelect }
                         onToggleImportant(task.id)
                     }}
                     className={`opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 ${task.isImportant
-                            ? "text-orange-600 dark:text-blue-400 opacity-100"
-                            : "text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-blue-400"
+                        ? "text-orange-600 dark:text-blue-400 opacity-100"
+                        : "text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-blue-400"
                         }`}
                 >
                     <Star className={`h-4 w-4 ${task.isImportant ? "fill-current" : ""}`} />
@@ -48,9 +48,9 @@ export function TaskGridItem({ task, onToggle, onToggleImportant, onTaskSelect }
 
             <div className="flex-1">
                 <div
-                    className={`text-sm mb-2 ${task.completed
-                            ? "line-through text-gray-500 dark:text-gray-400"
-                            : "text-gray-800 dark:text-gray-200"
+                    className={`text-sm sm:text-base mb-2 line-clamp-3 ${task.completed
+                        ? "line-through text-gray-500 dark:text-gray-400"
+                        : "text-gray-800 dark:text-gray-200"
                         }`}
                 >
                     {task.text}
@@ -59,12 +59,12 @@ export function TaskGridItem({ task, onToggle, onToggleImportant, onTaskSelect }
                 {task.dueDate && (
                     <div className="space-y-1 text-xs text-gray-500 dark:text-gray-400">
                         <div className="flex items-center gap-1">
-                            <CalendarDays className="h-3 w-3" />
-                            <span>{t("due")} {task.dueDate}</span>
+                            <CalendarDays className="h-3 w-3 flex-shrink-0" />
+                            <span className="truncate">{t("due")} {task.dueDate}</span>
                         </div>
                         <div className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            <span>{t("tomorrow")}</span>
+                            <Clock className="h-3 w-3 flex-shrink-0" />
+                            <span className="truncate">{t("tomorrow")}</span>
                         </div>
                     </div>
                 )}

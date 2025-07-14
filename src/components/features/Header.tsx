@@ -17,7 +17,7 @@ export const Header: FC<HeaderProps> = ({
     const { t } = useTranslation()
 
     return (
-        <header className="border-b border-amber-300 dark:border-gray-600 bg-orange-500 dark:bg-gray-800 text-white px-2 sm:px-4 h-16 flex items-center justify-between relative z-50">
+        <header className="border-b border-amber-300 dark:border-gray-600 bg-orange-500 dark:bg-gray-800 text-white px-2 sm:px-4 h-16 flex items-center justify-between sticky top-0 z-50 shadow-sm">
             <div className="flex items-center gap-2 sm:gap-4">
                 <Button
                     variant="ghost"

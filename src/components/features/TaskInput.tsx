@@ -38,7 +38,7 @@ export function TaskInput({ placeholder }: TaskInputProps) {
 
     return (
         <div className="mb-4 sm:mb-6">
-            <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600">
+            <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors bg-white dark:bg-gray-700 border border-amber-300 dark:border-gray-600">
                 <Plus className="w-4 h-4 text-orange-500 dark:text-blue-400 flex-shrink-0" />
                 <Input
                     type="text"
@@ -52,13 +52,13 @@ export function TaskInput({ placeholder }: TaskInputProps) {
                     onClick={addTaskWithInput}
                     variant="ghost"
                     size="sm"
-                    className="text-orange-500 dark:text-blue-400 hover:text-orange-600 dark:hover:text-blue-300 hover:bg-orange-50 dark:hover:bg-gray-600 flex-shrink-0"
+                    className="text-orange-500 dark:text-blue-400 hover:text-orange-600 dark:hover:text-blue-300 hover:bg-orange-50 dark:hover:bg-gray-600 flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3"
                 >
                     {t('add')}
                 </Button>
             </div>
 
-            <div className="flex items-center gap-2 mt-2">
+            <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-2">
                 <Tooltip content={t('addDueDate')}>
                     <DueDateMenu
                         isOpen={dueDateMenuOpen}
@@ -69,8 +69,8 @@ export function TaskInput({ placeholder }: TaskInputProps) {
                                 variant="ghost"
                                 size="sm"
                                 className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${dueDate
-                                        ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                                        : "border border-transparent"
+                                    ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                    : "border border-transparent"
                                     }`}
                             >
                                 <CalendarIcon className="h-4 w-4" />
@@ -92,8 +92,8 @@ export function TaskInput({ placeholder }: TaskInputProps) {
                                 variant="ghost"
                                 size="sm"
                                 className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${reminder
-                                        ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                                        : "border border-transparent"
+                                    ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                    : "border border-transparent"
                                     }`}
                             >
                                 <Bell className="h-4 w-4" />
@@ -115,8 +115,8 @@ export function TaskInput({ placeholder }: TaskInputProps) {
                                 variant="ghost"
                                 size="sm"
                                 className={`text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-1 transition-all ${repeat
-                                        ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                                        : "border border-transparent"
+                                    ? "border border-blue-300 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                    : "border border-transparent"
                                     }`}
                             >
                                 <RotateCcw className="h-4 w-4" />

@@ -31,7 +31,7 @@ export const Sidebar: FC<SidebarProps> = ({
         <>
             <aside
                 className={`
-                    ${isMobile ? "fixed" : "relative"} inset-y-0 left-0 z-40 w-64
+                    ${isMobile ? "fixed top-16 h-[calc(100vh-4rem)]" : "relative"} inset-y-0 left-0 z-40 w-64
                     bg-white dark:bg-gray-800 border-r border-amber-300 dark:border-gray-700
                     flex flex-col transform transition-transform duration-300 ease-in-out
                     ${isOpen ? "translate-x-0" : isMobile ? "-translate-x-full" : "translate-x-0"}
