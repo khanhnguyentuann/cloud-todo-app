@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useNavigate, useLocation } from "react-router-dom"
 
 export function useAuth() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -17,6 +18,8 @@ export function useAuth() {
         }
     } | null>(null)
     const [isLoading, setIsLoading] = useState(true)
+    const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
         const savedAuth = localStorage.getItem("auth")
@@ -29,6 +32,13 @@ export function useAuth() {
         setIsLoading(false)
     }, [])
 
+    // Redirect to login if not authenticated (except when already on login)
+    useEffect(() => {
+        if (!isLoading && !isAuthenticated && location.pathname !== '/') {
+            navigate('/', { replace: true })
+        }
+    }, [isAuthenticated, isLoading, location.pathname, navigate])
+
     const signInWithGoogle = async () => {}
 
     const signOut = () => {
@@ -36,6 +46,19 @@ export function useAuth() {
         setIsAuthenticated(false)
         localStorage.removeItem("auth")
         localStorage.removeItem("user")
+        
+        // Navigate to root path after logout, which will show login screen
+        navigate('/', { replace: true })
+    }
+
+    const signIn = (userData: typeof user) => {
+        setUser(userData)
+        setIsAuthenticated(true)
+        localStorage.setItem("auth", "true")
+        localStorage.setItem("user", JSON.stringify(userData))
+        
+        // Navigate to my-day after successful login
+        navigate('/my-day', { replace: true })
     }
 
     return {
@@ -44,6 +67,7 @@ export function useAuth() {
         isLoading,
         signInWithGoogle,
         signOut,
+        signIn,
         setIsAuthenticated,
         setUser
     }

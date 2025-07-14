@@ -35,6 +35,8 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
         try {
             const user = await onSignIn()
             if (user) {
+                // The signIn method will handle setting user, auth state, and navigation
+                // But we still need these for the LoginScreen component state
                 setUser(user)
                 setIsAuthenticated(true)
             }
@@ -159,13 +161,21 @@ export function LoginScreen({ onSignIn }: LoginScreenProps) {
                     <div className="mt-8 text-center text-xs text-gray-500 dark:text-gray-400">
                         <p>
                             {t("termsText")}{" "}
-                            <a href="#" className="text-orange-600 dark:text-blue-400 hover:underline">
+                            <button 
+                                type="button"
+                                onClick={() => toast.info("Terms of Service - Coming soon!", { position: "top-center" })}
+                                className="text-orange-600 dark:text-blue-400 hover:underline bg-transparent border-none p-0 cursor-pointer"
+                            >
                                 {t("termsOfService")}
-                            </a>{" "}
+                            </button>{" "}
                             {t("and")}{" "}
-                            <a href="#" className="text-orange-600 dark:text-blue-400 hover:underline">
+                            <button 
+                                type="button"
+                                onClick={() => toast.info("Privacy Policy - Coming soon!", { position: "top-center" })}
+                                className="text-orange-600 dark:text-blue-400 hover:underline bg-transparent border-none p-0 cursor-pointer"
+                            >
                                 {t("privacyPolicy")}
-                            </a>
+                            </button>
                         </p>
                     </div>
                 </div>

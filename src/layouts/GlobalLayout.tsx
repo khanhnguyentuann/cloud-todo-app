@@ -21,7 +21,7 @@ import { TaskProvider } from "@/context/TaskProvider"
 function GlobalLayoutContent() {
     const [unreadNotificationCount] = useState(2)
     const { isDarkMode, toggleDarkMode } = useDarkMode()
-    const { isAuthenticated, isLoading, signOut, user } = useAuth()
+    const { isAuthenticated, isLoading, signOut, signIn, user } = useAuth()
     const { t } = useTranslation()
     const isMobile = useMobile()
 
@@ -57,8 +57,17 @@ function GlobalLayoutContent() {
         )
     }
 
+    // Handle demo login with proper navigation
+    const handleDemoLogin = async () => {
+        const user = await loginDemoUser()
+        if (user) {
+            signIn(user)
+        }
+        return user
+    }
+
     if (!isAuthenticated) {
-        return <LoginScreen onSignIn={loginDemoUser} />
+        return <LoginScreen onSignIn={handleDemoLogin} />
     }
 
     return (

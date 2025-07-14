@@ -10,11 +10,13 @@ export default function App() {
     <Router basename="/cloud-todo-app">
       <Routes>
         <Route path="/" element={<GlobalLayout />}>
-          <Route index element={<Navigate to="/my-day" />} />
+          <Route index element={<Navigate to="/my-day" replace />} />
           <Route path="my-day" element={<MyDay />} />
           <Route path="important" element={<Important />} />
           <Route path="planned" element={<Planned />} />
           <Route path="tasks" element={<Tasks />} />
+          {/* Catch-all route for 404 - redirect to my-day */}
+          <Route path="*" element={<Navigate to="/my-day" replace />} />
         </Route>
       </Routes>
     </Router>
