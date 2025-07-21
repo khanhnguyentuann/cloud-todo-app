@@ -178,5 +178,12 @@ junit.xml
 .vercel
 .netlify
 
+# Serverless Framework
+.serverless/
+serverless-state.json
+
+# AWS
+.aws-sam/
+
 # Local development
 .local
