@@ -6,12 +6,12 @@ import Important from "@/pages/Important"
 import Tasks from "@/pages/Tasks"
 import Planned from "@/pages/Planned"
 import NotFound from "@/pages/NotFound"
+import axios from "@/lib/axios"
 
 export default function App() {
   useEffect(() => {
-    fetch("http://localhost:3000/api/hello")
-      .then((response) => response.json())
-      .then((data) => console.log("Backend Response:", data))
+    axios.get("/hello")
+      .then((response) => console.log("Backend Response:", response.data))
       .catch((error) => console.error("Error connecting to backend:", error))
   }, [])
 
