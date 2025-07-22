@@ -1,6 +1,14 @@
 # Cloud Todo Backend
 
-Next.js API backend deployed as AWS Lambda functions using Serverless Framework.
+Next.js API backend - Development workspace and deployment source for AWS Lambda functions.
+
+**Purpose**: This backend serves as:
+- 🛠️ **Development Environment**: Code, test, and debug API logic locally
+- 🚀 **Deployment Source**: Deploy code to AWS Lambda using Serverless Framework
+- 📊 **Database Management**: Manage DynamoDB schema and data
+- 🔄 **Version Control**: Track API changes and rollback if needed
+
+**Note**: Frontend always connects directly to AWS API Gateway, not this local backend.
 
 ## Architecture
 

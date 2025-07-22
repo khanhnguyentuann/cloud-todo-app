@@ -11,7 +11,13 @@
     "deploy:prod": "serverless deploy --stage prod",
     "remove": "serverless remove",
     "logs": "serverless logs -f api",
-    "invoke": "serverless invoke -f api"
+    "logs:tail": "serverless logs -f api --tail",
+    "invoke": "serverless invoke -f api",
+    "info": "serverless info",
+    "backup": "aws dynamodb create-backup --table-name Todos --backup-name todos-backup-$(date +%Y%m%d-%H%M%S)",
+    "list-backups": "aws dynamodb list-backups --table-name Todos",
+    "export-data": "aws dynamodb scan --table-name Todos --output json > todos-backup-$(date +%Y%m%d-%H%M%S).json",
+    "check-credentials": "aws sts get-caller-identity"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.848.0",

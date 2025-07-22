@@ -124,15 +124,21 @@ yarn build
 
 ## Development Workflow
 
-### Local Development
-- **Frontend**: Runs on Vite dev server (http://localhost:5173)
-- **Backend**: Runs on Next.js dev server (http://localhost:3000)
-- **Database**: Uses AWS DynamoDB (requires AWS credentials)
+### Development Setup
+- **Frontend**: Always connects to AWS API Gateway (production-like testing)
+- **Backend**: Local development workspace for coding and testing
+- **Database**: AWS DynamoDB (shared between frontend and backend development)
 
-### Production
-- **Frontend**: Static files hosted on CDN
-- **Backend**: Serverless functions on AWS Lambda
-- **Database**: AWS DynamoDB
+### Deployment
+- **Frontend**: Static files hosted on CDN (Vercel, Netlify, etc.)
+- **Backend**: Deploy from local to AWS Lambda using Serverless Framework
+- **Database**: AWS DynamoDB (production)
+
+**Benefits of this approach:**
+- Frontend always tests against real AWS environment
+- Backend serves as development workspace and deployment source
+- Consistent API behavior between development and production
+- Easy to manage database schema and data
 
 ## Available Scripts
 

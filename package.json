@@ -9,11 +9,16 @@
   ],
   "scripts": {
     "dev": "concurrently \"yarn workspace @cloud-todo/frontend dev\" \"yarn workspace @cloud-todo/backend dev\"",
+    "dev:frontend": "yarn workspace @cloud-todo/frontend dev",
+    "dev:backend": "yarn workspace @cloud-todo/backend dev",
     "build": "yarn workspace @cloud-todo/shared build && yarn workspace @cloud-todo/frontend build && yarn workspace @cloud-todo/backend build",
+    "build:frontend": "yarn workspace @cloud-todo/frontend build",
+    "build:backend": "yarn workspace @cloud-todo/backend build",
+    "deploy:backend": "yarn workspace @cloud-todo/backend deploy",
+    "deploy:backend:prod": "yarn workspace @cloud-todo/backend deploy:prod",
+    "logs:backend": "yarn workspace @cloud-todo/backend logs",
     "lint": "yarn workspaces foreach run lint",
     "clean": "yarn workspaces foreach run clean",
-    "frontend:dev": "yarn workspace @cloud-todo/frontend dev",
-    "backend:dev": "yarn workspace @cloud-todo/backend dev",
     "shared:build": "yarn workspace @cloud-todo/shared build"
   },
   "devDependencies": {
