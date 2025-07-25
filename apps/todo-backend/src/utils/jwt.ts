@@ -27,8 +27,14 @@ export const generateToken = (user: IUser): string => {
 export const verifyToken = (token: string): JWTPayload => {
     try {
         return jwt.verify(token, JWT_SECRET) as JWTPayload;
-    } catch (error) {
-        throw new AppError('Invalid token', HTTP.UNAUTHORIZED);
+    } catch (error: any) {
+        if (error.name === 'TokenExpiredError') {
+            throw new AppError('Token expired', HTTP.UNAUTHORIZED);
+        } else if (error.name === 'JsonWebTokenError') {
+            throw new AppError('Invalid token', HTTP.UNAUTHORIZED);
+        } else {
+            throw new AppError('Authentication error', HTTP.UNAUTHORIZED);
+        }
     }
 };
 
