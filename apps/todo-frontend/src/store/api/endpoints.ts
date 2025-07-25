@@ -7,5 +7,11 @@ export const API_ENDPOINTS = {
     },
     USER: {
         LOGIN_DEMO: '/api/demo-user',
+    },
+    NOTIFICATION: {
+        FETCH_NOTIFICATIONS: '/api/notifications',
+        MARK_AS_READ: (id: string) => `/api/notifications/${id}/read`,
+        MARK_ALL_AS_READ: '/api/notifications/read-all',
+        DELETE_NOTIFICATION: (id: string) => `/api/notifications/${id}`,
     }
 }

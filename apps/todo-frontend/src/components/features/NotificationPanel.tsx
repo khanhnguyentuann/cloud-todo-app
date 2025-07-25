@@ -1,80 +1,25 @@
 import { Button } from "@/components/common/Button"
-import type { Notification, NotificationPanelProps } from "@/types"
+import type { NotificationPanelProps } from "@/types"
 import { X, Check, Clock, Star, Trash2 } from "lucide-react"
-import { useState } from "react"
 import { useTranslation } from "react-i18next"
+import { useTaskContext } from "@/context/taskContext"
+import { formatTimeAgo } from "@/utils/formatDate"
 
 export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
     const { t } = useTranslation()
-    const [notifications, setNotifications] = useState<Notification[]>([
-        {
-            id: 1,
-            type: "reminder",
-            title: t("reminder"),
-            message: "Đi đánh bóng chày - Due today",
-            time: "2 minutes ago",
-            isRead: false,
-            isImportant: true,
-        },
-        {
-            id: 2,
-            type: "task",
-            title: t("taskCompleted"),
-            message: "Mua sắm cuối tuần has been completed",
-            time: "1 hour ago",
-            isRead: false,
-        },
-        {
-            id: 3,
-            type: "system",
-            title: t("systemUpdate"),
-            message: "New features are now available in your To Do app",
-            time: "3 hours ago",
-            isRead: true,
-        },
-        {
-            id: 4,
-            type: "reminder",
-            title: t("reminder"),
-            message: "Hoàn thành báo cáo - Due tomorrow",
-            time: "1 day ago",
-            isRead: true,
-        },
-        {
-            id: 5,
-            type: "reminder",
-            title: t("reminder"),
-            message: "Hoàn thành báo cáo - Due tomorrow",
-            time: "1 day ago",
-            isRead: true,
-        },
-    ])
+    const { notifications, markAsRead, markAllAsRead, deleteNotification } = useTaskContext()
 
     if (!isOpen) return null
 
-    const unreadCount = notifications.filter((n) => !n.isRead).length
+    const unreadCount = notifications.filter((n) => !n.read).length
 
-    const markAsRead = (id: number) => {
-        setNotifications((prev) =>
-            prev.map((n) => (n.id === id ? { ...n, isRead: true } : n))
-        )
-    }
-
-    const markAllAsRead = () => {
-        setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })))
-    }
-
-    const deleteNotification = (id: number) => {
-        setNotifications((prev) => prev.filter((n) => n.id !== id))
-    }
-
-    const getNotificationIcon = (type: string, isImportant?: boolean) => {
+    const getNotificationIcon = (type: string) => {
         switch (type) {
             case "reminder":
-                return <Clock className={`h-4 w-4 ${isImportant ? "text-theme-error" : "text-theme-info"}`} />
-            case "task":
+                return <Clock className="h-4 w-4 text-theme-info" />
+            case "taskCompleted":
                 return <Check className="h-4 w-4 text-theme-success" />
-            case "system":
+            case "systemUpdate":
                 return <Star className="h-4 w-4 text-theme-warning" />
             default:
                 return <Clock className="h-4 w-4 text-theme-text-muted" />
@@ -133,31 +78,31 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
                             {notifications.map((notification) => (
                                 <div
                                     key={notification.id}
-                                    className={`p-4 hover:bg-theme-surface-hover dark:hover:bg-theme-surface-hover transition-all duration-200 ${!notification.isRead ? "bg-theme-surface-active dark:bg-theme-surface-active border-l-2 border-l-theme-primary" : ""
+                                    className={`p-4 hover:bg-theme-surface-hover dark:hover:bg-theme-surface-hover transition-all duration-200 ${!notification.read ? "bg-theme-surface-active dark:bg-theme-surface-active border-l-2 border-l-theme-primary" : ""
                                         }`}
                                 >
                                     <div className="flex items-start gap-3">
                                         <div className="flex-shrink-0 mt-0.5 p-1.5 rounded-lg bg-theme-surface-hover dark:bg-theme-surface-hover">
-                                            {getNotificationIcon(notification.type, notification.isImportant)}
+                                            {getNotificationIcon(notification.type)}
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-start justify-between gap-3">
                                                 <div className="flex-1 min-w-0">
                                                     <h4
-                                                        className={`text-sm font-semibold leading-tight ${!notification.isRead ? "text-theme-text-primary" : "text-theme-text-secondary"}`}
+                                                        className={`text-sm font-semibold leading-tight ${!notification.read ? "text-theme-text-primary" : "text-theme-text-secondary"}`}
                                                     >
-                                                        {notification.title}
+                                                        {t(notification.type)}
                                                     </h4>
                                                     <p
-                                                        className={`text-sm mt-1 leading-relaxed break-words ${!notification.isRead ? "text-theme-text-secondary" : "text-theme-text-muted"}`}
+                                                        className={`text-sm mt-1 leading-relaxed break-words ${!notification.read ? "text-theme-text-secondary" : "text-theme-text-muted"}`}
                                                     >
                                                         {notification.message}
                                                     </p>
-                                                    <p className="text-xs text-theme-text-muted mt-2 font-medium">{notification.time}</p>
+                                                    <p className="text-xs text-theme-text-muted mt-2 font-medium">{formatTimeAgo(notification.createdAt)}</p>
                                                 </div>
 
                                                 <div className="flex items-center gap-1 flex-shrink-0">
-                                                    {!notification.isRead && (
+                                                    {!notification.read && (
                                                         <Button
                                                             variant="ghost"
                                                             size="sm"

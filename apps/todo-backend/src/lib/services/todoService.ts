@@ -2,6 +2,7 @@ import TodoModel from "@/lib/models/Todo";
 import { Todo, CreateTodoRequest, UpdateTodoRequest } from "@/types/todo";
 import { AppError } from "@/middleware/errorHandler";
 import { HTTP } from "@/lib/constants/httpStatus";
+import { createNotification } from "./notificationService";
 
 export async function getTodos(userId?: string): Promise<Todo[]> {
   try {
@@ -81,6 +82,8 @@ export async function updateTodo(
       filter.userId = userId;
     }
 
+    const originalTodo = await TodoModel.findOne(filter);
+
     const updatedTodo = await TodoModel.findOneAndUpdate(
       filter,
       { ...updates, updatedAt: now },
@@ -89,6 +92,15 @@ export async function updateTodo(
 
     if (!updatedTodo) {
       throw new AppError("Todo not found or access denied", HTTP.NOT_FOUND);
+    }
+
+    if (updates.completed && !originalTodo?.completed) {
+        await createNotification({
+            userId,
+            type: 'taskCompleted',
+            message: `Task "${updatedTodo.title}" has been completed.`,
+            relatedTaskId: updatedTodo.id,
+        });
     }
 
     return {

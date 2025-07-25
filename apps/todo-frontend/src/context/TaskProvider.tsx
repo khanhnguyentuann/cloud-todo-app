@@ -1,12 +1,14 @@
 import { ReactNode, useEffect } from "react"
 import { useTasks } from "@/hooks/useTasks"
 import { useUIState } from "@/hooks/useUIState"
+import { useNotifications } from "@/hooks/useNotifications"
 import { TaskContext, type TaskContextType } from "@/context/taskContext"
 
 interface TaskProviderProps { children: ReactNode }
 
 export function TaskProvider({ children }: TaskProviderProps) {
-    const taskState = useTasks()
+    const notificationState = useNotifications()
+    const taskState = useTasks({ fetchNotifications: notificationState.fetchNotifications })
     const uiState = useUIState()
 
     useEffect(() => {
@@ -50,6 +52,7 @@ export function TaskProvider({ children }: TaskProviderProps) {
     const contextValue: TaskContextType = {
         ...taskState,
         ...uiState,
+        ...notificationState,
         addTaskWithInput
     }
 

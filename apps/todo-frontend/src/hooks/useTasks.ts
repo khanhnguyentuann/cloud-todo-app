@@ -2,6 +2,10 @@ import { useState, useEffect, useCallback } from 'react'
 import { createTask, deleteTask, fetchTasks, updateTask, updateTaskImportance } from '@/store/task'
 import type { Task } from '@/types'
 
+export interface UseTasksProps {
+    fetchNotifications: () => void;
+}
+
 export interface UseTasksReturn {
     tasks: Task[]
     isLoading: boolean
@@ -23,7 +27,7 @@ export interface UseTasksReturn {
     setToken: (token: string | null) => void
 }
 
-export function useTasks(): UseTasksReturn {
+export function useTasks({ fetchNotifications }: UseTasksProps): UseTasksReturn {
     const [token, setToken] = useState<string | null>(null)
     const [tasks, setTasks] = useState<Task[]>([])
     const [isLoading, setIsLoading] = useState(true)
@@ -82,6 +86,9 @@ export function useTasks(): UseTasksReturn {
 
         try {
             await updateTask(id, { completed: newCompleted });
+            if (newCompleted) {
+                fetchNotifications();
+            }
         } catch (err) {
             // Revert the change in case of an error
             setTasks(prevTasks =>
@@ -92,7 +99,7 @@ export function useTasks(): UseTasksReturn {
             setError(err instanceof Error ? err.message : 'Failed to update task completion');
             console.error('Failed to update task completion:', err);
         }
-    }, [tasks]);
+    }, [tasks, fetchNotifications]);
 
     const toggleImportant = useCallback(async (id: string) => {
         const task = tasks.find(t => t.id === id);
