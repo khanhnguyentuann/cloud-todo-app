@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import app from '@/app';
-import { connectDatabase } from '@/lib/config/database';
+import { connectDatabase } from '@/config/database';
 
 const PORT = parseInt(process.env.PORT || '3001', 10);
 

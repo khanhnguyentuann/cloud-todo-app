@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { HTTP_STATUS, HTTP } from '@/lib/constants/httpStatus';
+import { HTTP_STATUS, HTTP } from '@/constants/httpStatus';
 
 export interface ApiError extends Error {
     statusCode?: number;

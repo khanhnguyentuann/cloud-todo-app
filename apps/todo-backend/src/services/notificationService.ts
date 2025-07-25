@@ -1,6 +1,6 @@
-import NotificationModel, { INotification } from '@/lib/models/Notification';
+import NotificationModel, { INotification } from '@/models/Notification';
 import { AppError } from '@/middleware/errorHandler';
-import { HTTP } from '@/lib/constants/httpStatus';
+import { HTTP } from '@/constants/httpStatus';
 
 export async function getNotifications(userId: string): Promise<INotification[]> {
     try {

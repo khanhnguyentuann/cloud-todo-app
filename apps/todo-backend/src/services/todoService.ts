@@ -1,7 +1,7 @@
-import TodoModel from "@/lib/models/Todo";
+import TodoModel from "@/models/Todo";
 import { Todo, CreateTodoRequest, UpdateTodoRequest } from "@/types/todo";
 import { AppError } from "@/middleware/errorHandler";
-import { HTTP } from "@/lib/constants/httpStatus";
+import { HTTP } from "@/constants/httpStatus";
 import { createNotification } from "./notificationService";
 
 export async function getTodos(userId?: string): Promise<Todo[]> {
@@ -95,12 +95,12 @@ export async function updateTodo(
     }
 
     if (updates.completed && !originalTodo?.completed) {
-        await createNotification({
-            userId,
-            type: 'taskCompleted',
-            message: `Task "${updatedTodo.title}" has been completed.`,
-            relatedTaskId: updatedTodo.id,
-        });
+      await createNotification({
+        userId,
+        type: 'taskCompleted',
+        message: `Task "${updatedTodo.title}" has been completed.`,
+        relatedTaskId: updatedTodo.id,
+      });
     }
 
     return {

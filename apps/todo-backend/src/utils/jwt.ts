@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-import { IUser } from '@/lib/models/User';
+import { IUser } from '@/models/User';
 import { AppError } from '@/middleware/errorHandler';
-import { HTTP } from '@/lib/constants/httpStatus';
+import { HTTP } from '@/constants/httpStatus';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-key';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';

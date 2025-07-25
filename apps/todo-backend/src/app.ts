@@ -7,7 +7,7 @@ import { errorHandler, notFoundHandler } from '@/middleware/errorHandler';
 // Load env (nếu cần load sớm, gọi từ server.ts)
 dotenv.config();
 
-import todoRoutes from '@/routes/todoRoutes';
+import todoRoutes from '@/routes/todo';
 import authRoutes from '@/routes/auth';
 import generalRoutes from '@/routes/index';
 import * as authController from '@/controllers/authController';

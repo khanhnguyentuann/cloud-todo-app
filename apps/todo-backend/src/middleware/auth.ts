@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken, extractTokenFromHeader, JWTPayload } from '@/lib/utils/jwt';
+import { verifyToken, extractTokenFromHeader, JWTPayload } from '@/utils/jwt';
 import { AppError, asyncHandler } from '@/middleware/errorHandler';
-import { HTTP } from '@/lib/constants/httpStatus';
+import { HTTP } from '@/constants/httpStatus';
 
 // Extend the JWTPayload interface to include id property for backwards compatibility
 export interface AuthenticatedUser extends JWTPayload {

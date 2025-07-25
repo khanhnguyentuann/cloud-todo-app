@@ -1,6 +1,6 @@
-import User, { IUser } from '@/lib/models/User';
+import User, { IUser } from '@/models/User';
 import { AppError } from '@/middleware/errorHandler';
-import { HTTP } from '@/lib/constants/httpStatus';
+import { HTTP } from '@/constants/httpStatus';
 
 export interface RegisterUserRequest {
   username: string;

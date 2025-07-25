@@ -1,4 +1,4 @@
-import { authenticateUser, createUser } from '@/lib/services/userService';
+import { authenticateUser, createUser } from '@/services/userService';
 
 export const getOrCreateDemoUser = async () => {
     const demoEmail = 'demo@example.com';

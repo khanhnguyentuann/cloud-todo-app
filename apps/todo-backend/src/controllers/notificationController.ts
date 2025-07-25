@@ -1,8 +1,8 @@
 import { Response } from 'express';
-import * as notificationService from '@/lib/services/notificationService';
+import * as notificationService from '@/services/notificationService';
 import { AppError, asyncHandler } from '@/middleware/errorHandler';
 import { AuthenticatedRequest } from '@/middleware/auth';
-import { HTTP } from '@/lib/constants/httpStatus';
+import { HTTP } from '@/constants/httpStatus';
 
 export const getUserNotifications = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.user!.id;
