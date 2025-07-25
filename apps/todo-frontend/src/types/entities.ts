@@ -34,15 +34,6 @@ export interface Notification {
 // DATA LAYER TYPES
 // =============================================================================
 
-// Database DTOs
-export interface DynamoDBTask {
-    taskId: { S: string };
-    title: { S: string };
-    completed: { BOOL: boolean };
-    dueDate: { S: string };
-    isImportant: { BOOL: boolean };
-}
-
 // API Types
 export interface ApiResponse<T> {
     data: T;

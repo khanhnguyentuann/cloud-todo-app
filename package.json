@@ -4,26 +4,26 @@
   "version": "0.0.0",
   "type": "module",
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/*"
   ],
   "scripts": {
-    "dev": "concurrently \"yarn workspace @cloud-todo/frontend dev\" \"yarn workspace @cloud-todo/backend dev\"",
+    "dev": "concurrently --kill-others-on-fail --prefix \"[{name}]\" --names \"🎨frontend,⚡backend\" --prefix-colors \"cyan,yellow\" \"yarn workspace @cloud-todo/frontend dev\" \"yarn workspace @cloud-todo/backend dev\"",
+    "dev:clean": "concurrently --kill-others-on-fail --raw \"yarn workspace @cloud-todo/frontend dev\" \"yarn workspace @cloud-todo/backend dev\"",
+    "dev:simple": "concurrently \"yarn dev:frontend\" \"yarn dev:backend\"",
     "dev:frontend": "yarn workspace @cloud-todo/frontend dev",
     "dev:backend": "yarn workspace @cloud-todo/backend dev",
-    "build": "yarn workspace @cloud-todo/shared build && yarn workspace @cloud-todo/frontend build && yarn workspace @cloud-todo/backend build",
+    "build": "yarn workspace @cloud-todo/frontend build && yarn workspace @cloud-todo/backend build",
     "build:frontend": "yarn workspace @cloud-todo/frontend build",
     "build:backend": "yarn workspace @cloud-todo/backend build",
-    "deploy:backend": "yarn workspace @cloud-todo/backend deploy",
-    "deploy:backend:prod": "yarn workspace @cloud-todo/backend deploy:prod",
-    "logs:backend": "yarn workspace @cloud-todo/backend logs",
     "lint": "yarn workspaces foreach run lint",
     "clean": "yarn workspaces foreach run clean",
-    "shared:build": "yarn workspace @cloud-todo/shared build"
+    "test": "yarn workspaces foreach run test"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "typescript": "^5.8.3"
+    "concurrently": "^9.1.0"
   },
-  "packageManager": "yarn@1.22.21"
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.0"
+  }
 }

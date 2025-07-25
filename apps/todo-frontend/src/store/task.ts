@@ -1,26 +1,18 @@
 import axios from "@/lib/axios"
 import { toast } from "sonner"
 import { API_ENDPOINTS } from "@/store/api/endpoints"
-import type { Task, DynamoDBTask } from "@/types"
+import type { Task } from "@/types"
 
 export async function fetchTasks(): Promise<Task[]> {
     try {
-        const response = await axios.get<DynamoDBTask[]>(API_ENDPOINTS.TASK.FETCH_TASKS)
+        const response = await axios.get<Task[]>(API_ENDPOINTS.TASK.FETCH_TASKS)
         const data = response.data
 
         if (!Array.isArray(data)) {
             throw new Error("Invalid data format")
         }
 
-        const mapped = data.map((item) => ({
-            id: parseInt(item.taskId.S),
-            text: item.title.S,
-            completed: item.completed.BOOL,
-            dueDate: item.dueDate?.S,
-            isImportant: item.isImportant?.BOOL,
-        }))
-
-        return mapped
+        return data
     } catch (error) {
         toast.error("Failed to fetch tasks")
         console.error("❌ Fetch tasks error:", error)

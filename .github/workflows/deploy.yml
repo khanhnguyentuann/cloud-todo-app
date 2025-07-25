@@ -17,17 +17,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install --frozen-lockfile
 
-      - name: Build project
+      - name: Build frontend
+        working-directory: ./apps/todo-frontend
         env:
-          VITE_API_URL: https://cwjooabgub.execute-api.ap-northeast-1.amazonaws.com
-        run: npm run build
+          VITE_API_URL: https://your-backend-domain.com/api
+        run: yarn build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./apps/todo-frontend/dist

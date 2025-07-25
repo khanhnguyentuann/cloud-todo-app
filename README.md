@@ -1,20 +1,14 @@
 # Cloud Todo App
 
-A full-stack todo application built with React frontend and serverless Next.js backend on AWS.
+A full-stack todo application built with React frontend and Express.js backend with MongoDB.
 
 ## Architecture
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   React + Vite  │───▶│  AWS API Gateway │───▶│  AWS Lambda     │
-│   (Frontend)    │    │                  │    │  (Next.js API)  │
+│   React + Vite  │───▶│  Express.js API  │───▶│    MongoDB      │
+│   (Frontend)    │    │   (Backend)      │    │   (Database)    │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
-                                                        │
-                                                        ▼
-                                               ┌─────────────────┐
-                                               │   DynamoDB      │
-                                               │   (Database)    │
-                                               └─────────────────┘
 ```
 
 ## Project Structure
@@ -26,10 +20,14 @@ cloud-todo-app/
 │   │   ├── src/
 │   │   ├── .env                # API URL configuration
 │   │   └── package.json
-│   └── todo-backend/           # Next.js serverless backend
-│       ├── src/app/api/        # API routes
-│       ├── serverless.yml      # AWS deployment config
-│       ├── .env                # AWS credentials
+│   └── todo-backend/           # Express.js backend
+│       ├── src/
+│       │   ├── lib/
+│       │   │   ├── config/     # Database configuration
+│       │   │   ├── models/     # MongoDB models
+│       │   │   └── services/   # Business logic
+│       │   └── server.ts       # Express server
+│       ├── .env                # MongoDB connection string
 │       └── package.json
 ├── packages/
 │   └── shared/                 # Shared TypeScript types
@@ -42,7 +40,7 @@ cloud-todo-app/
 
 - Node.js 18+
 - Yarn
-- AWS CLI (for deployment)
+- MongoDB (local or cloud)
 
 ### Local Development
 
@@ -51,55 +49,63 @@ cloud-todo-app/
 yarn install
 ```
 
-2. **Start both frontend and backend:**
+2. **Start MongoDB:**
+```bash
+# Make sure MongoDB is running on your system
+# For local MongoDB: mongodb://localhost:27017/cloud-todo-app
+# Or use MongoDB Atlas (cloud)
+```
+
+3. **Start both frontend and backend:**
 ```bash
 yarn dev
 ```
 
 This will start:
 - Frontend: http://localhost:5173/cloud-todo-app/
-- Backend: http://localhost:3000
+- Backend: http://localhost:3001
 
 ### Environment Setup
 
 1. **Frontend (.env):**
 ```bash
 # For local development
-VITE_API_URL=http://localhost:3000/api
+VITE_API_URL=http://localhost:3001/api
 
-# For production (after AWS deployment)
-# VITE_API_URL=https://your-api-id.execute-api.us-east-1.amazonaws.com/dev/api
+# For production 
+# VITE_API_URL=https://your-backend-domain.com/api
 ```
 
 2. **Backend (.env):**
 ```bash
-# Copy from .env.example and fill in your AWS credentials
+# Copy from .env.example and configure MongoDB
 cp apps/todo-backend/.env.example apps/todo-backend/.env
 
 # Then edit apps/todo-backend/.env:
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=your_actual_access_key
-AWS_SECRET_ACCESS_KEY=your_actual_secret_key
-DYNAMODB_TABLE_NAME=Todos
-NEXTAUTH_SECRET=your_random_secret_string
-NEXTAUTH_URL=http://localhost:3001
+MONGODB_URI=mongodb://localhost:27017/cloud-todo-app
+PORT=3001
+NODE_ENV=development
+CORS_ORIGIN=http://localhost:5173
 ```
 
-**⚠️ Important**: You need valid AWS credentials to test the API locally. The backend will show authentication errors until you provide real AWS credentials.
+## Production Deployment
 
-## Deployment
+### Backend (Node.js Server)
 
-### Backend (AWS Lambda)
+You can deploy the backend to any Node.js hosting service:
 
-1. **Install Serverless Framework:**
+1. **Build the backend:**
 ```bash
-npm install -g serverless
+cd apps/todo-backend
+yarn build
 ```
 
-2. **Configure AWS credentials:**
-```bash
-aws configure
-```
+2. **Deploy to your preferred hosting service:**
+- Railway
+- Render
+- Heroku
+- VPS with PM2
+- Docker container
 
 3. **Deploy to AWS:**
 ```bash
@@ -167,11 +173,11 @@ https://your-api-id.execute-api.region.amazonaws.com/dev/api/
 ```
 
 ### Available Routes
-- `GET /api/hello` - Health check
 - `GET /api/todos` - Get all todos
 - `POST /api/todos` - Create a new todo
 - `PUT /api/todos/[id]` - Update a todo
 - `DELETE /api/todos/[id]` - Delete a todo
+- `GET /api/demo-user` - Get demo user credentials
 
 ## Technology Stack
 
@@ -219,11 +225,11 @@ Expected monthly cost for moderate usage: **$0-5**
 cd apps/todo-backend
 yarn logs
 
-# Test API locally
-curl http://localhost:3000/api/hello
+# Test API locally - Get all todos
+curl http://localhost:3000/api/todos
 
 # Test deployed API
-curl https://your-api-id.execute-api.us-east-1.amazonaws.com/dev/api/hello
+curl https://your-api-id.execute-api.us-east-1.amazonaws.com/dev/api/todos
 ```
 
 ## Contributing

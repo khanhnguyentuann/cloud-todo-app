@@ -1,9 +1,11 @@
 export const API_ENDPOINTS = {
     TASK: {
-        FETCH_TASKS: '/todos',
-        CREATE_TASK: '/todos'
+        FETCH_TASKS: '/api/todos',
+        CREATE_TASK: '/api/todos',
+        UPDATE_TASK: (id: string) => `/api/todos/${id}`,
+        DELETE_TASK: (id: string) => `/api/todos/${id}`
     },
     USER: {
-        LOGIN_DEMO: '/demo-user',
-    },
+        LOGIN_DEMO: '/api/demo-user',
+    }
 }
