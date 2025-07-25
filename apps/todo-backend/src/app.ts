@@ -2,15 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import { errorHandler, notFoundHandler } from './middleware/errorHandler';
+import { errorHandler, notFoundHandler } from '@/middleware/errorHandler';
 
 // Load env (nếu cần load sớm, gọi từ server.ts)
 dotenv.config();
 
-import todoRoutes from './routes/todoRoutes';
-import authRoutes from './routes/auth';
-import generalRoutes from './routes/index';
-import * as authController from './controllers/authController';
+import todoRoutes from '@/routes/todoRoutes';
+import authRoutes from '@/routes/auth';
+import generalRoutes from '@/routes/index';
+import * as authController from '@/controllers/authController';
 
 const app = express();
 

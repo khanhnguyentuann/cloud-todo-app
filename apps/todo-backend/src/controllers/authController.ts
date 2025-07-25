@@ -4,11 +4,11 @@ import {
     authenticateUser,
     RegisterUserRequest,
     LoginUserRequest
-} from '../lib/services/userService';
-import { getOrCreateDemoUser } from '../lib/services/demoUserService';
-import { generateToken } from '../lib/utils/jwt';
-import { AppError, asyncHandler } from '../middleware/errorHandler';
-import { HTTP } from '../lib/constants/httpStatus';
+} from '@/lib/services/userService';
+import { getOrCreateDemoUser } from '@/lib/services/demoUserService';
+import { generateToken } from '@/lib/utils/jwt';
+import { AppError, asyncHandler } from '@/middleware/errorHandler';
+import { HTTP } from '@/lib/constants/httpStatus';
 
 export const register = asyncHandler(async (req: Request, res: Response) => {
     const userData: RegisterUserRequest = req.body;

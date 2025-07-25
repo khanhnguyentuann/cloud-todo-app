@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { getTodos, createTodo, updateTodo, deleteTodo } from '../lib/services/todoService';
-import { CreateTodoRequest, UpdateTodoRequest } from '../types/todo';
-import { AppError, asyncHandler } from '../middleware/errorHandler';
-import { AuthenticatedRequest } from '../middleware/auth';
-import { HTTP } from '../lib/constants/httpStatus';
+import { getTodos, createTodo, updateTodo, deleteTodo } from '@/lib/services/todoService';
+import { CreateTodoRequest, UpdateTodoRequest } from '@/types/todo';
+import { AppError, asyncHandler } from '@/middleware/errorHandler';
+import { AuthenticatedRequest } from '@/middleware/auth';
+import { HTTP } from '@/lib/constants/httpStatus';
 
 export const getAllTodos = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.user!.id;

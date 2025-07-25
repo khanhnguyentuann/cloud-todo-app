@@ -9,7 +9,7 @@ import type {
     FC
 } from "react";
 
-import type { Task, User, ViewMode, MenuAlignment } from "./entities";
+import type { Task, User, ViewMode, MenuAlignment } from "@/types/entities";
 
 // =============================================================================
 // UI DATA STRUCTURES

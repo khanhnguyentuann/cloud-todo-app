@@ -4,9 +4,9 @@ import {
     createNewTodo,
     updateExistingTodo,
     removeExistingTodo
-} from '../controllers/todoController';
-import { createTodoValidation, updateTodoValidation } from '../middleware/validation';
-import { authenticateToken } from '../middleware/auth';
+} from '@/controllers/todoController';
+import { createTodoValidation, updateTodoValidation } from '@/middleware/validation';
+import { authenticateToken } from '@/middleware/auth';
 
 const router = Router();
 

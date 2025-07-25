@@ -1,7 +1,7 @@
-import TodoModel from "../models/Todo";
-import { Todo, CreateTodoRequest, UpdateTodoRequest } from "../../types/todo";
-import { AppError } from "../../middleware/errorHandler";
-import { HTTP } from "../constants/httpStatus";
+import TodoModel from "@/lib/models/Todo";
+import { Todo, CreateTodoRequest, UpdateTodoRequest } from "@/types/todo";
+import { AppError } from "@/middleware/errorHandler";
+import { HTTP } from "@/lib/constants/httpStatus";
 
 export async function getTodos(userId?: string): Promise<Todo[]> {
   try {
