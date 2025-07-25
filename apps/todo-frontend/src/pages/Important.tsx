@@ -18,7 +18,7 @@ export default function Important() {
                 sortBy={ctx.sortBy}
                 onSortChange={ctx.setSortBy} />
             <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
-                <TaskInput placeholder={t("addImportantTask")} />
+                <TaskInput placeholder={t("addImportantTask")} defaultImportant={true} />
                 <TaskList
                     tasks={ctx.tasks.filter(task => task.isImportant)}
                 />

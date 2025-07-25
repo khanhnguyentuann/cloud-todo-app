@@ -45,10 +45,12 @@ export function TaskItem({ task, onToggle, onToggleImportant, onTaskSelect }: Ta
                             <CalendarDays className="h-3 w-3 flex-shrink-0 text-theme-info" />
                             <span className="truncate font-medium">{t("due")} {task.dueDate}</span>
                         </div>
-                        <div className="flex items-center gap-1 bg-theme-surface-hover dark:bg-theme-surface-hover px-2 py-1 rounded-md">
-                            <Clock className="h-3 w-3 flex-shrink-0 text-theme-warning" />
-                            <span className="truncate font-medium">{t("tomorrow")}</span>
-                        </div>
+                        {task.reminder && (
+                            <div className="flex items-center gap-1 bg-theme-surface-hover dark:bg-theme-surface-hover px-2 py-1 rounded-md">
+                                <Clock className="h-3 w-3 flex-shrink-0 text-theme-warning" />
+                                <span className="truncate font-medium">{task.reminder}</span>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

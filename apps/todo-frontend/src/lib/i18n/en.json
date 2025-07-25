@@ -18,6 +18,8 @@
   "sort": "Sort",
 
   "addTask": "Add a task",
+  "addImportantTask": "Add an important task",
+  "addPlannedTask": "Add a planned task",
   "add": "Add",
   "addDueDate": "Add due date",
   "remindMe": "Remind me",
@@ -65,6 +67,10 @@
   "addRepeat": "Add repeat",
   "created": "Created",
   "deleteTask": "Delete task",
+  "uncompleted": "Uncompleted",
+  "completed": "Completed",
+  "earlier": "Earlier",
+  "later": "Later",
 
   "sunday": "Sunday",
   "monday": "Monday",

@@ -5,7 +5,6 @@ import { CalendarIcon } from "lucide-react"
 import type { DueDateMenuProps } from "@/types"
 import { DropdownMenu } from "@/components/common/DropdownMenuBase"
 import { useTranslation } from "react-i18next"
-import { formatLongDate } from "@/utils/formatDate"
 import { getQuickDueDateOptions } from "@/utils/getQuickDueDates"
 
 export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: DueDateMenuProps) {
@@ -17,18 +16,9 @@ export function DueDateMenu({ isOpen, onOpenChange, onDateSelect, trigger }: Due
     const dueDateQuickOptions = getQuickDueDateOptions(today, t)
 
     const handleSave = (date: Date) => {
-        const matchedOption = dueDateQuickOptions.find(opt =>
-            opt.value.toDateString() === date.toDateString()
-        )
-
-        if (matchedOption) {
-            onDateSelect(matchedOption.label)
-        } else {
-            onDateSelect(`Due ${formatLongDate(date)}`)
-        }
-
-        onOpenChange(false)
-        setShowCalendar(false)
+        onDateSelect(date.toISOString().split('T')[0]);
+        onOpenChange(false);
+        setShowCalendar(false);
     }
 
     const defaultTrigger = (

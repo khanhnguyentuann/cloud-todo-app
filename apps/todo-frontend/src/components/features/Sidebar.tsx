@@ -3,6 +3,7 @@ import { Button } from "@/components/common/Button";
 import { X, Star, Calendar, CheckSquare, Sun } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
+import { useTaskContext } from "@/context/taskContext";
 
 type SidebarProps = {
     isOpen: boolean
@@ -17,12 +18,26 @@ export const Sidebar: FC<SidebarProps> = ({
 }) => {
     const { t } = useTranslation();
     const location = useLocation();
+    const { tasks } = useTaskContext();
+
+    const myDayCount = tasks.filter(task => {
+        if (!task.createdAt) return false;
+        const createdAt = new Date(task.createdAt);
+        const today = new Date();
+        return createdAt.getDate() === today.getDate() &&
+               createdAt.getMonth() === today.getMonth() &&
+               createdAt.getFullYear() === today.getFullYear();
+    }).length;
+
+    const importantCount = tasks.filter(task => task.isImportant).length;
+    const plannedCount = tasks.filter(task => task.dueDate).length;
+    const tasksCount = tasks.length;
 
     const sidebarItems = [
-        { icon: Sun, key: "myDay", count: 1, path: "/my-day" },
-        { icon: Star, key: "important", count: 0, path: "/important" },
-        { icon: Calendar, key: "planned", count: 1, path: "/planned" },
-        { icon: CheckSquare, key: "tasks", count: 1, path: "/tasks" },
+        { icon: Sun, key: "myDay", count: myDayCount, path: "/my-day" },
+        { icon: Star, key: "important", count: importantCount, path: "/important" },
+        { icon: Calendar, key: "planned", count: plannedCount, path: "/planned" },
+        { icon: CheckSquare, key: "tasks", count: tasksCount, path: "/tasks" },
     ];
 
     if (!isMobile && !isOpen) return null;

@@ -34,7 +34,7 @@ export async function loginDemoUser(): Promise<User | null> {
 
         // Save token to localStorage if available
         if (token) {
-            localStorage.setItem('auth_token', token);
+            localStorage.setItem('token', token);
             console.log("✅ Token saved to localStorage");
         }
 
@@ -72,13 +72,13 @@ export async function loginDemoUser(): Promise<User | null> {
 }
 
 export function logout(): void {
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem('token');
     localStorage.removeItem('user');
     console.log("✅ Token and user data removed from localStorage");
 }
 
 export function getAuthToken(): string | null {
-    return localStorage.getItem('auth_token');
+    return localStorage.getItem('token');
 }
 
 export function isAuthenticated(): boolean {

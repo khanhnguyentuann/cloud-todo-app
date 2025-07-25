@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { createTask, fetchTasks } from '@/store/task'
+import { createTask, deleteTask, fetchTasks, updateTask, updateTaskImportance } from '@/store/task'
 import type { Task } from '@/types'
 
 export interface UseTasksReturn {
@@ -12,13 +12,19 @@ export interface UseTasksReturn {
         dueDate?: string
         reminder?: string
         repeat?: string
+        isImportant?: boolean
     }) => Promise<void>
     toggleTask: (id: string) => void
     toggleImportant: (id: string) => void
+    updateTask: (id: string, updates: Partial<Task>) => Promise<void>
+    deleteTask: (id: string) => Promise<void>
     refreshTasks: () => Promise<void>
+    token: string | null
+    setToken: (token: string | null) => void
 }
 
 export function useTasks(): UseTasksReturn {
+    const [token, setToken] = useState<string | null>(null)
     const [tasks, setTasks] = useState<Task[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -38,8 +44,10 @@ export function useTasks(): UseTasksReturn {
     }, [])
 
     useEffect(() => {
-        refreshTasks()
-    }, [refreshTasks])
+        if (token) {
+            refreshTasks()
+        }
+    }, [refreshTasks, token])
 
     const addTask = useCallback(async (taskData: {
         text: string
@@ -47,6 +55,7 @@ export function useTasks(): UseTasksReturn {
         dueDate?: string
         reminder?: string
         repeat?: string
+        isImportant?: boolean
     }) => {
         if (taskData.text.trim() === '') return
 
@@ -59,21 +68,88 @@ export function useTasks(): UseTasksReturn {
         }
     }, [refreshTasks])
 
-    const toggleTask = useCallback((id: string) => {
-        setTasks(prevTasks =>
-            prevTasks.map(task =>
-                task.id === id ? { ...task, completed: !task.completed } : task
-            )
-        )
-    }, [])
+    const toggleTask = useCallback(async (id: string) => {
+        const task = tasks.find(t => t.id === id);
+        if (!task) return;
 
-    const toggleImportant = useCallback((id: string) => {
+        const newCompleted = !task.completed;
+
         setTasks(prevTasks =>
-            prevTasks.map(task =>
-                task.id === id ? { ...task, isImportant: !task.isImportant } : task
+            prevTasks.map(t =>
+                t.id === id ? { ...t, completed: newCompleted } : t
             )
-        )
-    }, [])
+        );
+
+        try {
+            await updateTask(id, { completed: newCompleted });
+        } catch (err) {
+            // Revert the change in case of an error
+            setTasks(prevTasks =>
+                prevTasks.map(t =>
+                    t.id === id ? { ...t, completed: task.completed } : t
+                )
+            );
+            setError(err instanceof Error ? err.message : 'Failed to update task completion');
+            console.error('Failed to update task completion:', err);
+        }
+    }, [tasks]);
+
+    const toggleImportant = useCallback(async (id: string) => {
+        const task = tasks.find(t => t.id === id);
+        if (!task) return;
+
+        const newIsImportant = !task.isImportant;
+
+        setTasks(prevTasks =>
+            prevTasks.map(t =>
+                t.id === id ? { ...t, isImportant: newIsImportant } : t
+            )
+        );
+
+        try {
+            await updateTaskImportance(id, newIsImportant);
+        } catch (err) {
+            // Revert the change in case of an error
+            setTasks(prevTasks =>
+                prevTasks.map(t =>
+                    t.id === id ? { ...t, isImportant: task.isImportant } : t
+                )
+            );
+            setError(err instanceof Error ? err.message : 'Failed to update task importance');
+            console.error('Failed to update task importance:', err);
+        }
+    }, [tasks]);
+
+    const updateTaskHandler = useCallback(async (id: string, updates: Partial<Task>) => {
+        const originalTasks = [...tasks];
+        const updatedTasks = tasks.map(task =>
+            task.id === id ? { ...task, ...updates } : task
+        );
+        setTasks(updatedTasks);
+
+        try {
+            await updateTask(id, updates);
+            await refreshTasks();
+        } catch (err) {
+            setTasks(originalTasks);
+            setError(err instanceof Error ? err.message : 'Failed to update task');
+            console.error('Failed to update task:', err);
+        }
+    }, [tasks, refreshTasks]);
+
+    const deleteTaskHandler = useCallback(async (id: string) => {
+        const originalTasks = [...tasks];
+        const updatedTasks = tasks.filter(task => task.id !== id);
+        setTasks(updatedTasks);
+
+        try {
+            await deleteTask(id);
+        } catch (err) {
+            setTasks(originalTasks);
+            setError(err instanceof Error ? err.message : 'Failed to delete task');
+            console.error('Failed to delete task:', err);
+        }
+    }, [tasks]);
 
     return {
         tasks,
@@ -82,6 +158,10 @@ export function useTasks(): UseTasksReturn {
         addTask,
         toggleTask,
         toggleImportant,
-        refreshTasks
+        updateTask: updateTaskHandler,
+        deleteTask: deleteTaskHandler,
+        refreshTasks,
+        token,
+        setToken
     }
 }

@@ -23,7 +23,14 @@ export default function MyDay() {
             <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
                 <TaskInput />
                 <TaskList
-                    tasks={sortTasks(ctx.tasks, ctx.sortBy)}
+                    tasks={sortTasks(ctx.tasks.filter(task => {
+                        if (!task.createdAt) return false;
+                        const createdAt = new Date(task.createdAt);
+                        const today = new Date();
+                        return createdAt.getDate() === today.getDate() &&
+                               createdAt.getMonth() === today.getMonth() &&
+                               createdAt.getFullYear() === today.getFullYear();
+                    }), ctx.sortBy)}
                 />
             </div>
         </>

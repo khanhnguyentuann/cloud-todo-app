@@ -10,10 +10,11 @@ import { useTranslation } from 'react-i18next'
 import { useTaskContext } from "@/context/taskContext"
 
 interface TaskInputProps {
-    placeholder?: string
+    placeholder?: string;
+    defaultImportant?: boolean;
 }
 
-export function TaskInput({ placeholder }: TaskInputProps) {
+export function TaskInput({ placeholder, defaultImportant = false }: TaskInputProps) {
     const {
         inputValue,
         setInputValue,
@@ -32,7 +33,7 @@ export function TaskInput({ placeholder }: TaskInputProps) {
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            addTaskWithInput()
+            addTaskWithInput(defaultImportant);
         }
     }
 
@@ -49,7 +50,7 @@ export function TaskInput({ placeholder }: TaskInputProps) {
                     className="border-0 shadow-none text-theme-text-primary dark:text-theme-text-primary placeholder:text-theme-text-muted dark:placeholder:text-theme-text-muted focus-visible:ring-0 p-0 text-sm sm:text-base bg-transparent font-medium"
                 />
                 <Button
-                    onClick={addTaskWithInput}
+                    onClick={() => addTaskWithInput(defaultImportant)}
                     variant="ghost"
                     size="sm"
                     className="text-theme-primary dark:text-theme-primary hover:text-theme-primary-hover dark:hover:text-theme-primary-hover hover:bg-theme-surface-hover dark:hover:bg-theme-surface-hover flex-shrink-0 text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-lg font-semibold transition-all duration-200"

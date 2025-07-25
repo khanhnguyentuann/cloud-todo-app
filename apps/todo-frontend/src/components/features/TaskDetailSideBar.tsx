@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/common/Button";
 import type { TaskDetailSidebarProps } from "@/types";
 import { X, Calendar, Bell, RotateCcw, Star, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { formatTimeAgo } from "@/utils/formatDate";
+import { DueDateMenu } from "@/components/features/DueDateMenu";
+import { ReminderMenu } from "@/components/features/ReminderMenu";
+import { RepeatMenu } from "@/components/features/RepeatMenu";
+import { useTaskContext } from "@/context/taskContext";
+import { Input } from "@/components/common/Input";
 
 export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
     isOpen,
@@ -10,6 +16,10 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
     task,
     isMobile,
 }) => {
+    const { updateTask, toggleImportant, deleteTask } = useTaskContext();
+    const [dueDateMenuOpen, setDueDateMenuOpen] = useState(false);
+    const [reminderMenuOpen, setReminderMenuOpen] = useState(false);
+    const [repeatMenuOpen, setRepeatMenuOpen] = useState(false);
     const { t } = useTranslation();
 
     if (!isMobile && !isOpen) return null;
@@ -67,14 +77,14 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
                             )}
                         </button>
                         <div className="flex-1">
-                            <div
-                                className={`text-base font-medium ${task.completed
+                            <Input
+                                value={task.title}
+                                onChange={(e) => updateTask(task.id, { title: e.target.value })}
+                                className={`text-base font-medium border-none focus:ring-0 p-0 ${task.completed
                                         ? "line-through text-gray-500 dark:text-gray-400"
                                         : "text-gray-800 dark:text-gray-200"
                                     }`}
-                            >
-                                {task.title}
-                            </div>
+                            />
                         </div>
                     </div>
 
@@ -83,6 +93,7 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
                         <Button
                             variant="ghost"
                             className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
+                            onClick={() => toggleImportant(task.id)}
                         >
                             <Star
                                 className={`h-4 w-4 mr-2 ${task.isImportant ? "fill-current" : ""
@@ -93,43 +104,58 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
                                 : t("markAsImportant")}
                         </Button>
 
-                        <Button
-                            variant="ghost"
-                            className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
-                        >
-                            <Calendar className="h-4 w-4 mr-2" />
-                            {task.dueDate ? `${t("due")}: ${task.dueDate}` : t("addDueDate")}
-                        </Button>
+                        <DueDateMenu
+                            isOpen={dueDateMenuOpen}
+                            onOpenChange={setDueDateMenuOpen}
+                            onDateSelect={(date) => updateTask(task.id, { dueDate: date })}
+                            trigger={
+                                <Button
+                                    variant="ghost"
+                                    className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
+                                >
+                                    <Calendar className="h-4 w-4 mr-2" />
+                                    {task.dueDate ? `${t("due")}: ${task.dueDate}` : t("addDueDate")}
+                                </Button>
+                            }
+                        />
 
-                        <Button
-                            variant="ghost"
-                            className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
-                        >
-                            <Bell className="h-4 w-4 mr-2" />
-                            {t("addReminder")}
-                        </Button>
+                        <ReminderMenu
+                            isOpen={reminderMenuOpen}
+                            onOpenChange={setReminderMenuOpen}
+                            onReminderSelect={(reminder) => updateTask(task.id, { reminder })}
+                            trigger={
+                                <Button
+                                    variant="ghost"
+                                    className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
+                                >
+                                    <Bell className="h-4 w-4 mr-2" />
+                                    {task.reminder ? task.reminder : t("addReminder")}
+                                </Button>
+                            }
+                        />
 
-                        <Button
-                            variant="ghost"
-                            className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
-                        >
-                            <RotateCcw className="h-4 w-4 mr-2" />
-                            {t("addRepeat")}
-                        </Button>
+                        <RepeatMenu
+                            isOpen={repeatMenuOpen}
+                            onOpenChange={setRepeatMenuOpen}
+                            onRepeatSelect={(repeat) => updateTask(task.id, { repeat })}
+                            trigger={
+                                <Button
+                                    variant="ghost"
+                                    className="w-full justify-start text-orange-500 dark:text-blue-400 hover:bg-amber-100 dark:hover:bg-gray-700"
+                                >
+                                    <RotateCcw className="h-4 w-4 mr-2" />
+                                    {task.repeat ? task.repeat : t("addRepeat")}
+                                </Button>
+                            }
+                        />
                     </div>
 
                     {/* Metadata */}
                     <div className="pt-4 border-t border-amber-300 dark:border-gray-700">
                         <div className="text-sm text-gray-500 dark:text-gray-400 space-y-1">
                             <div>
-                                {t("created")}: {t("today")}
+                                {t("created")}: {task.createdAt ? formatTimeAgo(task.createdAt) : t("today")}
                             </div>
-                            <div>List: Tasks</div>
-                            {task.dueDate && (
-                                <div>
-                                    {t("due")}: {task.dueDate}
-                                </div>
-                            )}
                         </div>
                     </div>
                 </div>
@@ -139,6 +165,7 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
                     <Button
                         variant="ghost"
                         className="w-full justify-start text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                        onClick={() => deleteTask(task.id)}
                     >
                         <Trash2 className="h-4 w-4 mr-2" />
                         {t("deleteTask")}
