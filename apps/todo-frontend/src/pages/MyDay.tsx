@@ -5,10 +5,12 @@ import { TaskList } from "@/components/features/TaskList"
 import { getCurrentDate } from "@/utils/getCurrentDate"
 import { sortTasks } from "@/utils/sortTask"
 import { useTranslation } from "react-i18next"
+import { useFilteredTasks } from "@/hooks/useFilteredTasks"
 
 export default function MyDay() {
     const ctx = useTaskContext()
     const { t } = useTranslation()
+    const filteredTasks = useFilteredTasks(ctx.tasks, 'myDay');
 
     return (
         <>
@@ -23,14 +25,7 @@ export default function MyDay() {
             <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
                 <TaskInput />
                 <TaskList
-                    tasks={sortTasks(ctx.tasks.filter(task => {
-                        if (!task.createdAt) return false;
-                        const createdAt = new Date(task.createdAt);
-                        const today = new Date();
-                        return createdAt.getDate() === today.getDate() &&
-                               createdAt.getMonth() === today.getMonth() &&
-                               createdAt.getFullYear() === today.getFullYear();
-                    }), ctx.sortBy)}
+                    tasks={sortTasks(filteredTasks, ctx.sortBy)}
                 />
             </div>
         </>

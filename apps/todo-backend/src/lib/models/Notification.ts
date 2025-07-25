@@ -1,5 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
-
+import mongoose, { Schema, Document, Types } from 'mongoose';
 export interface INotification extends Document {
     userId: string;
     type: 'taskCompleted' | 'reminder' | 'overdue';
@@ -20,15 +19,15 @@ const NotificationSchema: Schema = new Schema({
     timestamps: true,
     toJSON: {
         virtuals: true,
-        transform(doc, ret) {
+        transform(doc, ret: { _id?: any; __v?: any }) {
             delete ret._id;
             delete ret.__v;
         }
     }
 });
 
-NotificationSchema.virtual('id').get(function(this: INotification) {
-    return this._id.toHexString();
+NotificationSchema.virtual('id').get(function () {
+    return (this._id as Types.ObjectId).toHexString();
 });
 
 export default mongoose.model<INotification>('Notification', NotificationSchema);

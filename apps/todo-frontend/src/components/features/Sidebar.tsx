@@ -25,8 +25,8 @@ export const Sidebar: FC<SidebarProps> = ({
         const createdAt = new Date(task.createdAt);
         const today = new Date();
         return createdAt.getDate() === today.getDate() &&
-               createdAt.getMonth() === today.getMonth() &&
-               createdAt.getFullYear() === today.getFullYear();
+            createdAt.getMonth() === today.getMonth() &&
+            createdAt.getFullYear() === today.getFullYear();
     }).length;
 
     const importantCount = tasks.filter(task => task.isImportant).length;

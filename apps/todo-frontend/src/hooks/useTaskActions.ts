@@ -2,8 +2,8 @@
 import type { Task } from "@/types"
 
 export const useTaskActions = (
-    task: Task, 
-    onToggle: (id: string) => void, 
+    task: Task,
+    onToggle: (id: string) => void,
     onToggleImportant: (id: string) => void
 ) => {
     const handleToggle = (e: React.MouseEvent) => {

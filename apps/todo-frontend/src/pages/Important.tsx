@@ -4,10 +4,13 @@ import { TaskList } from "@/components/features/TaskList"
 import { useTaskContext } from "@/context/taskContext"
 import { getCurrentDate } from "@/utils/getCurrentDate"
 import { useTranslation } from "react-i18next"
+import { useFilteredTasks } from "@/hooks/useFilteredTasks"
 
 export default function Important() {
     const ctx = useTaskContext()
     const { t } = useTranslation()
+    const filteredTasks = useFilteredTasks(ctx.tasks, 'important');
+
     return (
         <>
             <ContentHeader
@@ -20,7 +23,7 @@ export default function Important() {
             <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
                 <TaskInput placeholder={t("addImportantTask")} defaultImportant={true} />
                 <TaskList
-                    tasks={ctx.tasks.filter(task => task.isImportant)}
+                    tasks={filteredTasks}
                 />
             </div>
         </>

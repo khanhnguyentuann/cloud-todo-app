@@ -39,14 +39,14 @@ export function useAuth() {
         }
     }, [isAuthenticated, isLoading, location.pathname, navigate])
 
-    const signInWithGoogle = async () => {}
+    const signInWithGoogle = async () => { }
 
     const signOut = () => {
         setUser(null)
         setIsAuthenticated(false)
         localStorage.removeItem("auth")
         localStorage.removeItem("user")
-        
+
         // Navigate to root path after logout, which will show login screen
         navigate('/', { replace: true })
     }
@@ -56,7 +56,7 @@ export function useAuth() {
         setIsAuthenticated(true)
         localStorage.setItem("auth", "true")
         localStorage.setItem("user", JSON.stringify(userData))
-        
+
         // Navigate to my-day after successful login
         navigate('/my-day', { replace: true })
     }

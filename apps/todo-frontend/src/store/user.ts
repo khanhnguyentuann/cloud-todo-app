@@ -47,7 +47,7 @@ export async function loginDemoUser(): Promise<User | null> {
                 phone: backendUser.phone || '',
                 timezone: backendUser.timezone || 'UTC'
             }
-            
+
             localStorage.setItem('user', JSON.stringify(user));
             console.log("✅ User data saved to localStorage");
             return user;
@@ -59,13 +59,13 @@ export async function loginDemoUser(): Promise<User | null> {
         const apiError = error as ApiError;
         const errorMessage = getErrorMessage(apiError);
         const severity = getErrorSeverity(apiError);
-        
+
         if (severity === 'error') {
             toast.error(errorMessage);
         } else {
             toast.warn(errorMessage);
         }
-        
+
         console.error("❌ Login demo user error:", error);
         return null;
     }

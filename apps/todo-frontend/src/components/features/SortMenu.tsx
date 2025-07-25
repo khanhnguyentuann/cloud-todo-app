@@ -66,8 +66,8 @@ export function SortMenu({ isOpen, onOpenChange, onSortChange, currentSort }: So
                                     onOpenChange(false);
                                 }}
                                 className={`w-full flex items-center gap-3 px-2 py-2 text-sm rounded transition-colors ${currentSort === label
-                                        ? "bg-amber-200 dark:bg-blue-600 text-orange-600 dark:text-white font-medium"
-                                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600"
+                                    ? "bg-amber-200 dark:bg-blue-600 text-orange-600 dark:text-white font-medium"
+                                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600"
                                     }`}
                             >
                                 <option.icon className="h-4 w-4" />

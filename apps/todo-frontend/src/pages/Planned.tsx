@@ -7,6 +7,7 @@ import { getCurrentDate } from "@/utils/getCurrentDate"
 import { sortTasks } from "@/utils/sortTask"
 import { useTranslation } from "react-i18next"
 import { ChevronDown } from "lucide-react";
+import { useFilteredTasks } from "@/hooks/useFilteredTasks";
 
 export default function Planned() {
     const ctx = useTaskContext()
@@ -17,12 +18,14 @@ export default function Planned() {
         later: true,
     });
 
+    const plannedTasks = useFilteredTasks(ctx.tasks, 'planned');
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const earlierTasks = ctx.tasks.filter(task => task.dueDate && new Date(task.dueDate) < today);
-    const todayTasks = ctx.tasks.filter(task => task.dueDate && new Date(task.dueDate).getTime() === today.getTime());
-    const laterTasks = ctx.tasks.filter(task => task.dueDate && new Date(task.dueDate) > today);
+    const earlierTasks = plannedTasks.filter(task => new Date(task.dueDate!) < today);
+    const todayTasks = plannedTasks.filter(task => new Date(task.dueDate!).getTime() === today.getTime());
+    const laterTasks = plannedTasks.filter(task => new Date(task.dueDate!) > today);
 
     const toggleGroup = (group: keyof typeof visibleGroups) => {
         setVisibleGroups(prev => ({ ...prev, [group]: !prev[group] }));

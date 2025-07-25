@@ -27,13 +27,13 @@ export async function fetchTasks(): Promise<Task[]> {
         const apiError = error as ApiError;
         const errorMessage = getErrorMessage(apiError);
         const severity = getErrorSeverity(apiError);
-        
+
         if (severity === 'error') {
             toast.error(errorMessage);
         } else {
             toast.warning(errorMessage);
         }
-        
+
         console.error("❌ Fetch tasks error:", error);
         return [];
     }
@@ -64,20 +64,20 @@ export async function createTask(newTask: {
 
         const response = await axios.post<CreateTaskResponse>(API_ENDPOINTS.TASK.CREATE_TASK, payload)
         toast.success("Created task successfully")
-        
+
         // Return the created task from response
         return response.data.data || null
     } catch (error) {
         const apiError = error as ApiError;
         const errorMessage = getErrorMessage(apiError);
         const severity = getErrorSeverity(apiError);
-        
+
         if (severity === 'error') {
             toast.error(errorMessage);
         } else {
             toast.warning(errorMessage);
         }
-        
+
         console.error("❌ Create task error:", error);
         return null;
     }

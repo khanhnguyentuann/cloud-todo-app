@@ -58,8 +58,8 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
                     <div className="flex items-center gap-3">
                         <button
                             className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${task.completed
-                                    ? "bg-emerald-500 border-emerald-500"
-                                    : "border-amber-300 dark:border-gray-600 hover:border-orange-500 dark:hover:border-blue-400"
+                                ? "bg-emerald-500 border-emerald-500"
+                                : "border-amber-300 dark:border-gray-600 hover:border-orange-500 dark:hover:border-blue-400"
                                 }`}
                         >
                             {task.completed && (
@@ -81,8 +81,8 @@ export const TaskDetailSidebar: React.FC<TaskDetailSidebarProps> = ({
                                 value={task.title}
                                 onChange={(e) => updateTask(task.id, { title: e.target.value })}
                                 className={`text-base font-medium border-none focus:ring-0 p-0 ${task.completed
-                                        ? "line-through text-gray-500 dark:text-gray-400"
-                                        : "text-gray-800 dark:text-gray-200"
+                                    ? "line-through text-gray-500 dark:text-gray-400"
+                                    : "text-gray-800 dark:text-gray-200"
                                     }`}
                             />
                         </div>
