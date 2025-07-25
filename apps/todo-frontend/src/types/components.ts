@@ -78,15 +78,15 @@ export interface ContentHeaderProps {
 // Task Management
 export interface TaskItemProps {
     task: Task;
-    onToggle: (id: number, e?: MouseEvent<HTMLButtonElement>) => void;
-    onToggleImportant: (id: number, e?: MouseEvent<HTMLButtonElement>) => void;
+    onToggle: (id: string, e?: MouseEvent<HTMLButtonElement>) => void;
+    onToggleImportant: (id: string, e?: MouseEvent<HTMLButtonElement>) => void;
     onTaskSelect: (task: Task) => void;
 }
 
 export interface TaskGridItemProps {
     task: Task;
-    onToggle: (id: number) => void;
-    onToggleImportant: (id: number) => void;
+    onToggle: (id: string) => void;
+    onToggleImportant: (id: string) => void;
     onTaskSelect: (task: Task) => void;
 }
 

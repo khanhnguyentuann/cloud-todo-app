@@ -13,8 +13,8 @@ export interface UseTasksReturn {
         reminder?: string
         repeat?: string
     }) => Promise<void>
-    toggleTask: (id: number) => void
-    toggleImportant: (id: number) => void
+    toggleTask: (id: string) => void
+    toggleImportant: (id: string) => void
     refreshTasks: () => Promise<void>
 }
 
@@ -59,7 +59,7 @@ export function useTasks(): UseTasksReturn {
         }
     }, [refreshTasks])
 
-    const toggleTask = useCallback((id: number) => {
+    const toggleTask = useCallback((id: string) => {
         setTasks(prevTasks =>
             prevTasks.map(task =>
                 task.id === id ? { ...task, completed: !task.completed } : task
@@ -67,7 +67,7 @@ export function useTasks(): UseTasksReturn {
         )
     }, [])
 
-    const toggleImportant = useCallback((id: number) => {
+    const toggleImportant = useCallback((id: string) => {
         setTasks(prevTasks =>
             prevTasks.map(task =>
                 task.id === id ? { ...task, isImportant: !task.isImportant } : task

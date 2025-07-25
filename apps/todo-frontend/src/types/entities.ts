@@ -13,11 +13,15 @@ export interface User {
 }
 
 export interface Task {
-    id: number;
-    text: string;
+    id: string;
+    title: string;
     completed: boolean;
     dueDate?: string;
+    reminder?: string;
+    repeat?: string;
     isImportant?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface Notification {

@@ -55,13 +55,23 @@ export const createTodoValidation = [
         .isLength({ min: 1, max: 255 })
         .withMessage('Title must be between 1 and 255 characters'),
     body('dueDate')
-        .optional()
-        .isISO8601()
-        .withMessage('Due date must be a valid ISO 8601 date'),
+        .optional({ nullable: true })
+        .custom((value) => {
+            if (value === null || value === '' || value === undefined) return true;
+            if (typeof value === 'string' && value.trim() === '') return true;
+            return new Date(value).toString() !== 'Invalid Date';
+        })
+        .withMessage('Due date must be a valid date'),
     body('reminder')
-        .optional()
-        .isISO8601()
-        .withMessage('Reminder must be a valid ISO 8601 date'),
+        .optional({ nullable: true })
+        .custom((value) => {
+            if (value === null || value === '' || value === undefined) return true;
+            if (typeof value === 'string' && value.trim() === '') return true;
+            return new Date(value).toString() !== 'Invalid Date';
+        })
+        .withMessage('Reminder must be a valid date'),
+    body('repeat')
+        .optional({ nullable: true }),
     body('isImportant')
         .optional()
         .isBoolean()
@@ -79,13 +89,23 @@ export const updateTodoValidation = [
         .isBoolean()
         .withMessage('Completed must be a boolean'),
     body('dueDate')
-        .optional()
-        .isISO8601()
-        .withMessage('Due date must be a valid ISO 8601 date'),
+        .optional({ nullable: true })
+        .custom((value) => {
+            if (value === null || value === '' || value === undefined) return true;
+            if (typeof value === 'string' && value.trim() === '') return true;
+            return new Date(value).toString() !== 'Invalid Date';
+        })
+        .withMessage('Due date must be a valid date'),
     body('reminder')
-        .optional()
-        .isISO8601()
-        .withMessage('Reminder must be a valid ISO 8601 date'),
+        .optional({ nullable: true })
+        .custom((value) => {
+            if (value === null || value === '' || value === undefined) return true;
+            if (typeof value === 'string' && value.trim() === '') return true;
+            return new Date(value).toString() !== 'Invalid Date';
+        })
+        .withMessage('Reminder must be a valid date'),
+    body('repeat')
+        .optional({ nullable: true }),
     body('isImportant')
         .optional()
         .isBoolean()

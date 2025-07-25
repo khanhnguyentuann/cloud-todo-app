@@ -13,8 +13,8 @@ export function sortTasks(tasks: Task[], sortType: string): Task[] {
                 return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
             })
         case "Alphabetical":
-            return tasksCopy.sort((a, b) => a.text.localeCompare(b.text))
+            return tasksCopy.sort((a, b) => a.title.localeCompare(b.title))
         default:
-            return tasksCopy.sort((a, b) => a.id - b.id)
+            return tasksCopy.sort((a, b) => parseInt(a.id) - parseInt(b.id))
     }
 }

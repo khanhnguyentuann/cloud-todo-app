@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 import { IUser } from '@/lib/models/User';
+import { AppError } from '@/middleware/errorHandler';
+import { HTTP } from '@/lib/constants/httpStatus';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-key';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
@@ -26,13 +28,13 @@ export const verifyToken = (token: string): JWTPayload => {
     try {
         return jwt.verify(token, JWT_SECRET) as JWTPayload;
     } catch (error) {
-        throw new Error('Invalid token');
+        throw new AppError('Invalid token', HTTP.UNAUTHORIZED);
     }
 };
 
 export const extractTokenFromHeader = (authHeader: string | undefined): string => {
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new Error('No token provided');
+        throw new AppError('No token provided', HTTP.UNAUTHORIZED);
     }
 
     return authHeader.substring(7); // Remove 'Bearer ' prefix

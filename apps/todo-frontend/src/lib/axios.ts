@@ -8,7 +8,14 @@ const instance = axios.create({
     }
 })
 
-instance.interceptors.request.use((config) => { return config })
+instance.interceptors.request.use((config) => {
+    // Add authorization token if available
+    const token = localStorage.getItem('auth_token');
+    if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+})
 
 instance.interceptors.response.use(
     (response) => response,

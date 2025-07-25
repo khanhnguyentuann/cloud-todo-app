@@ -53,7 +53,7 @@ export function TaskGridItem({ task, onToggle, onToggleImportant, onTaskSelect }
                         : "text-gray-800 dark:text-gray-200"
                         }`}
                 >
-                    {task.text}
+                    {task.title}
                 </div>
 
                 {task.dueDate && (

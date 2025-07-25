@@ -31,13 +31,19 @@ export async function createTodo(
     const id = Date.now().toString();
     const now = new Date().toISOString();
 
+    // Helper function to clean date values
+    const cleanDateValue = (value: string | null | undefined): string | null => {
+      if (!value || value.trim() === '') return null;
+      return value;
+    };
+
     const todo = new TodoModel({
       id,
       title: todoData.title,
       completed: false,
-      dueDate: todoData.dueDate || null,
-      reminder: todoData.reminder || null,
-      repeat: todoData.repeat || null,
+      dueDate: cleanDateValue(todoData.dueDate),
+      reminder: cleanDateValue(todoData.reminder),
+      repeat: cleanDateValue(todoData.repeat),
       isImportant: todoData.isImportant || false,
       userId: todoData.userId,
       createdAt: now,

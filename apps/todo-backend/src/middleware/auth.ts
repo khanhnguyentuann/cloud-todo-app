@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken, extractTokenFromHeader, JWTPayload } from '@/lib/utils/jwt';
-import { AppError } from '@/middleware/errorHandler';
+import { AppError, asyncHandler } from '@/middleware/errorHandler';
 import { HTTP } from '@/lib/constants/httpStatus';
 
 // Extend the JWTPayload interface to include id property for backwards compatibility
@@ -33,8 +33,9 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
         };
         next();
     } catch (error) {
-        const message = error instanceof Error ? error.message : 'Authentication failed';
-        throw new AppError(message, HTTP.UNAUTHORIZED);
+        const message = error instanceof AppError ? error.message : 'Authentication failed';
+        const statusCode = error instanceof AppError ? error.statusCode : HTTP.UNAUTHORIZED;
+        throw new AppError(message, statusCode);
     }
 };
 

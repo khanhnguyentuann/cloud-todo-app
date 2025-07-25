@@ -36,7 +36,7 @@ export function TaskItem({ task, onToggle, onToggleImportant, onTaskSelect }: Ta
                     className={`text-sm sm:text-base break-words font-medium leading-relaxed ${task.completed ? "line-through text-theme-text-muted" : "text-theme-text-primary"
                         }`}
                 >
-                    {task.text}
+                    {task.title}
                 </div>
                 {task.dueDate && (
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-2 text-xs text-theme-text-secondary">
