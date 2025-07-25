@@ -8,13 +8,14 @@ import {
 import { getOrCreateDemoUser } from '../lib/services/demoUserService';
 import { generateToken } from '../lib/utils/jwt';
 import { AppError, asyncHandler } from '../middleware/errorHandler';
+import { HTTP } from '../lib/constants/httpStatus';
 
 export const register = asyncHandler(async (req: Request, res: Response) => {
     const userData: RegisterUserRequest = req.body;
     const user = await createUser(userData);
     const token = generateToken(user);
 
-    res.status(201).json({
+    res.status(HTTP.CREATED).json({
         success: true,
         message: 'User registered successfully',
         data: { user, token }
@@ -26,7 +27,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
     const user = await authenticateUser(loginData);
     const token = generateToken(user);
 
-    res.status(200).json({
+    res.status(HTTP.OK).json({
         success: true,
         message: 'Login successful',
         data: { user, token }
@@ -34,9 +35,9 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const getProfile = asyncHandler(async (req: Request, res: Response) => {
-    if (!req.user) throw new AppError('User not authenticated', 401);
+    if (!req.user) throw new AppError('User not authenticated', HTTP.UNAUTHORIZED);
 
-    res.status(200).json({
+    res.status(HTTP.OK).json({
         success: true,
         data: { user: req.user }
     });
@@ -46,7 +47,7 @@ export const getDemoUser = asyncHandler(async (_req: Request, res: Response) => 
     const demoUser = await getOrCreateDemoUser();
     const token = generateToken(demoUser);
 
-    res.status(200).json({
+    res.status(HTTP.OK).json({
         success: true,
         message: 'Demo user logged in successfully',
         data: {

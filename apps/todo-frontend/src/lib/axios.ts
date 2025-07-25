@@ -1,4 +1,5 @@
 import axios from "axios"
+import { HTTP, isErrorStatus, getStatusMessage } from "./constants/httpStatus"
 
 const instance = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -11,7 +12,23 @@ instance.interceptors.request.use((config) => { return config })
 
 instance.interceptors.response.use(
     (response) => response,
-    (error) => { return Promise.reject(error) }
+    (error) => {
+        // Enhanced error handling with HTTP status codes
+        if (error.response) {
+            const status = error.response.status;
+            const statusMessage = getStatusMessage(status);
+            
+            console.error(`HTTP Error ${status}: ${statusMessage}`, error.response.data);
+            
+            // Add status code information to error object
+            error.statusCode = status;
+            error.statusMessage = statusMessage;
+            error.isClientError = isErrorStatus(status) && status < HTTP.INTERNAL_SERVER_ERROR;
+            error.isServerError = status >= HTTP.INTERNAL_SERVER_ERROR;
+        }
+        
+        return Promise.reject(error);
+    }
 )
 
 export default instance

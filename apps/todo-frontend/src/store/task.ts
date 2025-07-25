@@ -2,6 +2,7 @@ import axios from "@/lib/axios"
 import { toast } from "sonner"
 import { API_ENDPOINTS } from "@/store/api/endpoints"
 import type { Task } from "@/types"
+import { getErrorMessage, getErrorSeverity, ApiError } from "@/lib/utils/errorHandler"
 
 export async function fetchTasks(): Promise<Task[]> {
     try {
@@ -14,9 +15,18 @@ export async function fetchTasks(): Promise<Task[]> {
 
         return data
     } catch (error) {
-        toast.error("Failed to fetch tasks")
-        console.error("❌ Fetch tasks error:", error)
-        return []
+        const apiError = error as ApiError;
+        const errorMessage = getErrorMessage(apiError);
+        const severity = getErrorSeverity(apiError);
+        
+        if (severity === 'error') {
+            toast.error(errorMessage);
+        } else {
+            toast.warning(errorMessage);
+        }
+        
+        console.error("❌ Fetch tasks error:", error);
+        return [];
     }
 }
 
@@ -40,8 +50,17 @@ export async function createTask(newTask: {
         toast.success("Created task successfully")
         return null
     } catch (error) {
-        toast.error("Failed to create task")
-        console.error("❌ Create task error:", error)
-        return null
+        const apiError = error as ApiError;
+        const errorMessage = getErrorMessage(apiError);
+        const severity = getErrorSeverity(apiError);
+        
+        if (severity === 'error') {
+            toast.error(errorMessage);
+        } else {
+            toast.warning(errorMessage);
+        }
+        
+        console.error("❌ Create task error:", error);
+        return null;
     }
 }

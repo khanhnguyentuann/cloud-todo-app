@@ -1,5 +1,6 @@
 import User, { IUser } from '../models/User';
 import { AppError } from '../../middleware/errorHandler';
+import { HTTP } from '../constants/httpStatus';
 
 export interface RegisterUserRequest {
   username: string;
@@ -24,23 +25,23 @@ export const createUser = async (userData: RegisterUserRequest): Promise<IUser> 
 
     if (existingUser) {
       if (existingUser.email === userData.email) {
-        throw new AppError('Email already registered', 400);
+        throw new AppError('Email already registered', HTTP.BAD_REQUEST);
       }
       if (existingUser.username === userData.username) {
-        throw new AppError('Username already taken', 400);
+        throw new AppError('Username already taken', HTTP.BAD_REQUEST);
       }
     }
 
     const user = new User(userData);
     await user.save();
-    
+
     return user;
   } catch (error) {
     if (error instanceof AppError) {
       throw error;
     }
     console.error('🚨 Error creating user:', error);
-    throw new AppError('Failed to create user', 500);
+    throw new AppError('Failed to create user', HTTP.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -48,16 +49,16 @@ export const authenticateUser = async (loginData: LoginUserRequest): Promise<IUs
   try {
     // Find user by email
     const user = await User.findOne({ email: loginData.email });
-    
+
     if (!user) {
-      throw new AppError('Invalid email or password', 401);
+      throw new AppError('Invalid email or password', HTTP.UNAUTHORIZED);
     }
 
     // Check password
     const isPasswordValid = await user.comparePassword(loginData.password);
-    
+
     if (!isPasswordValid) {
-      throw new AppError('Invalid email or password', 401);
+      throw new AppError('Invalid email or password', HTTP.UNAUTHORIZED);
     }
 
     return user;
@@ -66,7 +67,7 @@ export const authenticateUser = async (loginData: LoginUserRequest): Promise<IUs
       throw error;
     }
     console.error('🚨 Error authenticating user:', error);
-    throw new AppError('Authentication failed', 500);
+    throw new AppError('Authentication failed', HTTP.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -75,6 +76,6 @@ export const getUserById = async (userId: string): Promise<IUser | null> => {
     return await User.findById(userId);
   } catch (error) {
     console.error('🚨 Error getting user:', error);
-    throw new AppError('Failed to get user', 500);
+    throw new AppError('Failed to get user', HTTP.INTERNAL_SERVER_ERROR);
   }
 };

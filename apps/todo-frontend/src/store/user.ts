@@ -2,6 +2,7 @@ import axios from "@/lib/axios"
 import { toast } from "react-toastify"
 import { API_ENDPOINTS } from "@/store/api/endpoints"
 import type { User } from "@/types"
+import { getErrorMessage, getErrorSeverity, ApiError } from "@/lib/utils/errorHandler"
 
 export async function loginDemoUser(): Promise<User | null> {
     try {
@@ -11,8 +12,17 @@ export async function loginDemoUser(): Promise<User | null> {
         console.log("✅ Login demo user success:", user)
         return user
     } catch (error) {
-        toast.error("Failed to login demo user")
-        console.error("❌ Login demo user error:", error)
-        return null
+        const apiError = error as ApiError;
+        const errorMessage = getErrorMessage(apiError);
+        const severity = getErrorSeverity(apiError);
+        
+        if (severity === 'error') {
+            toast.error(errorMessage);
+        } else {
+            toast.warn(errorMessage);
+        }
+        
+        console.error("❌ Login demo user error:", error);
+        return null;
     }
 }

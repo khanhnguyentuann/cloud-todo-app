@@ -1,12 +1,13 @@
-import TodoModel from '../models/Todo';
-import { Todo, CreateTodoRequest, UpdateTodoRequest } from '../../types/todo';
-import { AppError } from '../../middleware/errorHandler';
+import TodoModel from "../models/Todo";
+import { Todo, CreateTodoRequest, UpdateTodoRequest } from "../../types/todo";
+import { AppError } from "../../middleware/errorHandler";
+import { HTTP } from "../constants/httpStatus";
 
 export async function getTodos(userId?: string): Promise<Todo[]> {
   try {
     const filter = userId ? { userId } : {};
     const todos = await TodoModel.find(filter).sort({ createdAt: -1 });
-    return todos.map(todo => ({
+    return todos.map((todo) => ({
       id: todo.id,
       title: todo.title,
       completed: todo.completed,
@@ -18,12 +19,14 @@ export async function getTodos(userId?: string): Promise<Todo[]> {
       updatedAt: todo.updatedAt,
     }));
   } catch (error) {
-    console.error('🚨 Error getting todos:', error);
-    throw new AppError('Failed to retrieve todos', 500);
+    console.error("🚨 Error getting todos:", error);
+    throw new AppError("Failed to retrieve todos", HTTP.INTERNAL_SERVER_ERROR);
   }
 }
 
-export async function createTodo(todoData: CreateTodoRequest & { userId: string }): Promise<Todo> {
+export async function createTodo(
+  todoData: CreateTodoRequest & { userId: string }
+): Promise<Todo> {
   try {
     const id = Date.now().toString();
     const now = new Date().toISOString();
@@ -42,7 +45,7 @@ export async function createTodo(todoData: CreateTodoRequest & { userId: string 
     });
 
     const savedTodo = await todo.save();
-    
+
     return {
       id: savedTodo.id,
       title: savedTodo.title,
@@ -55,19 +58,23 @@ export async function createTodo(todoData: CreateTodoRequest & { userId: string 
       updatedAt: savedTodo.updatedAt,
     };
   } catch (error) {
-    console.error('🚨 Error creating todo:', error);
-    throw new AppError('Failed to create todo', 500);
+    console.error("🚨 Error creating todo:", error);
+    throw new AppError("Failed to create todo", HTTP.INTERNAL_SERVER_ERROR);
   }
 }
 
-export async function updateTodo(id: string, updates: UpdateTodoRequest, userId?: string): Promise<Todo | null> {
+export async function updateTodo(
+  id: string,
+  updates: UpdateTodoRequest,
+  userId?: string
+): Promise<Todo | null> {
   try {
     const now = new Date().toISOString();
     const filter: any = { id };
     if (userId) {
       filter.userId = userId;
     }
-    
+
     const updatedTodo = await TodoModel.findOneAndUpdate(
       filter,
       { ...updates, updatedAt: now },
@@ -75,7 +82,7 @@ export async function updateTodo(id: string, updates: UpdateTodoRequest, userId?
     );
 
     if (!updatedTodo) {
-      throw new AppError('Todo not found or access denied', 404);
+      throw new AppError("Todo not found or access denied", HTTP.NOT_FOUND);
     }
 
     return {
@@ -90,33 +97,36 @@ export async function updateTodo(id: string, updates: UpdateTodoRequest, userId?
       updatedAt: updatedTodo.updatedAt,
     };
   } catch (error) {
-    console.error('🚨 Error updating todo:', error);
+    console.error("🚨 Error updating todo:", error);
     if (error instanceof AppError) {
       throw error;
     }
-    throw new AppError('Failed to update todo', 500);
+    throw new AppError("Failed to update todo", HTTP.INTERNAL_SERVER_ERROR);
   }
 }
 
-export async function deleteTodo(id: string, userId?: string): Promise<boolean> {
+export async function deleteTodo(
+  id: string,
+  userId?: string
+): Promise<boolean> {
   try {
     const filter: any = { id };
     if (userId) {
       filter.userId = userId;
     }
-    
+
     const deletedTodo = await TodoModel.findOneAndDelete(filter);
-    
+
     if (!deletedTodo) {
-      throw new AppError('Todo not found or access denied', 404);
+      throw new AppError("Todo not found or access denied", HTTP.NOT_FOUND);
     }
-    
+
     return true;
   } catch (error) {
-    console.error('🚨 Error deleting todo:', error);
+    console.error("🚨 Error deleting todo:", error);
     if (error instanceof AppError) {
       throw error;
     }
-    throw new AppError('Failed to delete todo', 500);
+    throw new AppError("Failed to delete todo", HTTP.INTERNAL_SERVER_ERROR);
   }
 }
